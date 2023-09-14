@@ -49,9 +49,10 @@ form .form-field:nth-child(1)::before {
   top: 15px;
 }
 form .form-field:nth-child(2)::before {
-  background-image: url('key.jpeg');
-  width: 16px;
-  height: 16px;
+  background-image: url('key.jpg');
+  width: 20px;
+  height: 26px;
+  top: 10px;
 }
 form .form-field {
   display: -webkit-box;
