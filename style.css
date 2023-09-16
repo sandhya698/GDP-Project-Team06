@@ -10,6 +10,7 @@
   height: 100%;
   background-size: cover;
   filter: blur(5px);
+  display: table;
 }
 
 body {
@@ -43,12 +44,14 @@ form .form-field::before {
   background-repeat: no-repeat;
 }
 form .form-field:nth-child(1)::before {
+  align-items: center;
   background-image: url('user.jpeg');
   width: 20px;
   height: 20px;
-  top: 15px;
+  top: 20px;
 }
 form .form-field:nth-child(2)::before {
+  align-items: center;
   background-image: url('key.jpg');
   width: 20px;
   height: 26px;
