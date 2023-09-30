@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<title> Welcome! </title>
-<link rel="stylesheet" href="style.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <style>
+        /* Add CSS to style the navbar */
+        body {
+            background: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: white; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 10px; 
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            display: inline;
+            margin-right: 10px; 
+        }
+
+        .navbar img {
+            width: 100px; 
+            height: 100px; 
+        }
+    </style>
 </head>
-<body style="background: none;">
-    <div class="container">
-        <div class = "list" >
-            <ul>
-                <li><a href="donorLogin.html">Login/Sign Up</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="">Events</a> </li>
-                <li><a href="">Donate Blood</a> </li>
-                <li><a href="">Request Blood</a></li>
-            </ul>
-        </div>
-        
+<body>
+    <div class="navbar">
+        <img src="Group6.jpg" alt="Logo">
+        <ul>
+            <li><a href="donorLogin.html">Login/Sign Up</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Donate Blood</a></li>
+            <li><a href="#">Request Blood</a></li>
+        </ul>
     </div>
-</div>
 </body>
 </html>
