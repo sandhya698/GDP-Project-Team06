@@ -11,6 +11,8 @@
             background: none;
             margin: 0;
             padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
         }
 
         .navbar {
@@ -21,41 +23,28 @@
             align-items: center; 
             padding: 10px 10px; 
         }
-
-        .navbar ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
+        .topnav-right {
+          float: right;
         }
-
-        .navbar ul li {
-            display: inline;
-            margin-right: 10px; 
+        .navbar a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
         }
-
         .navbar img {
-            width: 100px; 
-            height: 100px; 
+            width: 50px; 
+            height: 50px; 
         }
-    </style>
-</head>
-<body>
-    <div class="navbar">
-        <img src="Group6.jpg" alt="Logo">
-        <ul>
-            <li><a href="donorLogin.html">Login/Sign Up</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Events</a></li>
-            <li><a href="#">Donate Blood</a></li>
-            <li><a href="#">Request Blood</a></li>
-        </ul>
-    </div>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-        body {font-family: Arial, Helvetica, sans-serif;}
-        * {box-sizing: border-box;}
+        .navbar a:hover {
+          background-color: #ddd;
+          color: black;
+        }
+        .navbar title{
+          float: inline-start;
+        }
         .open-button {
           background-color: #555;
           color: white;
@@ -110,35 +99,46 @@
         .form-container .btn:hover, .open-button:hover {
           opacity: 1;
         }
-        </style>
-        </head>
-        <body>
-        <button class="open-button" onclick="openForm()">Chat</button>
-        
-        <div class="chat-popup" id="myForm">
-          <form action="/action_page.php" class="form-container">
-            <h1>Chat</h1>
-        
-            <label for="msg"><b>Message</b></label>
-            <textarea placeholder="Type message.." name="msg" required></textarea>
-        
-            <button type="submit" class="btn">Send</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-          </form>
-        </div>
-        
-        <script>
-        function openForm() {
-          document.getElementById("myForm").style.display = "block";
-        }
-        
-        function closeForm() {
-          document.getElementById("myForm").style.display = "none";
-        }
-        </script>
-        
-        </body>
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="Group6.jpg" alt="Logo">
+        <div class="title">TransfuseNow</div> 
+        <div class="topnav-right">
+          <a href="donorLogin.html">Login/Sign Up</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+          <a href="#">Events</a>
+          <a href="#">Donate Blood</a>
+          <a href="#">Request Blood</a>
+        </div> 
+    </div>
     
+    <button class="open-button" onclick="openForm()">Chat</button>
+        
+    <div class="chat-popup" id="myForm">
+      <form action="/action_page.php" class="form-container">
+        <h1>Chat</h1>
+        
+        <label for="msg"><b>Message</b></label>
+        <textarea placeholder="Type message.." name="msg" required></textarea>
+        
+        <button type="submit" class="btn">Send</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+      </form>
+    </div>
+        
+    <script>
+      function openForm() {
+        document.getElementById("myForm").style.display = "block";
+      }
+        
+      function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+      }
+      </script>
+ 
 </body>
 </html>
 
