@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+   
+    
+        <div class="center">
+<div class="appointment-section">
+    <h2>Schedule an Appointment</h2>
+    <form action="schedule_appointment.php" method="post">
+
+
+        <form method="POST" action="">
+            <div class="txt_field">
+                <input type="text" name="name" required>
+                <span></span>
+                <label>Name</label>
+            </div>
+            <div class="txt_field">
+                <input type="email" name="email" required>
+                <span></span>
+                <label>Email</label>
+            </div>
+            <div class="txt_field">
+                <input type="Phone Number" name="Phone Number" required>
+                <span></span>
+                <label>Mobile Number</label>
+            </div>
+            
+            <div class="date">
+                <input type="date" name="date" required>
+                <span></span>
+                <label>Preferred Date</label>
+            </div>
+            <div class="time">
+                <input type="time" name="time" required>
+               <span></span>
+                <label>Preferred Time</label>
+            </div> 
+
+            <label for="comments">Comments/Requirements:</label>
+            <textarea id="comments" name="comments" rows="4"></textarea>
+
+        <input type="submit" value="Submit Appointment">
+    </form>
+</div>
+        </div>
+   
+</body>
+</html>

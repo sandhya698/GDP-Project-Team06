@@ -10,6 +10,10 @@
 <body>
 <div class="container" style="text-align:center">
     <div class="center">
+        <div class="topnav-right">
+            <input type="submit" value="Book an Appointment" href="appointment.html" >
+            
+        </div>
         <form id="registrationForm" onsubmit="return validateForm()">
             <h1>Registration</h1>
             <div class="txt_field">
@@ -33,11 +37,13 @@
                     <option value="AB+">AB+</option>
                     <option value="AB-">AB-</option>
                 </select>
+               
             </div>
             <input type="submit" value="Register">
         </form>
     </div>
 </div>
+
 <script>
     function validateForm() {
         // Get form input values
