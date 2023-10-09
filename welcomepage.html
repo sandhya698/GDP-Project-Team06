@@ -183,6 +183,14 @@
 
         }
          </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".faq h3").click(function () {
+            $(this).next("p").slideToggle();
+        });
+    });
+</script>
 
 </head>
 
@@ -207,6 +215,9 @@
             <a href="#">Donate Blood</a>
 
             <a href="#">Request Blood</a>
+            
+            <a href="FAQs.html">FAQ's</a>
+            
 
         </div>
 

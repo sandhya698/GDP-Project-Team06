@@ -1,35 +1,61 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title> Donor Login Form  </title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>User Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div class="container" style="text-align:center">
-    
     <div class="center">
-        <form>
-            <h1>Login</h1>
-            <div class="txt_field" >
-                <input type="email" placeholder="Email / Username" required/>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <h1>Registration</h1>
+            <div class="txt_field">
+                <input type="text" id="name" placeholder="Full Name" required/>
             </div>
             <div class="txt_field">
-                <input type="password" placeholder="Password" required/>                         
+                <input type="email" id="email" placeholder="Email" required/>
             </div>
-            <div class="container signin">
-                <a href="resetPassword.html">Forgot Password? </a>
-                </div>
-                <br>
-            <input name="submit" type="Submit" value="Login">
-            <div class="container signin">
-            <p>Create a new account <a href="signupForm.html">Sign up</a>.</p>
+            <div class="txt_field">
+                <input type="password" id="password" placeholder="Password" required/>
             </div>
-            
+            <div class="txt_field">
+                <select id="bloodType" required>
+                    <option value="" disabled selected>Select Blood Type</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+            </div>
+            <input type="submit" value="Register">
         </form>
     </div>
 </div>
+<script>
+    function validateForm() {
+        // Get form input values
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var bloodType = document.getElementById("bloodType").value;
+
+        // Simple validation checks
+        if (name.trim() === "" || email.trim() === "" || password.trim() === "" || bloodType === "") {
+            alert("All fields are required.");
+            return false;
+        }
+
+        // You can add more complex validation here (e.g., email format)
+
+        return true;
+    }
+</script>
 </body>
 </html>
