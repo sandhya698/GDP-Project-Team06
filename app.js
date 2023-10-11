@@ -1,5 +1,6 @@
 const express = require('express');
 
+require('./src/db/conn');
 const app = express();
 const port = 1432 || process.env.PORT;
 
