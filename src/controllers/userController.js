@@ -14,6 +14,11 @@ module.exports.register = async (req, res) => {
     }
 
     try {
+        // Find a user by email if exists throw error
+        const duplicateUser = await Users.findOne({ email });
+        if (duplicateUser) {
+            return res.status(406).json({ message: 'A user already exists with same email', error: duplicateUser });
+        }
 
         const user = new Users({ name, email, phone, password, cpassword, userType });
         const registerdUser = await user.save();
