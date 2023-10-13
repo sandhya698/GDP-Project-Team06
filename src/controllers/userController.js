@@ -20,12 +20,22 @@ module.exports.register = async (req, res) => {
 
         res.status(201).json({ message: 'User registered', data: registerdUser });
     }
-    catch (error) {
-        console.log("Error:", error);
-        res.status(422).json({
-            message: 'unknown error',
-            error
-        });
+    catch (err) {
+        if (err.name === "MongoError" || err.name === "MongoServerError") {
+            // MongoDB-related error
+            console.log("MongoDB Error:", err.message);
+            res.status(422).json({
+                message: 'Error occured while registering',
+                error: err.message
+            });
+        } else {
+            // Other types of errors
+            console.log("Generic Error:", err);
+            res.status(422).json({
+                message: 'unknown error',
+                error: err
+            });
+        }
     }
 }
 
