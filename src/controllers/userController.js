@@ -45,6 +45,22 @@ module.exports.register = async (req, res) => {
 }
 
 // login route
-module.exports.login = (req,res) => {
-    res.status(200).send('<h1>login page</h1>');
+module.exports.login = async (req, res) => {
+    // object destructuring
+    const { email, password } = req.body;
+
+    try {
+        const loginUser = await Users.findOne({ email });
+        if (loginUser) {
+            if (password === loginUser.password)
+                res.status(200).json({ message: "Login success" });
+        }
+
+    }
+    catch (err) {
+        res.status(422).json({
+            message: 'unknown error',
+            error: err.message
+        });
+    }
 }
