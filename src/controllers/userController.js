@@ -5,6 +5,14 @@ module.exports.register = async (req, res) => {
     // object destructuring
     const { name, email, phone, password, cpassword, userType } = req.body;
 
+    // basic validation
+    if (!name || !email || !phone || !password || !cpassword) {
+        return res.status(422).json({ message: "Every field must be filled" });
+    }
+    else if (password !== cpassword) {
+        return res.status(422).json({ message: "password and confirm password must be same" });
+    }
+
     try {
 
         const user = new Users({ name, email, phone, password, cpassword, userType });
