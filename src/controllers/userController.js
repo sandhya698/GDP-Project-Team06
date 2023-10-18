@@ -49,11 +49,19 @@ module.exports.login = async (req, res) => {
     // object destructuring
     const { email, password } = req.body;
 
+    // validation
+    if (!email || !password ) {
+        return res.status(422).json({ message: "email and password are required" });
+    }
+
     try {
         const loginUser = await Users.findOne({ email });
         if (loginUser) {
             if (password === loginUser.password)
                 res.status(200).json({ message: "Login success" });
+        }
+        else {
+            return res.status(401).json({ message: "Invalid Credentials." });
         }
 
     }
