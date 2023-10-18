@@ -1,4 +1,5 @@
 const Users = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 // register route
 module.exports.register = async (req, res) => {
@@ -57,8 +58,15 @@ module.exports.login = async (req, res) => {
     try {
         const loginUser = await Users.findOne({ email });
         if (loginUser) {
-            if (password === loginUser.password)
-                res.status(200).json({ message: "Login success" });
+            // comparing user password with hashed password
+            // returns true if both hash values are matched
+            const hashOk = await bcrypt.compare(password, loginUser.password);
+
+            if (!hashOk) {
+                return res.status(401).json({ message: "Invalid Credentials." });
+            }
+
+            res.status(200).json({ message: "Login success" });
         }
         else {
             return res.status(401).json({ message: "Invalid Credentials." });
