@@ -15,7 +15,7 @@ export const Register = () => {
               <Card.Body>
                 <div className="mb-3 mt-4">
                   <h2 className="fw-bold mb-2 text-uppercase">BLOOD BANK</h2>
-                  <p className="mb-3">Please enter your details to join us!</p>
+                  <p className="mb-3">Please enter your details to become a transfuser!</p>
                   <Form className="mb-3">
                       
                     <Form.Group className="mb-3">
@@ -44,12 +44,6 @@ export const Register = () => {
                       </Form.Group>
                     </Row>
 
-                    <div className="mb-3">
-                      <p className="small">
-                        <Link className="text-primary" to='#' >Forgot password?</Link>
-                      </p>
-                    </div>
-
                     <div className="d-grid">
                       <Button variant="primary" type="submit">
                         Register
@@ -58,7 +52,7 @@ export const Register = () => {
                       
                     <div className="mt-3">
                       <p className="mb-0  text-center">
-                        Already joined with us?{" "}
+                        Already a transfuser?{" "}
                         <Link className="text-primary fw-bold" to='/login' >Login</Link>
                       </p>
                     </div>
