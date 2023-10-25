@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
+import { Link } from 'react-router-dom';
 
 export const Register = () => {
   return (
@@ -45,9 +46,7 @@ export const Register = () => {
 
                     <div className="mb-3">
                       <p className="small">
-                        <a className="text-primary" href="#!">
-                          Forgot password?
-                        </a>
+                        <Link className="text-primary" to='#' >Forgot password?</Link>
                       </p>
                     </div>
 
@@ -59,10 +58,8 @@ export const Register = () => {
                       
                     <div className="mt-3">
                       <p className="mb-0  text-center">
-                        Don't have an account?{" "}
-                        <a href="{''}" className="text-primary fw-bold">
-                          Sign In
-                        </a>
+                        Already joined with us?{" "}
+                        <Link className="text-primary fw-bold" to='/login' >Login</Link>
                       </p>
                     </div>
                   </Form>
