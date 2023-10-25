@@ -6,7 +6,7 @@ export default function NavigationBar() {
   
   return (
     <>
-      <Navbar collapseOnSelect expand="md" className="bg-body-tertiary">
+      <Navbar collapseOnSelect expand="md" bg="primary" data-bs-theme="dark">
       <Container>
         <Navbar.Brand href="#home">Transfuse Now</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
