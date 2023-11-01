@@ -11,7 +11,7 @@ export const Register = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUserDetails({ ...userDetails, [name]: value });
+    return setUserDetails({ ...userDetails, [name]: value });
   }
 
   const validateUserDetails = () => {

@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { Link } from 'react-router-dom';
 
 export const Login = () => {
+
+  const [loginDetails, setLoginDetails] = useState({
+    email: "", password: ""
+  })
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    return setLoginDetails({ ...loginDetails, [name]: value });
+  }
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(loginDetails);
+    alert('form submitted');
+  }
+
   return (
     <>
     <NavigationBar />
@@ -16,17 +32,17 @@ export const Login = () => {
               <div className="mb-3 mt-4">
                 <h2 className="fw-bold mb-2 text-uppercase">BLOOD BANK</h2>
                 <p className="mb-3">Login to start Transfusion!</p>
-                <Form className="mb-3">
+                <Form className="mb-3" onSubmit={handleSubmit}>
                     
                   <Form.Group className="mb-3">
-                    <FloatingLabel controlId="floatingInput" label="Email address"  >
-                      <Form.Control type="email" placeholder="name@example.com" name="email" required />
+                    <FloatingLabel controlId="email" label="Email address"  >
+                      <Form.Control type="email" placeholder="name@example.com" name="email" onChange={handleChange} required />
                     </FloatingLabel> 
                   </Form.Group>
                     
                   <Form.Group className="mb-3">
-                    <FloatingLabel controlId="floatingInput" label="Password" >
-                      <Form.Control type="password" placeholder="secret" name="password" required />
+                    <FloatingLabel controlId="password" label="Password" >
+                      <Form.Control type="password" placeholder="secret" name="password" onChange={handleChange} required />
                     </FloatingLabel> 
                   </Form.Group>
 
