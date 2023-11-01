@@ -9,6 +9,7 @@ body {
   padding: 0;
 }
 
+/* Setting up full height for row excluding Navbar */
 .full-height-row {
   min-height: calc(100vh - 56px);
 }

@@ -2,12 +2,23 @@ import React, { useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 
 export const Login = () => {
 
   const [loginDetails, setLoginDetails] = useState({
     email: "", password: ""
-  })
+  });
+
+  const toastOptions = {
+		position: "bottom-right",
+		autoClose: 6000,
+		pauseOnHover: true,
+		draggable: true,
+    theme: "light", 
+    // style: { color: '#141414' },
+    // progressStyle: { background: '#0d6efd' },
+	};
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -16,8 +27,14 @@ export const Login = () => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(loginDetails);
-    alert('form submitted');
+    const { email, password } = loginDetails;
+
+    if (email !== 'saiaditya' || !password) {
+      toast.error("email and password are required", toastOptions);
+    }
+    else {
+      alert('form submitted');
+    }
   }
 
   return (
@@ -72,6 +89,7 @@ export const Login = () => {
         </Col>
       </Row>
     </Container> 
+    <ToastContainer />
   </>
   )
 }
