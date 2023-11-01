@@ -2,12 +2,23 @@ import React, { useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 
 export const Register = () => {
 
   const [userDetails, setUserDetails] = useState({
     name: "", email: "", password: "", cpassword: ""
   })
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 6000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light", 
+    // style: { color: '#141414' },
+    // progressStyle: { background: '#0d6efd' },
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,31 +35,36 @@ export const Register = () => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.!@#$%^&*-])[a-zA-Z\d.!@#$%^&*-]{8,16}$/;
 
+    toast.dismiss();
 
     if (!nameRegex.test(name)) {
-      alert(
-				"Username should be greater than 3 chars. Special chars allowed space and underscore",
+      toast.error(
+        "Username should be greater than 3 chars. Special chars allowed space and underscore",
+        toastOptions
       );
       validated = false;
     }
 
     if (!emailRegex.test(email)) {
-      alert(
-				"Invalid email",
+      toast.error(
+        "Invalid email",
+        toastOptions
       );
       validated = false;
     }
 
     if (!passwordRegex.test(password)) {
-      alert(
-				"Password should be min of 8 and max 16. Should follow standard password rules",
+      toast.error(
+        "Password should be min of 8 and max 16. Should follow standard password rules",
+        toastOptions
       );
     validated = false;
     }
 
     if (!password.match(cpassword)) {
-      alert(
-				"Passwords does not match",
+      toast.error(
+        "Passwords does not match",
+        toastOptions
       );
       validated = false;
     }
@@ -123,6 +139,7 @@ export const Register = () => {
           </Col>
         </Row>
       </Container> 
+      <ToastContainer />
     </>
   );
 }
