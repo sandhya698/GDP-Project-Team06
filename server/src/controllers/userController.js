@@ -4,10 +4,10 @@ const bcrypt = require('bcryptjs');
 // register route
 module.exports.register = async (req, res) => {
     // object destructuring
-    const { name, email, phone, password, cpassword, userType } = req.body;
+    const { name, email, password, cpassword, userType } = req.body;
 
     // basic validation
-    if (!name || !email || !phone || !password || !cpassword) {
+    if (!name || !email || !password || !cpassword || !userType) {
         return res.status(422).json({ message: "Every field must be filled" });
     }
     else if (password !== cpassword) {
@@ -21,7 +21,7 @@ module.exports.register = async (req, res) => {
             return res.status(406).json({ message: 'A user already exists with same email', error: duplicateUser });
         }
 
-        const user = new Users({ name, email, phone, password, cpassword, userType });
+        const user = new Users({ name, email, password, cpassword, userType });
         const registerdUser = await user.save();
 
         res.status(201).json({ message: 'User registered', data: registerdUser });
