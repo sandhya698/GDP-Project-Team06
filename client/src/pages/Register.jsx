@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 export const Register = () => {
 
   const [userDetails, setUserDetails] = useState({
-    name: "", email: "", password: "", cpassword: ""
+    name: "", email: "", password: "", cpassword: "", userType: ""
   })
 
   const toastOptions = {
@@ -26,7 +26,7 @@ export const Register = () => {
   }
 
   const validateUserDetails = () => {
-    const { name, email, password, cpassword } = userDetails;
+    const { name, email, password, cpassword, userType } = userDetails;
     console.log(userDetails);
 
     let validated = true;
@@ -69,6 +69,14 @@ export const Register = () => {
       validated = false;
     }
 
+    if (userType === '') {
+      toast.error(
+        "Who are you?",
+        toastOptions
+      );
+      validated = false;
+    }
+
     return validated;
   }
 
@@ -99,12 +107,24 @@ export const Register = () => {
                       </FloatingLabel> 
                     </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <FloatingLabel controlId="email" label="Email address"  >
-                        <Form.Control type="email" placeholder="name@example.com" name="email" onChange={handleChange} required />
-                      </FloatingLabel> 
-                    </Form.Group>
+                    <Row className="mb-3 align-items-center">
+                      <Form.Group className="mb-3" as={Col}>
+                        <FloatingLabel controlId="email" label="Email address"  >
+                          <Form.Control type="email" placeholder="name@example.com" name="email" onChange={handleChange} required />
+                        </FloatingLabel> 
+                      </Form.Group>
                       
+                      <Form.Group as={Col} controlId="userType">
+                        <div className="d-flex flex-column  align-items-start flex-md-row justify-content-md-around">
+                          <Form.Label className="text-center"> I am a </Form.Label>
+                          <Form.Check type="radio" value="donor" label="Donor" name="userType" id="donor"
+                            checked={userDetails.userType === "donor"} onChange={handleChange} />
+                          <Form.Check type="radio" value="patient" label="Patient" name="userType" id="patient"
+                            checked={userDetails.userType === "patient"} onChange={handleChange} />
+                        </div>
+                      </Form.Group>
+                    </Row>
+
                     <Row className="mb-2">
                       <Form.Group className="mb-3" as={Col}>
                         <FloatingLabel controlId="password" label="Password" >
