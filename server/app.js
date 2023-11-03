@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const routes = require('./src/routes/routes');
 
 // env and database connection configurations
@@ -9,6 +10,9 @@ require('./src/db/conn');
 // set up express and port
 const app = express();
 const port = 1432 || process.env.PORT;
+
+// To accept requests from client
+app.use(cors());
 
 // parsing incoming requesting to json
 app.use(express.json());
