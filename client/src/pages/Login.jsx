@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 
 export const Login = () => {
+
+  const navigate = useNavigate();
 
   const [loginDetails, setLoginDetails] = useState({
     email: "", password: ""
@@ -35,15 +37,16 @@ export const Login = () => {
     }
     else {
       try {
-        const res = await axios.post('http://localhost:1432/api/user/login', {
+        await axios.post('http://localhost:1432/api/user/login', {
           email, password
         });
         
+        // console.log(res);
         toast.success('Login in Sucess', toastOptions);
-        console.log(res);
+        navigate('/');
       }
       catch (err) {
-        console.log(err.response);
+        // console.log(err.response);
         toast.error(err.response.data.message, toastOptions);
         // window.alert(err.response.data.message);
       }

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 
 export const Register = () => {
+
+  const navigate = useNavigate();
 
   const [userDetails, setUserDetails] = useState({
     name: "", email: "", password: "", cpassword: "", userType: ""
@@ -93,6 +95,7 @@ export const Register = () => {
   
         console.log(res);
         toast.success('You are now a Transfuser!!', toastOptions);
+        navigate('/login');
       }
       catch (err) {
         // console.log(err.response);
