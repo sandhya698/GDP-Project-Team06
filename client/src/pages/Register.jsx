@@ -3,6 +3,7 @@ import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bo
 import NavigationBar from '../components/NavigationBar';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
+import axios from 'axios';
 
 export const Register = () => {
 
@@ -31,7 +32,7 @@ export const Register = () => {
 
     let validated = true;
 
-    const nameRegex = /^[a-zA-z0-9_ ]{3,15}$/;
+    const nameRegex = /^[a-zA-z0-9_ ]{3,25}$/;
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.!@#$%^&*-])[a-zA-Z\d.!@#$%^&*-]{8,16}$/;
 
@@ -80,11 +81,26 @@ export const Register = () => {
     return validated;
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const { name, email, password, cpassword, userType } = userDetails;
+
     if (validateUserDetails()) {
-      alert('form validated')
-    }
+      try {
+        const res = await axios.post('http://localhost:1432/api/user/register', {
+          name, email, password, cpassword, userType
+        });
+  
+        console.log(res);
+        toast.success('You are now a Transfuser!!', toastOptions);
+      }
+      catch (err) {
+        console.log(err.response);
+        // window.alert(err.response.data.message);
+        toast.error(err.response.data.message, toastOptions);
+      }
+      
+		}
   }
 
   return (
