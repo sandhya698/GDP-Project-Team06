@@ -3,6 +3,7 @@ import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bo
 import NavigationBar from '../components/NavigationBar';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
+import axios from 'axios';
 
 export const Login = () => {
 
@@ -25,15 +26,27 @@ export const Login = () => {
     return setLoginDetails({ ...loginDetails, [name]: value });
   }
   
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = loginDetails;
 
-    if (email !== 'saiaditya' || !password) {
+    if (!email || !password) {
       toast.error("email and password are required", toastOptions);
     }
     else {
-      alert('form submitted');
+      try {
+        const res = await axios.post('http://localhost:1432/api/user/login', {
+          email, password
+        });
+        
+        toast.success('Login in Sucess', toastOptions);
+        console.log(res);
+      }
+      catch (err) {
+        console.log(err.response);
+        toast.error(err.response.data.message, toastOptions);
+        // window.alert(err.response.data.message);
+      }
     }
   }
 

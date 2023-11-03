@@ -95,7 +95,7 @@ export const Register = () => {
         toast.success('You are now a Transfuser!!', toastOptions);
       }
       catch (err) {
-        console.log(err.response);
+        // console.log(err.response);
         // window.alert(err.response.data.message);
         toast.error(err.response.data.message, toastOptions);
       }
