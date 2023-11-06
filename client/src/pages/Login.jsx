@@ -37,9 +37,14 @@ export const Login = () => {
     }
     else {
       try {
-        await axios.post('http://localhost:1432/api/user/login', {
-          email, password
-        });
+        await axios.post('http://localhost:1432/api/user/login',
+          {
+            email, password
+          },
+          {
+            withCredentials: true,
+          }
+        );
         
         // console.log(res);
         toast.success('Login in Sucess', toastOptions);

@@ -11,8 +11,14 @@ require('./src/db/conn');
 const app = express();
 const port = 1432 || process.env.PORT;
 
+const corsOptions = {
+    origin: ["http://localhost:3000"],
+    credentials: true,
+    exposedHeaders: ["bloodToken"],
+};
+
 // To accept requests from client
-app.use(cors());
+app.use(cors(corsOptions));
 
 // parsing incoming requesting to json
 app.use(express.json());
