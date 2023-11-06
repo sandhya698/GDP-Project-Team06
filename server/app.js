@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const routes = require('./src/routes/routes');
+const cookieParser = require('cookie-parser');
 
 // env and database connection configurations
 dotenv.config({ path: './config.env' });
@@ -22,6 +23,9 @@ app.use(cors(corsOptions));
 
 // parsing incoming requesting to json
 app.use(express.json());
+
+// To parse incoming cookies
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
     res.send('home page');
