@@ -66,6 +66,16 @@ module.exports.login = async (req, res) => {
                 return res.status(401).json({ message: "Invalid Credentials." });
             }
 
+            const token = await loginUser.generateJsonWebToken();
+            
+            const twelveHours = 12 * 60 * 60 * 1000; // Convert 12 hours to milliseconds
+            const expirationDate = new Date(Date.now() + twelveHours);
+
+            res.cookie('bloodToken', token, {
+                expires: expirationDate,
+                httpOnly: true
+            });
+
             res.status(200).json({ message: "Login success" });
         }
         else {
