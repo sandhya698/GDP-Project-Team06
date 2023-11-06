@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,6 +22,28 @@ export const Login = () => {
     // style: { color: '#141414' },
     // progressStyle: { background: '#0d6efd' },
 	};
+
+  const redirecToHome = async () => {
+    try {
+      const res = await axios.get('http://localhost:1432/api/user/authenticate', {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      // console.log(res.data);
+      if (res.data.status) {
+        navigate('/');
+      }
+    }
+    catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  useEffect(() => {
+    redirecToHome();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
