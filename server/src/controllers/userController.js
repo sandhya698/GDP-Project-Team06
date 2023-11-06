@@ -90,3 +90,12 @@ module.exports.login = async (req, res) => {
         });
     }
 }
+
+// authnetication route
+module.exports.auth = (req,res) => {
+    res.status(200).json({
+        message: "user logged in",
+        data: req.user,
+        status: true
+    });
+}
