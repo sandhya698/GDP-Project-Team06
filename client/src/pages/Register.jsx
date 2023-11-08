@@ -4,6 +4,7 @@ import NavigationBar from '../components/NavigationBar';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
+import { authenticate, registerRoute } from '../utils/ApiRoutes';
 
 export const Register = () => {
 
@@ -25,7 +26,7 @@ export const Register = () => {
 
   const redirecToHome = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:1432/api/user/authenticate', {
+      const res = await axios.get(authenticate, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json"
@@ -111,7 +112,7 @@ export const Register = () => {
 
     if (validateUserDetails()) {
       try {
-        const res = await axios.post('http://localhost:1432/api/user/register', {
+        const res = await axios.post(registerRoute, {
           name, email, password, cpassword, userType
         });
   
