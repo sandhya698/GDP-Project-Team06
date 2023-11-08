@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -23,7 +23,7 @@ export const Register = () => {
     // progressStyle: { background: '#0d6efd' },
   };
 
-  const redirecToHome = async () => {
+  const redirecToHome = useCallback(async () => {
     try {
       const res = await axios.get('http://localhost:1432/api/user/authenticate', {
         withCredentials: true,
@@ -39,11 +39,11 @@ export const Register = () => {
     catch (err) {
       console.log(err.response.data);
     }
-  };
+  }, [navigate]);
 
   useEffect(() => {
     redirecToHome();
-  }, []);
+  }, [redirecToHome, navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
