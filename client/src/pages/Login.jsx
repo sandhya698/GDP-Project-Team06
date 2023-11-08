@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 import { authenticate, loginRoute } from '../utils/ApiRoutes';
+import { userContext } from '../App';
 
 export const Login = () => {
 
+  const { dispatch } = useContext(userContext);
   const navigate = useNavigate();
 
   const [loginDetails, setLoginDetails] = useState({
@@ -60,7 +62,7 @@ export const Login = () => {
     }
     else {
       try {
-        await axios.post(loginRoute,
+        const res = await axios.post(loginRoute,
           {
             email, password
           },
@@ -70,8 +72,15 @@ export const Login = () => {
         );
         
         // console.log(res);
-        toast.success('Login in Sucess', toastOptions);
-        navigate('/');
+        if (res.status === 200) {
+          dispatch({
+              type: 'USER',
+              payload: true
+          });
+          toast.success('Login in Sucess', toastOptions);
+          navigate('/');
+        }
+        
       }
       catch (err) {
         // console.log(err.response);
