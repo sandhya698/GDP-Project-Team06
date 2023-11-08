@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import {Container, Nav, Navbar} from 'react-bootstrap';
+import { userContext } from '../App';
 
 export default function NavigationBar() {
+
+  const { state } = useContext(userContext);
+
+  const LoginLogout = () => {
+    if (state) {
+      return (
+        <>
+          <NavLink className="nav-link" to="/logout">Logout</NavLink>
+        </>
+      )
+    }
+    else {
+      return (
+        <>
+          <NavLink className="nav-link" to="/register">Register</NavLink>
+          <NavLink className="nav-link" to="/login">Login</NavLink>
+        </>
+      )
+    }
+  }
   
   return (
     <>
@@ -13,9 +34,7 @@ export default function NavigationBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
             <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
-            <NavLink className="nav-link" to="/register">Register</NavLink>
-            <NavLink className="nav-link" to="/login">Login</NavLink>
-            <NavLink className="nav-link" to="/logout">Logout</NavLink>
+            <LoginLogout />  
           </Nav>
         </Navbar.Collapse>
       </Container>
