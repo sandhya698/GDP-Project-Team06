@@ -8,7 +8,7 @@ export default function NavigationBar() {
   const { state } = useContext(userContext);
 
   const LoginLogout = () => {
-    if (state) {
+    if (state.isAuthenticated) {
       return (
         <>
           <NavLink className="nav-link" to="/logout">Logout</NavLink>
