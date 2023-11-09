@@ -1,6 +1,16 @@
-// Initialize initialState from localStorage if available
-export const initialState = JSON.parse(localStorage.getItem('userState')) || {
-    isAuthenticated: false,
+import Cookies from 'js-cookie';
+
+// Check if cookieName exists
+function isCookiePresent(cookieName) {
+  const cookieValue = Cookies.get(cookieName);
+  return cookieValue ? true : false;
+}
+
+// Determine whether the user is authenticated based on the presence of a cookie
+const isAuthenticated = isCookiePresent('isAuthenticated');
+
+export const initialState = {
+  isAuthenticated,
 };
 
 export const reducer = (state, action) => {

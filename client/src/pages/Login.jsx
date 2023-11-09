@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 import { authenticate, loginRoute } from '../utils/ApiRoutes';
 import { userContext } from '../App';
+import Cookies from 'js-cookie';
 
 export const Login = () => {
 
@@ -77,6 +78,7 @@ export const Login = () => {
               type: 'USER',
               payload: true
           });
+          Cookies.set('isAuthenticated', true);
           toast.success('Login in Sucess', toastOptions);
           navigate('/');
         }
