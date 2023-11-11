@@ -99,3 +99,23 @@ module.exports.auth = (req,res) => {
         status: true
     });
 }
+
+// logout route
+module.exports.logout = async (req,res) => {
+    try {
+        // console.log('logging out from all devices');
+        const userId = req.params.id;
+        const user = await Users.findOneAndUpdate({ _id: userId }, {
+            tokens: []
+        })
+        res.clearCookie('bloodToken', { path: '/' });
+        res.status(200).send('user logged out');
+    }
+    catch (err) {
+        console.log(err);
+        res.status(422).json({
+            message: 'Logout failed!!',
+            error: err.message
+        });
+    }
+}
