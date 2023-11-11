@@ -1,14 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {Container, Nav, Navbar} from 'react-bootstrap';
+import { Logout } from './Logout';
 
-export default function NavigationBar({isAuthenticated}) {
+export default function NavigationBar({isAuthenticated, userId}) {
 
   const LoginLogout = () => {
     if (isAuthenticated) {
       return (
         <>
-          <NavLink className="nav-link" to="/logout">Logout</NavLink>
+          <Logout userId={userId} />
         </>
       )
     }

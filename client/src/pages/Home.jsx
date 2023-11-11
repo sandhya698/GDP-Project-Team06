@@ -40,14 +40,19 @@ export const Home = () => {
   
   return (
     <>
-      <NavigationBar isAuthenticated={isAuthenticated} />
       {
         loading ?
           (
             <p>Loading...</p>
           ) :
           (
-            <div><p>How are you feeling today { currentUser.name }?</p></div>
+            <>
+              <NavigationBar
+                isAuthenticated={isAuthenticated}
+                userId = {currentUser._id}
+              />
+              <div><p>How are you feeling today { currentUser.name }?</p></div>
+            </>
           )
       }
     </>
