@@ -5,6 +5,7 @@ import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { Error } from './pages/Error';
 import { ToastContainer } from 'react-toastify';
+import { About } from './pages/About';
 
 export default function App() {
 
@@ -13,6 +14,7 @@ export default function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path='/'         element={<Home />} />
+                    <Route path='/about'    element={<About />} />
                     <Route path='/login'    element={<Login />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='*'         element={<Error />} />

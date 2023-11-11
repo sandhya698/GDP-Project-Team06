@@ -27,11 +27,11 @@ export default function NavigationBar({isAuthenticated, userId}) {
     <>
       <Navbar collapseOnSelect expand="md" bg="primary" data-bs-theme="dark">
       <Container>
-        <Navbar.Brand href="#home">Transfuse Now</Navbar.Brand>
+        <Navbar.Brand>Transfuse Now</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
+            <NavLink className="nav-link" aria-current="page" to="/about">About</NavLink>
             <LoginLogout />  
           </Nav>
         </Navbar.Collapse>
