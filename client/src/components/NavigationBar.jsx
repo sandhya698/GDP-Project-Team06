@@ -31,8 +31,9 @@ export default function NavigationBar({isAuthenticated, userId}) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <NavLink className="nav-link" aria-current="page" to="/about">About</NavLink>
+            <NavLink className="nav-link" to="/about">About</NavLink>
             <LoginLogout />  
+            <NavLink className="nav-link" to="/faq">FAQ</NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
