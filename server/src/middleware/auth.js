@@ -27,7 +27,7 @@ const authenticate = async (req,res,next) => {
     }
     catch (err) {
         // console.log(err);
-        console.log('user not found');
+        // console.log('user not found');
         res.status(401).json({
             message: "Unauthorized user",
             error: err.message,

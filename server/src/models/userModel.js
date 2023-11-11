@@ -73,7 +73,7 @@ userSchema.methods.generateJsonWebToken = async function () {
         this.tokens = this.tokens.concat({ token });
         await this.save();
 
-        console.log('token generated and saved to the database');
+        // console.log('token generated and saved to the database');
         return token;
     }
     catch (err) {

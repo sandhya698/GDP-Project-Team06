@@ -8,6 +8,7 @@ export const Home = () => {
 
   const [currentUser, setCurrentUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   const checkUserAuthentication = useCallback(async () => {
@@ -21,6 +22,7 @@ export const Home = () => {
       });
       console.log(res.data);
       setCurrentUser(res.data.user);
+      setIsAuthenticated(true);
       setLoading(false);
     }
     catch (err) {
@@ -38,7 +40,7 @@ export const Home = () => {
   
   return (
     <>
-      <NavigationBar />
+      <NavigationBar isAuthenticated={isAuthenticated} />
       {
         loading ?
           (

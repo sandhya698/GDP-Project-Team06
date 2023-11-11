@@ -1,16 +1,13 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Row, Form, FloatingLabel, Button, Card, Col } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 import { authenticate, loginRoute } from '../utils/ApiRoutes';
-import { userContext } from '../App';
-import Cookies from 'js-cookie';
 
 export const Login = () => {
 
-  const { dispatch } = useContext(userContext);
   const navigate = useNavigate();
 
   const [loginDetails, setLoginDetails] = useState({
@@ -74,12 +71,7 @@ export const Login = () => {
         
         // console.log(res);
         if (res.status === 200) {
-          dispatch({
-              type: 'USER',
-              payload: true
-          });
-          Cookies.set('isAuthenticated', true);
-          toast.success('Login in Sucess', toastOptions);
+          toast.success('Successfully logged In', toastOptions);
           navigate('/');
         }
         

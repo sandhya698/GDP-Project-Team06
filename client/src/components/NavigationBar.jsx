@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {Container, Nav, Navbar} from 'react-bootstrap';
-import { userContext } from '../App';
 
-export default function NavigationBar() {
-
-  const { state } = useContext(userContext);
+export default function NavigationBar({isAuthenticated}) {
 
   const LoginLogout = () => {
-    if (state.isAuthenticated) {
+    if (isAuthenticated) {
       return (
         <>
           <NavLink className="nav-link" to="/logout">Logout</NavLink>

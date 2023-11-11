@@ -95,7 +95,7 @@ module.exports.login = async (req, res) => {
 module.exports.auth = (req,res) => {
     res.status(200).json({
         message: "user logged in",
-        data: req.user,
+        user: req.user,
         status: true
     });
 }
