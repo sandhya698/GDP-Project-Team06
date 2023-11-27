@@ -1,6 +1,6 @@
 const Inventory = require("../models/inventoryModel");
 
-module.exports.addStock = async (req, res) => {
+module.exports.manageStock = async (req, res) => {
     let { bloodGroup, quantity, type } = req.body;
 
     const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
@@ -20,11 +20,26 @@ module.exports.addStock = async (req, res) => {
         const updateInit = { $setOnInsert: { bloodGroup, quantity } };
         const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-        updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
-    
-        // If the increment didn't find a matching document, create one with the specified initial value
-        if (!updatedInventory) {
-            updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
+        if (type === "in") {
+            updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+        
+            // If the increment didn't find a matching document, create one with the specified initial value
+            if (!updatedInventory) {
+                updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
+            }
+        }
+        else if (type === "out") {
+            updateQuanity = { $inc: { quantity: quantity * -1 } }
+
+            // Retrieve the current document to check the current "quantity" value
+            const currentDoc = await Inventory.findOne(filter);
+
+            if (currentDoc && currentDoc.quantity >= quantity) {
+                updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+            }
+            else {
+                throw new Error(`Requested ${quantity} units are not avilable`);
+            }
         }
 
         res.status(201).json({
