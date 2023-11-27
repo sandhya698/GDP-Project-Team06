@@ -3,6 +3,8 @@ import NavigationBar from '../components/NavigationBar'
 import axios from 'axios';
 import { authenticate } from '../utils/ApiRoutes';
 import { useNavigate } from 'react-router-dom';
+import { Col, Container, Row } from 'react-bootstrap';
+import { Sidebar } from '../components/Sidebar';
 
 export const Home = () => {
 
@@ -51,7 +53,17 @@ export const Home = () => {
                 isAuthenticated={isAuthenticated}
                 userId = {currentUser._id}
               />
-              <div><p>How are you feeling today { currentUser.name }?</p></div>
+              <Container fluid >
+                <Row className="full-height-row">
+                  <Col sm={2} md={3} lg={2} className='ps-0'>
+                    <Sidebar
+                      userType={currentUser.userType} />
+                  </Col>
+                  <Col sm={10} md={9} lg={10}>
+                  <div><p>How are you feeling today { currentUser.name }?</p></div>
+                  </Col>
+                </Row>
+              </Container>
             </>
           )
       }
