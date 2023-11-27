@@ -32,8 +32,8 @@ export default function NavigationBar({isAuthenticated, userId}) {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
             <NavLink className="nav-link" to="/about">About</NavLink>
-            <LoginLogout />  
             <NavLink className="nav-link" to="/faq">FAQ</NavLink>
+            <LoginLogout />  
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -18,13 +18,12 @@ export const Sidebar = ({ userType, pageChange }) => {
       <Container>
         <div className="menu">
           {
-            menuList.map((item, index) => {
-              return (
-                <Link key={index} className={`menu-item ${item.icon} ${index === currentMenu ? "selected" : ""}`}
-                  onClick={() => changeCurrentMenu(index, item.name)}><p>{item.name}</p></Link>
-              )
-            })
+            menuList.filter(item => userType === item.userType || item.userType === "common").map((item, index) => (
+              <Link key={index} className={`menu-item ${item.icon} ${index === currentMenu ? "selected" : ""}`}
+                onClick={() => changeCurrentMenu(index, item.api)} > <p>{item.name}</p> </Link>
+            ))
           }
+          
         </div>
       </Container>
 

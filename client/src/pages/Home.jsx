@@ -11,7 +11,7 @@ export const Home = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentPage, setCurrentPage] = useState('Home');
+  const [currentPage, setCurrentPage] = useState('home');
   const navigate = useNavigate();
 
   const checkUserAuthentication = useCallback(async () => {
@@ -46,27 +46,27 @@ export const Home = () => {
   }
 
   const PageToRedner = () => {
-    if (currentPage === 'Home') {
+    if (currentPage === 'home') {
       return (
         <h1>Home page</h1>
       )
     }
-    else if (currentPage === 'Patient'){
+    else if (currentPage === 'patient'){
       return (
         <h1>Patient Page</h1>
       )
     }
-    else if (currentPage === 'Inventory') {
+    else if (currentPage === 'inventory') {
       return (
         <h1>Inventory Page</h1>
       )
     }
-    else if (currentPage === 'Donations'){
+    else if (currentPage === 'donations'){
       return (
         <h1>Donation Page</h1>
       )
     }
-    else if (currentPage === 'Donor'){
+    else if (currentPage === 'donor'){
       return (
         <h1>Donor Page</h1>
       )
