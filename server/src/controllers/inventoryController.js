@@ -1,15 +1,17 @@
 const Inventory = require("../models/inventoryModel");
+const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
 
 module.exports.manageStock = async (req, res) => {
     let { bloodGroup, quantity, type } = req.body;
-
-    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
 
     if (!bloodGroup || !quantity ) {
         return res.status(422).json({ message: "Every field must be filled" });
     }
     if (!bloodGroups.includes(bloodGroup)) {
-        return res.status(422).json({ message: `Blood groups allowed are ${bloodGroups}` });
+        return res.status(422).json({
+            message: `Blood groups allowed are ${bloodGroups}`,
+            success: false
+        });
     }
 
     try {
@@ -60,10 +62,26 @@ module.exports.manageStock = async (req, res) => {
 
 
 module.exports.getStock = async (req, res) => {
+    const group = req.query.group || '';
+
+    // Throw error if group is not empty and not valid blood group
+    if (group && !bloodGroups.includes(group)) {
+        return res.status(422).json({
+            message: `Blood groups allowed are ${bloodGroups}`,
+            success: false
+        });
+    }
 
     try {
+
+        let inventory = {}
         
-        const inventory = await Inventory.findOne({ bloodGroup: group });
+        if (group) {
+            inventory = await Inventory.findOne({ bloodGroup: group });
+        } 
+        else {
+            inventory = await Inventory.find();
+        }
         
         res.status(201).json({
             message: 'Fetched stock details from Inventory',
