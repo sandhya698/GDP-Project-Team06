@@ -14,11 +14,18 @@ module.exports.addStock = async (req, res) => {
 
     try {
 
+        let updatedInventory = {};
         const filter = { bloodGroup };
-        const updateQuanity = { $inc: { quantity } }
-        const options = { new: true };
+        let updateQuanity = { $inc: { quantity } };
+        const updateInit = { $setOnInsert: { bloodGroup, quantity } };
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-        let  updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+        updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+    
+        // If the increment didn't find a matching document, create one with the specified initial value
+        if (!updatedInventory) {
+            updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
+        }
 
         res.status(201).json({
             message: 'Inventory Updated',
@@ -30,8 +37,8 @@ module.exports.addStock = async (req, res) => {
     catch (error) {
         res.status(422).json({
             success: false,
-            message: 'Error in updating inventory',
-            error
+            message: 'Failed to update inventory',
+            error: error.message
         });
     }
 }
