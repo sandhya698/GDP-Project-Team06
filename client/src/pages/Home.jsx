@@ -11,6 +11,7 @@ export const Home = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentPage, setCurrentPage] = useState('Home');
   const navigate = useNavigate();
 
   const checkUserAuthentication = useCallback(async () => {
@@ -39,6 +40,38 @@ export const Home = () => {
   useEffect(() => {
     checkUserAuthentication();
   }, [checkUserAuthentication, navigate]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  }
+
+  const PageToRedner = () => {
+    if (currentPage === 'Home') {
+      return (
+        <h1>Home page</h1>
+      )
+    }
+    else if (currentPage === 'Patient'){
+      return (
+        <h1>Patient Page</h1>
+      )
+    }
+    else if (currentPage === 'Inventory') {
+      return (
+        <h1>Inventory Page</h1>
+      )
+    }
+    else if (currentPage === 'Donations'){
+      return (
+        <h1>Donation Page</h1>
+      )
+    }
+    else if (currentPage === 'Donor'){
+      return (
+        <h1>Donor Page</h1>
+      )
+    }
+  }
   
   return (
     <>
@@ -57,10 +90,11 @@ export const Home = () => {
                 <Row className="full-height-row">
                   <Col sm={2} md={3} lg={2} className='ps-0'>
                     <Sidebar
-                      userType={currentUser.userType} />
+                      userType={currentUser.userType}
+                      pageChange={handlePageChange}/>
                   </Col>
                   <Col sm={10} md={9} lg={10}>
-                  <div><p>How are you feeling today { currentUser.name }?</p></div>
+                    <PageToRedner />
                   </Col>
                 </Row>
               </Container>

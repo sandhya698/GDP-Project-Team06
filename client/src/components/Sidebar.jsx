@@ -4,11 +4,12 @@ import styled from 'styled-components'
 import { menuList } from '../utils/menuList';
 
 
-export const Sidebar = ({ userType }) => {
+export const Sidebar = ({ userType, pageChange }) => {
 
-  const [currentMenu, setCurrentMenu] = useState(undefined);
+  const [currentMenu, setCurrentMenu] = useState(0);
 
-  const changeCurrentMenu = (index) => {
+  const changeCurrentMenu = (index, page) => {
+    pageChange(page);
     setCurrentMenu(index);
   }
    
@@ -20,7 +21,7 @@ export const Sidebar = ({ userType }) => {
             menuList.map((item, index) => {
               return (
                 <Link key={index} className={`menu-item ${item.icon} ${index === currentMenu ? "selected" : ""}`}
-                  onClick={() => changeCurrentMenu(index)}><p>{item.name}</p></Link>
+                  onClick={() => changeCurrentMenu(index, item.name)}><p>{item.name}</p></Link>
               )
             })
           }
