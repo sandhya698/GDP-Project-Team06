@@ -57,3 +57,25 @@ module.exports.manageStock = async (req, res) => {
         });
     }
 }
+
+
+module.exports.getStock = async (req, res) => {
+
+    try {
+        
+        const inventory = await Inventory.findOne({ bloodGroup: group });
+        
+        res.status(201).json({
+            message: 'Fetched stock details from Inventory',
+            success: true,
+            inventory
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            success: false,
+            message: 'Failed to query stock',
+            error: error.message
+        });
+    }
+}

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { register, login, auth, logout } = require('../controllers/userController');
 const authenticate = require('../middleware/auth');
-const { manageStock } = require('../controllers/inventoryController');
+const { manageStock, getStock } = require('../controllers/inventoryController');
 
 // user routes
 router.post('/user/login', login);
@@ -12,5 +12,6 @@ router.get('/user/logout/:id', logout);
 
 // inventory routes
 router.post('/inventory/manage-stock', manageStock);
+router.get('/inventory/get-stock', getStock);
 
 module.exports = router;
