@@ -32,19 +32,12 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    registerDate: {
-        type: Date,
-        default: Date.now()
-    },
-    lastLogin: {
-        type: Date,
-    },
     tokens: [{
         token: {
             type: String
         }
     }]
-});
+}, { timeStamps: true });
 
 /* This is a default method 'pre' which runs everytime before saving 
  * into the database. If password is changed hash the password.
