@@ -1,18 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { menuList } from '../utils/menuList';
+
 
 export const Sidebar = ({ userType }) => {
+
+  const [currentMenu, setCurrentMenu] = useState(undefined);
+
+  const changeCurrentMenu = (index) => {
+    setCurrentMenu(index);
+  }
    
   return (
     <>
       <Container>
         <div className="menu">
-          <Link className="fas fa-home menu-item selected" to='#' ><p>Home</p></Link>
-          <Link className="fas fa-user menu-item " to='#'><p>Donor</p></Link>
-          <Link className="fas fa-hand-holding-medical menu-item" to='#'> <p>Patient</p></Link>
-          <Link className="fas fa-sync-alt menu-item" to='#'> <p>Donations</p></Link>
-          <Link className="fas fa-warehouse menu-item" to='#' ><p>Inventory</p></Link>
+          {
+            menuList.map((item, index) => {
+              return (
+                <Link key={index} className={`menu-item ${item.icon} ${index === currentMenu ? "selected" : ""}`}
+                  onClick={() => changeCurrentMenu(index)}><p>{item.name}</p></Link>
+              )
+            })
+          }
         </div>
       </Container>
 
