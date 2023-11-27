@@ -30,6 +30,13 @@ module.exports.donorRequest = async (req, res) => {
         });
     }
     catch (error) {
+        let message = ''
+        if (type === 'donate') {
+            message = 'Failed to make blood donation'
+        }
+        else if (type === 'request') {
+            message = 'Failed to reqest a blood donor'
+        }
         res.status(422).json({
             success: false,
             message,
