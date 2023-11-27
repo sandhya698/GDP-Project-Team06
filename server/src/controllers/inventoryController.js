@@ -1,9 +1,19 @@
 const Inventory = require("../models/inventoryModel");
 
 module.exports.addStock = async (req, res) => {
-    const { bloodGroup, quantity } = req.body;
+    let { bloodGroup, quantity, type } = req.body;
+
+    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
+
+    if (!bloodGroup || !quantity ) {
+        return res.status(422).json({ message: "Every field must be filled" });
+    }
+    if (!bloodGroups.includes(bloodGroup)) {
+        return res.status(422).json({ message: `Blood groups allowed are ${bloodGroups}` });
+    }
 
     try {
+
         const filter = { bloodGroup };
         const updateQuanity = { $inc: { quantity } }
         const options = { new: true };
