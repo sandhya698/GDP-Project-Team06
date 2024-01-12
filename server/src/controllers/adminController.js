@@ -1,26 +1,13 @@
 module.exports.adminControls = async (req, res) => {
     const { user, type, status } = req.params;
-    const userList = ['donor', 'patient'];
-    const typeList = ['donate', 'request'];
-    const statusList = ['accept', 'reject'];
-
-    if (!userList.includes(user)) {
+    
+    // validation
+    const paramValidationError = paramsValidation(user, type, status);
+    if (paramValidationError) {
         return res.status(422).json({
             success: false,
-            message: `Invalid user = ${user}`
+            message: paramValidationError
         });
-    }
-    else if (!typeList.includes(type)) {
-        return res.status(422).json({
-            success: false,
-            message: `Invalid request = ${type}`
-        }) 
-    }
-    else if (!statusList.includes(status)) {
-        return res.status(422).json({
-            success: false,
-            message: `Invalid status = ${status}`
-        }) 
     }
     
     try {
@@ -118,3 +105,19 @@ const patientRequest = async (status, req, res) => {
         body: req.body
     });
 };
+
+const paramsValidation = (user, type, status) => {
+    const userList = ['donor', 'patient'];
+    const typeList = ['donate', 'request'];
+    const statusList = ['accept', 'reject'];
+
+    if (!userList.includes(user)) {
+        return `Invalid user = ${user}`
+    }
+    else if (!typeList.includes(type)) {
+        return `Invalid request = ${type}`
+    }
+    else if (!statusList.includes(status)) {
+        return `Invalid status = ${status}`
+    }
+}
