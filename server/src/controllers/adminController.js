@@ -98,12 +98,56 @@ const donorDonation = async (status, req, res) => {
 
 const donorRequest = async (status, req, res) => {
 
+    const { bloodGroup, quantity, histRecId } = req.body;
+    
+    try {
 
-    res.status(200).json({
-        success: true,
-        message: `donor request status = ${status}`,
-        body: req.body
-    });
+        let updatedInventory = {};
+        const filter = { bloodGroup };
+        let updateQuanity = { $inc: { quantity } };
+        const options = { new: true };
+        let donorHistRec = {};
+        let message = '';
+        let body = {};
+
+        if (status === 'accept') {
+            updateQuanity = { $inc: { quantity: quantity * -1 } }
+
+            // Retrieve the current document to check the current "quantity" value
+            const currentDoc = await Inventory.findOne(filter);
+
+            if (currentDoc && currentDoc.quantity >= quantity) {
+                updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+            }
+            else {
+                throw new Error(`Requested ${quantity} units are not avilable`);
+            }
+
+            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+            message = 'Donor request accepted';
+            body['updatedInventory'] = updatedInventory;
+            body['donorHistRec'] = donorHistRec;
+        }
+        else if (status === 'reject') {
+            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'rejected' }, options);
+
+            message = 'Donor request rejected';
+            body['donorHistRec'] = donorHistRec;
+        } 
+
+        res.status(200).json({
+            success: true,
+            message,
+            body
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            success: false,
+            message: 'Failed to accept donor request',
+            error: error.message
+        });
+    }
 };
 
 const patientRequest = async (status, req, res) => {
