@@ -8,7 +8,7 @@ export const menuList = [
     {
         name: "Donor",
         api: "donor",
-        icon: "fas fa-user",
+        icon: "fas fa-users",
         userType: "admin"
     },
     {

@@ -5,6 +5,7 @@ import { authenticate } from '../utils/ApiRoutes';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Sidebar } from '../components/Sidebar';
+import Dashboard from '../components/homePage/Dashboard';
 
 export const Home = () => {
 
@@ -48,7 +49,7 @@ export const Home = () => {
   const PageToRedner = () => {
     if (currentPage === 'home') {
       return (
-        <h1>Home page</h1>
+        <Dashboard />
       )
     }
     else if (currentPage === 'patient'){
@@ -88,12 +89,12 @@ export const Home = () => {
               />
               <Container fluid >
                 <Row className="full-height-row">
-                  <Col sm={2} md={3} lg={2} className='ps-0'>
+                  <Col sm={2} md={3} lg={2} className='p-0'>
                     <Sidebar
                       userType={currentUser.userType}
                       pageChange={handlePageChange}/>
                   </Col>
-                  <Col sm={10} md={9} lg={10}>
+                  <Col sm={10} md={9} lg={10} className='p-0'>
                     <PageToRedner />
                   </Col>
                 </Row>
