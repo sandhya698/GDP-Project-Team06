@@ -56,35 +56,40 @@ const donorDonation = async (status, req, res) => {
 
     try {
 
+        let updatedInventory = {};
         const filter = { bloodGroup };
         let updateQuanity = { $inc: { quantity } };
         const updateInit = { $setOnInsert: { bloodGroup, quantity } };
         const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        let donorHistRec = {};
+        let message = '';
+        let body = {};
 
         if (status === 'accept') {
-            const updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
-            
+            updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+        
             // If the increment didn't find a matching document, create one with the specified initial value
             if (!updatedInventory) {
                 updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
             }
 
-            const donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
-
-            return res.status(200).json({
-                success: true,
-                message: `donor donation status = ${status}`,
-                body: {updatedInventory, donorHistRec}
-            });
+            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+            message = 'Donor donation accepted';
+            body['updatedInventory'] = updatedInventory;
+            body['donorHistRec'] = donorHistRec;
         }
         else if (status === 'reject') {
-            const donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
-            return res.status(200).json({
-                success: true,
-                message: `donor donation status = ${status}`,
-                donorHistRec
-            });
+            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'rejected' }, options);
+
+            message = 'Donor donation rejected';
+            body['donorHistRec'] = donorHistRec;
         } 
+
+        res.status(200).json({
+            success: true,
+            message,
+            body
+        });
     }
     catch (error) {
         res.status(422).json({
