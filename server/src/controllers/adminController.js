@@ -1,18 +1,18 @@
 module.exports.adminControls = async (req, res) => {
     const { user, type, status } = req.params;
-
+    
     try {
         if (user === 'donor') {
             if (type === 'donate') {
-                console.log(`In ${user} and ${type}`);
+                await donorDonation(status, req, res);
             } 
             else if (type === 'request') {
-                console.log(`In ${user} and ${type}`);
+                await donorRequest(status, req, res);
             }
         }
         else if (user === 'patient') {
             if (type === 'request') {
-                console.log(`In ${user} and ${type}`);
+                await patientRequest(status, req, res);
             }
         }
     }
@@ -24,3 +24,33 @@ module.exports.adminControls = async (req, res) => {
         });
     }
 }
+
+const donorDonation = async (status, req, res) => {
+
+
+        res.status(200).json({
+            success: true,
+            message: `donor donation status = ${status}`,
+            body: req.body
+        });
+};
+
+const donorRequest = async (status, req, res) => {
+
+
+    res.status(200).json({
+        success: true,
+        message: `donor request status = ${status}`,
+        body: req.body
+    });
+};
+
+const patientRequest = async (status, req, res) => {
+
+
+    res.status(200).json({
+        success: true,
+        message: `patient request status = ${status}`,
+        body: req.body
+    });
+};
