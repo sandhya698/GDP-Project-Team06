@@ -55,7 +55,7 @@ const donorDonation = async (status, req, res) => {
         const filter = { bloodGroup };
         let updateQuanity = { $inc: { quantity } };
         const updateInit = { $setOnInsert: { bloodGroup, quantity } };
-        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        const options = { new: true };
         let donorHistRec = {};
         let message = '';
         let body = {};
