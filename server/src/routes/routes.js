@@ -4,6 +4,7 @@ const authenticate = require('../middleware/auth');
 const { register, login, auth, logout } = require('../controllers/userController');
 const { manageStock, getStock } = require('../controllers/inventoryController');
 const { donorRequest, patientRequest } = require('../controllers/historyController');
+const { adminControls } = require('../controllers/adminController');
 
 // user routes
 router.post('/user/login', login);
@@ -18,5 +19,8 @@ router.get('/inventory/get-stock', getStock);
 // history routes
 router.post('/donor/:type', donorRequest);
 router.post('/patient', patientRequest);
+
+// admin routes
+router.post('/admin/:user/:type/:status', adminControls);
 
 module.exports = router;
