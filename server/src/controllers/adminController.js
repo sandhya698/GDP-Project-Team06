@@ -12,7 +12,15 @@ module.exports.adminControls = async (req, res) => {
             message: paramValidationError
         });
     }
-    
+
+    const bodyValidationError = bodyValidation(req.body);
+    if (bodyValidationError){
+        return res.status(422).json({
+            status: false,
+            message: bodyValidationError
+        });
+    }
+
     try {
         if (user === 'donor') {
             if (type === 'donate') {
@@ -38,21 +46,8 @@ module.exports.adminControls = async (req, res) => {
 }
 
 const donorDonation = async (status, req, res) => {
-    const { bloodGroup, quantity, histRecId } = body;
-    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-    
-    if (!bloodGroup || !quantity || !histRecId) {
-        return res.status(422).json({
-            success: false,
-            message: `Request body doesn't contain requried information`
-        }) ;
-    }
-    if (!bloodGroups.includes(bloodGroup)) {
-        return res.status(422).json({
-            success: false,
-            message: `Invalid blood group ${bloodGroup}`
-        }) ;
-    }
+
+    const { bloodGroup, quantity, histRecId } = req.body;
 
     try {
 
@@ -102,21 +97,7 @@ const donorDonation = async (status, req, res) => {
 };
 
 const donorRequest = async (status, req, res) => {
-    const { bloodGroup, quantity, histRecId } = body;
-    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-    
-    if (!bloodGroup || !quantity || !histRecId) {
-        return res.status(422).json({
-            success: false,
-            message: `Request body doesn't contain requried information`
-        }) ;
-    }
-    if (!bloodGroups.includes(bloodGroup)) {
-        return res.status(422).json({
-            success: false,
-            message: `Invalid blood group ${bloodGroup}`
-        }) ;
-    }
+
 
     res.status(200).json({
         success: true,
@@ -126,21 +107,7 @@ const donorRequest = async (status, req, res) => {
 };
 
 const patientRequest = async (status, req, res) => {
-    const { bloodGroup, quantity, histRecId } = body;
-    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-    
-    if (!bloodGroup || !quantity || !histRecId) {
-        return res.status(422).json({
-            success: false,
-            message: `Request body doesn't contain requried information`
-        }) ;
-    }
-    if (!bloodGroups.includes(bloodGroup)) {
-        return res.status(422).json({
-            success: false,
-            message: `Invalid blood group ${bloodGroup}`
-        }) ;
-    }
+
 
     res.status(200).json({
         success: true,
@@ -162,5 +129,17 @@ const paramsValidation = (user, type, status) => {
     }
     else if (!statusList.includes(status)) {
         return `Invalid status = ${status}`
+    }
+}
+
+const bodyValidation = (body) => {
+    const { bloodGroup, quantity, histRecId } = body;
+    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+    
+    if (!bloodGroup || !quantity || !histRecId) {
+        return `Request body doesn't contain requried information`;
+    }
+    if (!bloodGroups.includes(bloodGroup)) {
+        return `Invalid blood group ${bloodGroup}`;
     }
 }
