@@ -1,3 +1,5 @@
+const Inventory = require("../models/inventoryModel");
+
 module.exports.adminControls = async (req, res) => {
     const { user, type, status } = req.params;
     
@@ -51,11 +53,39 @@ const donorDonation = async (status, req, res) => {
         }) ;
     }
 
-        res.status(200).json({
-            success: true,
-            message: `donor donation status = ${status}`,
-            body: req.body
+    try {
+
+        const filter = { bloodGroup };
+        let updateQuanity = { $inc: { quantity } };
+        const updateInit = { $setOnInsert: { bloodGroup, quantity } };
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+        if (status === 'accept') {
+            const updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+            
+            // If the increment didn't find a matching document, create one with the specified initial value
+            if (!updatedInventory) {
+                updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: `donor donation status = ${status}`,
+                updatedInventory
+            });
+        }
+        else if (status === 'reject') {
+            console.log('donation rejected')
+        } 
+    }
+    catch (error) {
+        res.status(422).json({
+            success: false,
+            message: 'Failed to accept donation request',
+            error: error.message
         });
+    }
+
 };
 
 const donorRequest = async (status, req, res) => {
