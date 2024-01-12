@@ -48,7 +48,21 @@ module.exports.adminControls = async (req, res) => {
 }
 
 const donorDonation = async (status, req, res) => {
-
+    const { bloodGroup, quantity, histRecId } = body;
+    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+    
+    if (!bloodGroup || !quantity || !histRecId) {
+        return res.status(422).json({
+            success: false,
+            message: `Request body doesn't contain requried information`
+        }) ;
+    }
+    if (!bloodGroups.includes(bloodGroup)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid blood group ${bloodGroup}`
+        }) ;
+    }
 
         res.status(200).json({
             success: true,
@@ -58,7 +72,21 @@ const donorDonation = async (status, req, res) => {
 };
 
 const donorRequest = async (status, req, res) => {
-
+    const { bloodGroup, quantity, histRecId } = body;
+    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+    
+    if (!bloodGroup || !quantity || !histRecId) {
+        return res.status(422).json({
+            success: false,
+            message: `Request body doesn't contain requried information`
+        }) ;
+    }
+    if (!bloodGroups.includes(bloodGroup)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid blood group ${bloodGroup}`
+        }) ;
+    }
 
     res.status(200).json({
         success: true,
@@ -68,7 +96,21 @@ const donorRequest = async (status, req, res) => {
 };
 
 const patientRequest = async (status, req, res) => {
-
+    const { bloodGroup, quantity, histRecId } = body;
+    const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+    
+    if (!bloodGroup || !quantity || !histRecId) {
+        return res.status(422).json({
+            success: false,
+            message: `Request body doesn't contain requried information`
+        }) ;
+    }
+    if (!bloodGroups.includes(bloodGroup)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid blood group ${bloodGroup}`
+        }) ;
+    }
 
     res.status(200).json({
         success: true,
