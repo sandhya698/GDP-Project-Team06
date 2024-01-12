@@ -44,3 +44,24 @@ module.exports.donorRequest = async (req, res) => {
         });
     }
 }
+
+module.exports.patientRequest = async (req, res) => {
+    const { bloodGroup, quantity, userId, disease } = req.body;
+
+    try {
+        const patientHistRec = new PatientRequestHistory({ bloodGroup, quantity, disease, status: 'pending', patient: userId });
+        const patientRequestHistRec = await patientHistRec.save();
+        res.status(201).json({
+            success: true,
+            message: 'Requested created successfully',
+            result: patientRequestHistRec
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            success: false,
+            message: 'Failed to reqest a blood donor',
+            error: error.message
+        });
+    }
+}

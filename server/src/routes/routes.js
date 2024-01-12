@@ -3,7 +3,7 @@ const router = express.Router();
 const authenticate = require('../middleware/auth');
 const { register, login, auth, logout } = require('../controllers/userController');
 const { manageStock, getStock } = require('../controllers/inventoryController');
-const { donorRequest } = require('../controllers/historyController');
+const { donorRequest, patientRequest } = require('../controllers/historyController');
 
 // user routes
 router.post('/user/login', login);
@@ -17,5 +17,6 @@ router.get('/inventory/get-stock', getStock);
 
 // history routes
 router.post('/donor/:type', donorRequest);
+router.post('/patient', patientRequest);
 
 module.exports = router;
