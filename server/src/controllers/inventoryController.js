@@ -1,4 +1,5 @@
 const Inventory = require("../models/inventoryModel");
+const { addStock, subtractStock } = require("../utils/inventoryOperations");
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
 
 module.exports.manageStock = async (req, res) => {
@@ -18,31 +19,12 @@ module.exports.manageStock = async (req, res) => {
     try {
 
         let updatedInventory = {};
-        const filter = { bloodGroup };
-        let updateQuanity = { $inc: { quantity } };
-        const updateInit = { $setOnInsert: { bloodGroup, quantity } };
-        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
         if (type === "in") {
-            updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
-        
-            // If the increment didn't find a matching document, create one with the specified initial value
-            if (!updatedInventory) {
-                updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
-            }
+            updatedInventory = await addStock(bloodGroup, quantity);
         }
         else if (type === "out") {
-            updateQuanity = { $inc: { quantity: quantity * -1 } }
-
-            // Retrieve the current document to check the current "quantity" value
-            const currentDoc = await Inventory.findOne(filter);
-
-            if (currentDoc && currentDoc.quantity >= quantity) {
-                updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
-            }
-            else {
-                throw new Error(`Requested ${quantity} units are not avilable`);
-            }
+            updatedInventory = await subtractStock(bloodGroup, quantity);
         }
         else {
             throw new Error(`Invalid operation ${type}`);
@@ -58,8 +40,8 @@ module.exports.manageStock = async (req, res) => {
     catch (error) {
         res.status(422).json({
             success: false,
-            message: 'Failed to update inventory',
-            error: error.message
+            message: error.message,
+            error: error
         });
     }
 }
