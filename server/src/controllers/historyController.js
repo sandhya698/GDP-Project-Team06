@@ -23,6 +23,10 @@ module.exports.donorRequest = async (req, res) => {
     try {
         const donorHistRec = new DonorRequestHistory({ bloodGroup, quantity, type, disease, status: 'pending', donor: userId });
         const donorRequestHistRec = await donorHistRec.save();
+        await donorRequestHistRec.populate({
+            path: 'donor',
+            select: 'name', 
+        });
         res.status(201).json({
             success: true,
             message: 'Requested created successfully',
@@ -59,6 +63,10 @@ module.exports.patientRequest = async (req, res) => {
     try {
         const patientHistRec = new PatientRequestHistory({ bloodGroup, quantity, disease, status: 'pending', patient: userId });
         const patientRequestHistRec = await patientHistRec.save();
+        await patientRequestHistRec.populate({
+            path: 'patient',
+            select: 'name', 
+        });
         res.status(201).json({
             success: true,
             message: 'Requested created successfully',
