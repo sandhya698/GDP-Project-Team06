@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 
-const MyCard = () => {
+const MyCard = ({count}) => {
   return (
     <>
       <Row xs={1} md={4} className="g-4 mt-0">
-      {Array.from({ length: 8 }).map((_, idx) => (
+      {Array.from({ length: count }).map((_, idx) => (
         <Col key={idx}>
           <Card>
             <Card.Body>
