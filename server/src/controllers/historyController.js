@@ -48,6 +48,14 @@ module.exports.donorRequest = async (req, res) => {
 module.exports.patientRequest = async (req, res) => {
     const { bloodGroup, quantity, userId, disease } = req.body;
 
+    // some validations
+    if (!bloodGroups.includes(bloodGroup)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid blood group ${bloodGroup}`
+        });
+    }
+
     try {
         const patientHistRec = new PatientRequestHistory({ bloodGroup, quantity, disease, status: 'pending', patient: userId });
         const patientRequestHistRec = await patientHistRec.save();
