@@ -1,5 +1,27 @@
 module.exports.adminControls = async (req, res) => {
     const { user, type, status } = req.params;
+    const userList = ['donor', 'patient'];
+    const typeList = ['donate', 'request'];
+    const statusList = ['accept', 'reject'];
+
+    if (!userList.includes(user)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid user = ${user}`
+        });
+    }
+    else if (!typeList.includes(type)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid request = ${type}`
+        }) 
+    }
+    else if (!statusList.includes(status)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid status = ${status}`
+        }) 
+    }
     
     try {
         if (user === 'donor') {
