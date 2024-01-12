@@ -1,6 +1,6 @@
 const DonorRequestHistory = require("../models/donorRequestModel");
-const Inventory = require("../models/inventoryModel");
 const PatientRequestHistory = require("../models/patientRequestModel");
+const { addStock, subtractStock } = require("../utils/inventoryOperations");
 
 module.exports.adminControls = async (req, res) => {
     const { user, type, status } = req.params;
@@ -53,23 +53,15 @@ const donorDonation = async (status, req, res) => {
     try {
 
         let updatedInventory = {};
-        const filter = { bloodGroup };
-        let updateQuanity = { $inc: { quantity } };
-        const updateInit = { $setOnInsert: { bloodGroup, quantity } };
         const options = { new: true };
         let donorHistRec = {};
         let message = '';
         let body = {};
 
         if (status === 'accept') {
-            updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
-        
-            // If the increment didn't find a matching document, create one with the specified initial value
-            if (!updatedInventory) {
-                updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
-            }
-
+            updatedInventory = await addStock(bloodGroup, quantity);
             donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+
             message = 'Donor donation accepted';
             body['updatedInventory'] = updatedInventory;
             body['donorHistRec'] = donorHistRec;
@@ -104,27 +96,15 @@ const donorRequest = async (status, req, res) => {
     try {
 
         let updatedInventory = {};
-        const filter = { bloodGroup };
-        let updateQuanity = { $inc: { quantity } };
         const options = { new: true };
         let donorHistRec = {};
         let message = '';
         let body = {};
 
         if (status === 'accept') {
-            updateQuanity = { $inc: { quantity: quantity * -1 } }
-
-            // Retrieve the current document to check the current "quantity" value
-            const currentDoc = await Inventory.findOne(filter);
-
-            if (currentDoc && currentDoc.quantity >= quantity) {
-                updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
-            }
-            else {
-                throw new Error(`Requested ${quantity} units are not avilable`);
-            }
-
+            updatedInventory = await subtractStock(bloodGroup, quantity);
             donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+
             message = 'Donor request accepted';
             body['updatedInventory'] = updatedInventory;
             body['donorHistRec'] = donorHistRec;
@@ -158,27 +138,15 @@ const patientRequest = async (status, req, res) => {
     try {
 
         let updatedInventory = {};
-        const filter = { bloodGroup };
-        let updateQuanity = { $inc: { quantity } };
         const options = { new: true };
         let patientHistRec = {};
         let message = '';
         let body = {};
 
         if (status === 'accept') {
-            updateQuanity = { $inc: { quantity: quantity * -1 } }
-
-            // Retrieve the current document to check the current "quantity" value
-            const currentDoc = await Inventory.findOne(filter);
-
-            if (currentDoc && currentDoc.quantity >= quantity) {
-                updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
-            }
-            else {
-                throw new Error(`Requested ${quantity} units are not avilable`);
-            }
-
+            updatedInventory = await subtractStock(bloodGroup, quantity);
             patientHistRec = await PatientRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+
             message = 'Patient request accepted';
             body['updatedInventory'] = updatedInventory;
             body['patientHistRec'] = patientHistRec;
