@@ -1,3 +1,4 @@
+const DonorRequestHistory = require("../models/donorRequestModel");
 const Inventory = require("../models/inventoryModel");
 
 module.exports.adminControls = async (req, res) => {
@@ -68,14 +69,21 @@ const donorDonation = async (status, req, res) => {
                 updatedInventory = await Inventory.findOneAndUpdate(filter, updateInit, options);
             }
 
+            const donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+
             return res.status(200).json({
                 success: true,
                 message: `donor donation status = ${status}`,
-                updatedInventory
+                body: {updatedInventory, donorHistRec}
             });
         }
         else if (status === 'reject') {
-            console.log('donation rejected')
+            const donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+            return res.status(200).json({
+                success: true,
+                message: `donor donation status = ${status}`,
+                donorHistRec
+            });
         } 
     }
     catch (error) {
