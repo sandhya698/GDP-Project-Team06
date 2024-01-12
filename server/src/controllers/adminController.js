@@ -1,5 +1,6 @@
 const DonorRequestHistory = require("../models/donorRequestModel");
 const Inventory = require("../models/inventoryModel");
+const PatientRequestHistory = require("../models/patientRequestModel");
 
 module.exports.adminControls = async (req, res) => {
     const { user, type, status } = req.params;
@@ -152,12 +153,56 @@ const donorRequest = async (status, req, res) => {
 
 const patientRequest = async (status, req, res) => {
 
+    const { bloodGroup, quantity, histRecId } = req.body;
 
-    res.status(200).json({
-        success: true,
-        message: `patient request status = ${status}`,
-        body: req.body
-    });
+    try {
+
+        let updatedInventory = {};
+        const filter = { bloodGroup };
+        let updateQuanity = { $inc: { quantity } };
+        const options = { new: true };
+        let patientHistRec = {};
+        let message = '';
+        let body = {};
+
+        if (status === 'accept') {
+            updateQuanity = { $inc: { quantity: quantity * -1 } }
+
+            // Retrieve the current document to check the current "quantity" value
+            const currentDoc = await Inventory.findOne(filter);
+
+            if (currentDoc && currentDoc.quantity >= quantity) {
+                updatedInventory = await Inventory.findOneAndUpdate(filter, updateQuanity, options);
+            }
+            else {
+                throw new Error(`Requested ${quantity} units are not avilable`);
+            }
+
+            patientHistRec = await PatientRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'accepted' }, options);
+            message = 'Patient request accepted';
+            body['updatedInventory'] = updatedInventory;
+            body['patientHistRec'] = patientHistRec;
+        }
+        else if (status === 'reject') {
+            patientHistRec = await PatientRequestHistory.findOneAndUpdate({ _id: histRecId }, { status: 'rejected' }, options);
+
+            message = 'Patient reject rejected';
+            body['patientHistRec'] = patientHistRec;
+        } 
+
+        res.status(200).json({
+            success: true,
+            message,
+            body
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            success: false,
+            message: 'Failed to accept donor request',
+            error: error.message
+        });
+    }
 };
 
 const paramsValidation = (user, type, status) => {
