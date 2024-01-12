@@ -14,7 +14,7 @@ router.get('/user/authenticate', authenticate, auth);
 router.get('/user/logout/:id', logout);
 
 // inventory routes
-router.post('/inventory/manage-stock', adminAuth, manageStock);
+router.post('/inventory/manage-stock/:type', adminAuth, manageStock);
 router.get('/inventory/get-stock', adminAuth, getStock);
 
 // history routes

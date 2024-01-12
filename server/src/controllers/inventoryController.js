@@ -2,7 +2,8 @@ const Inventory = require("../models/inventoryModel");
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
 
 module.exports.manageStock = async (req, res) => {
-    let { bloodGroup, quantity, type } = req.body;
+    let { bloodGroup, quantity } = req.body;
+    const type = req.params.type;
 
     if (!bloodGroup || !quantity ) {
         return res.status(422).json({ message: "Every field must be filled" });
@@ -42,6 +43,9 @@ module.exports.manageStock = async (req, res) => {
             else {
                 throw new Error(`Requested ${quantity} units are not avilable`);
             }
+        }
+        else {
+            throw new Error(`Invalid operation ${type}`);
         }
 
         res.status(201).json({
