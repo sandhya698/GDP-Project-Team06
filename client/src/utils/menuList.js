@@ -6,13 +6,13 @@ export const menuList = [
         userType: "common"
     },
     {
-        name: "Donor",
+        name: "Donors",
         api: "donor",
         icon: "fas fa-users",
         userType: "admin"
     },
     {
-        name: "Patient",
+        name: "Patients",
         api: "patient",
         icon: "fas fa-user-injured",
         userType: "admin"

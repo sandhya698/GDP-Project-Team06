@@ -3,8 +3,8 @@ import { Card, Col, Container, Row } from 'react-bootstrap'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getStockRoute, miscStatsRoute } from '../../utils/ApiRoutes';
-import styled from 'styled-components';
 import { dashboardList } from '../../utils/dashboardIconList';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function Dashboard() {
 
@@ -53,7 +53,7 @@ export default function Dashboard() {
       {
       loading ?
         (
-          <p> Loading...</p>
+          <LoadingSpinner />
         ) :
         (
           <>
@@ -82,8 +82,8 @@ export default function Dashboard() {
                     }
                   </Row>
               </Row>
-              <Row className='blood-groups my-5'>
-                  <Row xs={1} md={2} lg={4} className="g-3 mt-0">
+              <Row className='blood-groups my-5 pt-5'>
+                  <Row xs={1} md={2} lg={4} className="g-5 mt-0">
                       {
                         stock.map((data, index) => (
                           <Col key={index}>
@@ -97,9 +97,7 @@ export default function Dashboard() {
                                 </Card.Body>
                               </Col>
                               <Col md={4}>
-                                <Icon>
-                                  <i className="fas fa-tint"></i>
-                                </Icon>
+                                <i className="fas fa-tint" style={{ color: "red", fontSize: "2.8rem"}}></i>
                               </Col>
                             </Card>
                           </Col>
@@ -115,9 +113,3 @@ export default function Dashboard() {
     </>
   )
 }
-
-
-const Icon = styled.div`
-  color: red;
-  font-size: 4rem;
-`

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Sidebar } from '../components/Sidebar';
 import Dashboard from './homePage/Dashboard';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export const Home = () => {
 
@@ -79,7 +80,7 @@ export const Home = () => {
       {
         loading ?
           (
-            <p>Loading...</p>
+            <LoadingSpinner />
           ) :
           (
             <>
