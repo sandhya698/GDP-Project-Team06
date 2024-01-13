@@ -3,6 +3,7 @@ const Inventory = require("../models/inventoryModel");
 const PatientRequestHistory = require("../models/patientRequestModel");
 const Users = require("../models/userModel");
 const { addStock, subtractStock } = require("../utils/inventoryOperations");
+
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
 
 module.exports.manageStock = async (req, res) => {
@@ -115,14 +116,34 @@ module.exports.miscStats = async (req,res) => {
             }
         ]);
 
+        const donorRejected = await DonorRequestHistory.aggregate([
+            {
+                $match: { $and: [{ status: "rejected" }, { type: "request" }] }
+            },
+            {
+                $group: group
+            }
+        ]);
+
+        const patientRejected = await PatientRequestHistory.aggregate([
+            {
+                $match: { status: "rejected" }
+            },
+            {
+                $group: group
+            }
+        ]);
+
         miscStats.donors = donors;
         miscStats.patients = patients;
         miscStats.donorAccepted = donorAccepted[0]?.totalQuantity ?? 0;
         miscStats.patientAccepted = patientAccepted[0]?.totalQuantity ?? 0;
+        miscStats.donorRejected = donorRejected[0]?.totalQuantity ?? 0;
+        miscStats.patientRejected = patientRejected[0]?.totalQuantity ?? 0;
 
         res.status(200).json({
             success: true,
-            message: 'sucess',
+            message: 'fetched misc stats successfully',
             miscStats
         });
     }
