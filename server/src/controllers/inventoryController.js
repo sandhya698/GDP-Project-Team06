@@ -1,4 +1,6 @@
+const DonorRequestHistory = require("../models/donorRequestModel");
 const Inventory = require("../models/inventoryModel");
+const PatientRequestHistory = require("../models/patientRequestModel");
 const Users = require("../models/userModel");
 const { addStock, subtractStock } = require("../utils/inventoryOperations");
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
@@ -86,14 +88,37 @@ module.exports.getStock = async (req, res) => {
 
 module.exports.miscStats = async (req,res) => {
     const miscStats = {}
+    const group = {
+        _id: null,
+        totalQuantity: { $sum: '$quantity' }
+    };
 
     try {
         
         const donors = await Users.find({ userType: 'donor' }).countDocuments();
         const patients = await Users.find({ userType: 'patient' }).countDocuments();
+        const donorAccepted = await DonorRequestHistory.aggregate([
+            {
+                $match: { $and: [{ status: "accepted" }, { type: "request" }] }
+            },
+            {
+                $group: group
+            }
+        ]);
+
+        const patientAccepted = await PatientRequestHistory.aggregate([
+            {
+              $match: { status: 'accepted' }
+            },
+            {
+              $group: group
+            }
+        ]);
 
         miscStats.donors = donors;
         miscStats.patients = patients;
+        miscStats.donorAccepted = donorAccepted[0]?.totalQuantity ?? 0;
+        miscStats.patientAccepted = patientAccepted[0]?.totalQuantity ?? 0;
 
         res.status(200).json({
             success: true,
