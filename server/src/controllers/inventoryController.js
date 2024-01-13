@@ -134,12 +134,18 @@ module.exports.miscStats = async (req,res) => {
             }
         ]);
 
+        const bloodStock = await Inventory.aggregate([{ $group: group }]);
+
         miscStats.donors = donors;
         miscStats.patients = patients;
-        miscStats.donorAccepted = donorAccepted[0]?.totalQuantity ?? 0;
-        miscStats.patientAccepted = patientAccepted[0]?.totalQuantity ?? 0;
-        miscStats.donorRejected = donorRejected[0]?.totalQuantity ?? 0;
-        miscStats.patientRejected = patientRejected[0]?.totalQuantity ?? 0;
+        miscStats.accepted = (donorAccepted[0]?.totalQuantity ?? 0) + (patientAccepted[0]?.totalQuantity ?? 0);
+        miscStats.rejected = (donorRejected[0]?.totalQuantity ?? 0) + (patientRejected[0]?.totalQuantity ?? 0);
+        miscStats.totalBlood = bloodStock[0]?.totalQuantity ?? 0;
+
+        // miscStats.donorAccepted = donorAccepted[0]?.totalQuantity ?? 0;
+        // miscStats.patientAccepted = patientAccepted[0]?.totalQuantity ?? 0;
+        // miscStats.donorRejected = donorRejected[0]?.totalQuantity ?? 0;
+        // miscStats.patientRejected = patientRejected[0]?.totalQuantity ?? 0;
 
         res.status(200).json({
             success: true,
