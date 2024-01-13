@@ -1,4 +1,5 @@
 const Inventory = require("../models/inventoryModel");
+const Users = require("../models/userModel");
 const { addStock, subtractStock } = require("../utils/inventoryOperations");
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
 
@@ -46,7 +47,6 @@ module.exports.manageStock = async (req, res) => {
     }
 }
 
-
 module.exports.getStock = async (req, res) => {
     const group = req.query.group || '';
 
@@ -79,6 +79,32 @@ module.exports.getStock = async (req, res) => {
         res.status(422).json({
             success: false,
             message: 'Failed to query stock',
+            error: error.message
+        });
+    }
+}
+
+module.exports.miscStats = async (req,res) => {
+    const miscStats = {}
+
+    try {
+        
+        const donors = await Users.find({ userType: 'donor' }).countDocuments();
+        const patients = await Users.find({ userType: 'patient' }).countDocuments();
+
+        miscStats.donors = donors;
+        miscStats.patients = patients;
+
+        res.status(200).json({
+            success: true,
+            message: 'sucess',
+            miscStats
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            success: false,
+            message: 'Failed to get misc stats',
             error: error.message
         });
     }
