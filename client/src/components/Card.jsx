@@ -6,13 +6,13 @@ const MyCard = ({ count, height, rowCount }) => {
   
   const CustomCard = () => {
     return (
-      <Card border='primary' className='flex-row shadow' style={{ height }}>
+      <Card border='primary' className='flex-row align-items-center justify-content-around shadow' style={{ height }}>
         {/* <Row> */}
           <Col md={8}>
-            <Card.Body>
-              <Card.Title>title</Card.Title>
+            <Card.Body className='py-2'>
+              <Card.Title className="text-primary fs-1">A+</Card.Title>
               <Card.Text>
-                Body
+                <span className='fw-boldler fs-5'>8ml</span> Available
               </Card.Text>
             </Card.Body>
           </Col>
@@ -40,10 +40,8 @@ const MyCard = ({ count, height, rowCount }) => {
 };
 
 const Icon = styled.div`
-  align-items:center;
-  justify-content: center;
   color: red;
-  font-size: 3rem;
+  font-size: 4rem;
 `
 
 export default MyCard;
