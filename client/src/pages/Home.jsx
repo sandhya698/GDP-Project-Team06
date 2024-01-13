@@ -5,7 +5,7 @@ import { authenticate } from '../utils/ApiRoutes';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Sidebar } from '../components/Sidebar';
-import Dashboard from '../components/homePage/Dashboard';
+import Dashboard from './homePage/Dashboard';
 
 export const Home = () => {
 
