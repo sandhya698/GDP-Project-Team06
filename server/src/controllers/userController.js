@@ -112,7 +112,7 @@ module.exports.logout = async (req,res) => {
         res.status(200).send('user logged out');
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(422).json({
             message: 'Logout failed!!',
             error: err.message

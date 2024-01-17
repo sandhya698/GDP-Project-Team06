@@ -30,7 +30,12 @@ const userSchema = mongoose.Schema({
     },
     userType: {
         type: String,
-        require: true
+        require: true,
+        enum: ['admin', 'donor', 'patinet']
+    },
+    status: {
+        type: String,
+        enum: ['verfied', 'rejected']
     },
     tokens: [{
         token: {
