@@ -1,4 +1,5 @@
 const DonorRequestHistory = require("../models/donorRequestModel");
+const PatientRequestHistory = require("../models/patientRequestModel");
 const Users = require("../models/userModel");
 
 // user status update route
@@ -107,6 +108,69 @@ module.exports.getDonationsList = async (req,res) => {
     catch (error) {
         res.status(422).json({
             message: 'Failed to fetch donations list',
+            success: false,
+            error: error.message
+        });
+    }
+}
+
+module.exports.getRequestsList = async (req, res) => {
+    let requestsList = [];
+    try {
+        let donorRequestList = await DonorRequestHistory.find({ type: 'request' },
+            {
+                _id: 1,
+                bloodGroup: 1,
+                quantity: 1,
+                status: 1,
+                donor: 1
+            }
+        ).populate({
+            path: 'donor',
+            select: 'name', 
+        });
+
+        const formattedDonorRequestList = donorRequestList.map((request) => ({
+            _id: request._id,
+            donor: request.donor.name,
+            bloodGroup: request.bloodGroup,
+            quantity: request.quantity,
+            status: request.status,
+        }));
+
+        let patientRequestList = await PatientRequestHistory.find({},
+            {
+                _id: 1,
+                bloodGroup: 1,
+                quantity: 1,
+                status: 1,
+                patient: 1
+            }
+        ).populate({
+            path: 'patient',
+            select: 'name', 
+        });
+        
+        
+        const formattedPatientRequestList = patientRequestList.map((request) => ({
+            _id: request._id,
+            patient: request.patient.name,
+            bloodGroup: request.bloodGroup,
+            quantity: request.quantity,
+            status: request.status,
+        }));
+
+        requestsList = [...formattedDonorRequestList, ...formattedPatientRequestList];
+  
+        res.status(200).json({
+            message: 'Requests list fetched succesfully',
+            success: true,
+            requestsList
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            message: 'Failed to fetch requests list',
             success: false,
             error: error.message
         });
