@@ -49,9 +49,19 @@ export const Donor = () => {
 
   const updateStatus = async (id,status) => {
     try {
-      let route = `${userStatusUpdateRoute}/${id}/${status === 'rejected' ? 'verified' : 'rejected'}`;
-      const updatedStatus = await api.post(route);
-      console.log(updatedStatus);
+      let newStatus = status === 'rejected' ? 'verified' : 'rejected';
+      let route = `${userStatusUpdateRoute}/${id}/${newStatus}`;
+      const res = await api.post(route);
+      if (res.data.success === true) {
+        setDonorList((prevDonorList) => {
+          return prevDonorList.map((donor) => {
+            if (donor._id === id) {
+              return { ...donor, status: newStatus };
+            }
+            return donor;
+          });
+        });
+      };
     }
     catch (error) {
       console.log(error.response);
