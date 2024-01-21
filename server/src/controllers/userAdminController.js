@@ -33,7 +33,7 @@ module.exports.getDonors = async (req,res) => {
                 registerDate: 1
             }
         );
-        res.status(422).json({
+        res.status(200).json({
             message: 'Donors list fetched succesfully',
             success: true,
             donors
@@ -59,7 +59,7 @@ module.exports.getPatients = async (req,res) => {
                 registerDate: 1
             }
         );
-        res.status(422).json({
+        res.status(200).json({
             message: 'Patients list fetched succesfully',
             success: true,
             patients

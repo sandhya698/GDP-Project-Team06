@@ -4,3 +4,4 @@ export const authenticate = 'http://localhost:1432/api/user/authenticate';
 export const logoutRoute = 'http://localhost:1432/api/user/logout';
 export const getStockRoute = 'http://localhost:1432/api/inventory/get-stock';
 export const miscStatsRoute = 'http://localhost:1432/api/inventory/misc-stats';
+export const donorsListRoute = 'http://localhost:1432/api/admin/donor-list';

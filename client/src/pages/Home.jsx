@@ -7,6 +7,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Sidebar } from '../components/Sidebar';
 import Dashboard from './homePage/Dashboard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { Donor } from './homePage/Donor';
 
 export const Home = () => {
 
@@ -70,7 +71,7 @@ export const Home = () => {
     }
     else if (currentPage === 'donor'){
       return (
-        <h1>Donor Page</h1>
+        <Donor />
       )
     }
   }
