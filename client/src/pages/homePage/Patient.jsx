@@ -6,6 +6,7 @@ import { patientsListRoute, userStatusUpdateRoute } from '../../utils/ApiRoutes'
 import { Button, Container } from 'react-bootstrap';
 import ReactTable from '../../components/ReactTable';
 import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
+import { toast } from 'react-toastify';
 
 export const Patient = () => {
 
@@ -45,6 +46,14 @@ export const Patient = () => {
     getPatients();
   }, [getPatients, navigate]);
 
+  const toastOptions = {
+		position: "bottom-right",
+		autoClose: 3000,
+		pauseOnHover: true,
+		draggable: true,
+    theme: "light", 
+	};
+
   const updateStatus = async (id,status) => {
     try {
       let newStatus = status === 'rejected' ? 'verified' : 'rejected';
@@ -63,6 +72,7 @@ export const Patient = () => {
     }
     catch (error) {
       console.log(error.response.data);
+      toast.error('Failed to update the status', toastOptions);
     }
   }
 
