@@ -15,14 +15,16 @@ export const Donor = () => {
   const [loading, setLoading] = useState(true);
   const [columns, setColumns] = useState(donorPatientHeaders);
 
+  const api = axios.create({
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
   const getDonors = useCallback ( async () => {
     try {
-      const res = await axios.get(donorsListRoute, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await api.get(donorsListRoute);
 
       if (res.data.success) {
         setDonorList(res.data.donors);
@@ -37,6 +39,7 @@ export const Donor = () => {
     finally {
       setLoading(false);
     }
+    // eslint-disable-next-line
   }, [navigate])
 
   useEffect(() => {
@@ -47,16 +50,8 @@ export const Donor = () => {
   const updateStatus = async (id,status) => {
     try {
       let route = `${userStatusUpdateRoute}/${id}/${status === 'rejected' ? 'verified' : 'rejected'}`;
-      console.log(route);
-      const updatedStatus = await axios.post(route,{
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },  
-      });
-
+      const updatedStatus = await api.post(route);
       console.log(updatedStatus);
-
     }
     catch (error) {
       console.log(error.response);
