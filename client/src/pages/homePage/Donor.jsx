@@ -3,6 +3,10 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { donorsListRoute } from '../../utils/ApiRoutes';
+import { donorColumns } from '../../utils/tableHeaders/donorHeaders';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from "react-bootstrap-table2-paginator";
+import { Container } from 'react-bootstrap';
 
 export const Donor = () => {
 
@@ -36,15 +40,25 @@ export const Donor = () => {
 
   useEffect(() => {
     getDonors();
-  }, [getDonors, navigate])
+  }, [getDonors, navigate]);
 
   return (
     <>
       {
         loading ? (
           <LoadingSpinner />
-        ) : (
-            <h1>donor list</h1>
+        ) :
+          (
+            <Container className='h-100 px-5 d-flex flex-column'>
+              <div style={{ color: "#4682B4" }}>
+                <BootstrapTable
+                  keyField="_id"
+                  data={donorList}
+                  columns={donorColumns}
+                  pagination={paginationFactory()}
+                />
+              </div>
+            </Container>
         )
       }
     </>
