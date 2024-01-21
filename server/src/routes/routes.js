@@ -25,7 +25,7 @@ router.post('/patient', authenticate, patientRequest);
 
 // admin routes
 router.post('/admin/:user/:type/:status', adminAuth, adminControls);
-router.post('/admin/user/:id/:status', adminAuth, statusUpdate);
+router.post('/user/admin/status/:id/:status', adminAuth, statusUpdate);
 router.get('/admin/donor-list', adminAuth, getDonors);
 router.get('/admin/patient-list', adminAuth, getPatients);
 
