@@ -47,3 +47,29 @@ module.exports.getDonors = async (req,res) => {
         });
     }
 }
+
+module.exports.getPatients = async (req,res) => {
+    try {
+        const patients = await Users.find({ userType: 'patient' },
+            {
+                _id: 1,
+                name: 1,
+                email: 1,
+                status: 1,
+                registerDate: 1
+            }
+        );
+        res.status(422).json({
+            message: 'Patients list fetched succesfully',
+            success: true,
+            patients
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            message: 'Failed to fetch patients list',
+            success: false,
+            error: error.message
+        });
+    }
+}
