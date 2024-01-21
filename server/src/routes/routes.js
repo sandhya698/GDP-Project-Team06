@@ -6,7 +6,7 @@ const { register, login, auth, logout } = require('../controllers/userController
 const { manageStock, getStock, miscStats } = require('../controllers/inventoryController');
 const { donorRequest, patientRequest } = require('../controllers/historyController');
 const { adminControls } = require('../controllers/adminController');
-const { statusUpdate } = require('../controllers/userAdminController');
+const { statusUpdate, getDonors } = require('../controllers/userAdminController');
 
 // user routes
 router.post('/user/login', login);
@@ -26,5 +26,6 @@ router.post('/patient', authenticate, patientRequest);
 // admin routes
 router.post('/admin/:user/:type/:status', adminAuth, adminControls);
 router.post('/admin/user/:id/:status', adminAuth, statusUpdate);
+router.get('/admin/donor-list', adminAuth, getDonors);
 
 module.exports = router;

@@ -15,8 +15,35 @@ module.exports.statusUpdate = async (req,res) => {
     }
     catch (error) {
         res.status(422).json({
+            success: false,
             message: 'Failed to update user status',
-            error: err.message
+            error: error.message
+        });
+    }
+}
+
+module.exports.getDonors = async (req,res) => {
+    try {
+        const donors = await Users.find({ userType: 'donor' },
+            {
+                _id: 1,
+                name: 1,
+                email: 1,
+                status: 1,
+                registerDate: 1
+            }
+        );
+        res.status(422).json({
+            message: 'Donors list fetched succesfully',
+            success: true,
+            donors
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            message: 'Failed to fetch donors list',
+            success: false,
+            error: error.message
         });
     }
 }
