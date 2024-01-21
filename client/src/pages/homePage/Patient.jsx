@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { patientsListRoute } from '../../utils/ApiRoutes';
+import { patientsListRoute, userStatusUpdateRoute } from '../../utils/ApiRoutes';
 import { Button, Container } from 'react-bootstrap';
 import ReactTable from '../../components/ReactTable';
 import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
@@ -14,14 +14,16 @@ export const Patient = () => {
   const [loading, setLoading] = useState(true);
   const [columns, setColumns] = useState(donorPatientHeaders);
 
+  const api = axios.create({
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
   const getPatients = useCallback ( async () => {
     try {
-      const res = await axios.get(patientsListRoute, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await api.get(patientsListRoute);
 
       if (res.data.success) {
         setPatientList(res.data.patients);
@@ -42,6 +44,17 @@ export const Patient = () => {
     getPatients();
   }, [getPatients, navigate]);
 
+  const updateStatus = async (id,status) => {
+    try {
+      let newStatus = status === 'rejected' ? 'verified' : 'rejected';
+      let route = `${userStatusUpdateRoute}/${id}/${newStatus}`;
+      const res = await api.post(route);
+    }
+    catch (error) {
+      console.log(error.response.data);
+    }
+  }
+
   useEffect(() => {
     setColumns([...columns,{
       dataField: "Actions",
@@ -54,6 +67,7 @@ export const Patient = () => {
       formatter: (cell, row) => {
         return (  <>
           <Button
+            onClick={()=>updateStatus(row._id, row.status)}
             variant={row.status === 'rejected' ? 'success' : 'danger'}
             size="sm">
             {row.status === 'rejected' ? 'Accept' : 'Reject'}
