@@ -2,20 +2,20 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { donorsListRoute } from '../../utils/ApiRoutes';
-import { donorColumns } from '../../utils/tableHeaders/donorHeaders';
+import { patientsListRoute } from '../../utils/ApiRoutes';
 import { Container } from 'react-bootstrap';
+import { patientColumns } from '../../utils/tableHeaders/patientHeaders';
 import ReactTable from '../../components/ReactTable';
 
-export const Donor = () => {
+export const Patient = () => {
 
   const navigate = useNavigate();
-  const [donorList, setDonorList] = useState([]);
+  const [patientList, setPatientList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getDonors = useCallback ( async () => {
+  const getPatients = useCallback ( async () => {
     try {
-      const res = await axios.get(donorsListRoute, {
+      const res = await axios.get(patientsListRoute, {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export const Donor = () => {
       });
 
       if (res.data.success) {
-        setDonorList(res.data.donors);
+        setPatientList(res.data.patients);
       }
     }
     catch (err) {
@@ -38,9 +38,8 @@ export const Donor = () => {
   }, [navigate])
 
   useEffect(() => {
-    getDonors();
-  }, [getDonors, navigate]);
-
+    getPatients();
+  }, [getPatients, navigate]);
  
   return (
     <Container className="h-100">
@@ -48,11 +47,11 @@ export const Donor = () => {
         loading ? (
           <LoadingSpinner />
         ) : (
-            <ReactTable
-              title={'Donors ready to Tranfuse'}
+          <ReactTable
+              title={'Patients waiting for Transfusion'}
               pageSize={8}
-              data={donorList}
-              columns={donorColumns}
+              data={patientList}
+              columns={patientColumns}
             />
         )
       }

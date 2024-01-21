@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
-import moment from 'moment';
+import moment from "moment";
 
-export const donorColumns = [
+export const patientColumns = [
   {
     dataField: "_id",
     text: "Id",

@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   const [loading, setLoading] = useState(true);
   const [stock, setStock] = useState({});
-  const [miscStats, setmiscStats] = useState({});
+  const [miscStats, setMiscStats] = useState({});
 
   const getStock = useCallback(async () => {
     try {
@@ -31,15 +31,16 @@ export default function Dashboard() {
       });
 
       setStock(stockRes.data.inventory);
-      setmiscStats(miscStatRes.data.miscStats);
-      setLoading(false);
+      setMiscStats(miscStatRes.data.miscStats);
     }
     catch (err) {
       console.log(err.response.data);
-      setLoading(false);
       if (!err.response.data.status) {
         navigate('/error');
       }
+    }
+    finally {
+      setLoading(false);
     }
   }, [navigate]);
 
@@ -58,7 +59,7 @@ export default function Dashboard() {
         (
           <>
             <Container className='h-100 px-5 d-flex flex-column'>
-              <Row className='overview'>
+              <Row className='overview mt-3'>
                   <Row xs={1} md={2} lg={5} className="g-4 mt-0">
                     {
                       Object.keys(miscStats).map((data, index) => ( 
@@ -82,7 +83,7 @@ export default function Dashboard() {
                     }
                   </Row>
               </Row>
-              <Row className='blood-groups my-5 pt-5'>
+              <Row className='blood-groups my-5'>
                   <Row xs={1} md={2} lg={4} className="g-5 mt-0">
                       {
                         stock.map((data, index) => (
