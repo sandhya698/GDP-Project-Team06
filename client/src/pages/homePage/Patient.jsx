@@ -38,6 +38,7 @@ export const Patient = () => {
     finally {
       setLoading(false);
     }
+    // eslint-disable-next-line
   }, [navigate])
 
   useEffect(() => {
@@ -49,6 +50,16 @@ export const Patient = () => {
       let newStatus = status === 'rejected' ? 'verified' : 'rejected';
       let route = `${userStatusUpdateRoute}/${id}/${newStatus}`;
       const res = await api.post(route);
+      if (res.data.success === true) {
+        setPatientList((prevDonorList) => {
+          return prevDonorList.map((donor) => {
+            if (donor._id === id) {
+              return { ...donor, status: newStatus };
+            }
+            return donor;
+          });
+        });
+      };
     }
     catch (error) {
       console.log(error.response.data);
