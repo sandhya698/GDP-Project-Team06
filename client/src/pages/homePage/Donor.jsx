@@ -7,6 +7,7 @@ import { Container } from 'react-bootstrap';
 import ReactTable from '../../components/ReactTable';
 import { Button } from "react-bootstrap";
 import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
+import { toast } from 'react-toastify';
 
 export const Donor = () => {
 
@@ -46,6 +47,13 @@ export const Donor = () => {
     getDonors();
   }, [getDonors, navigate]);
   
+  const toastOptions = {
+		position: "bottom-right",
+		autoClose: 3000,
+		pauseOnHover: true,
+		draggable: true,
+    theme: "light", 
+	};
 
   const updateStatus = async (id,status) => {
     try {
@@ -64,7 +72,8 @@ export const Donor = () => {
       };
     }
     catch (error) {
-      console.log(error.response);
+      console.log(error.response.data);
+      toast.error('Failed to update the status', toastOptions);
     }
   }
 
