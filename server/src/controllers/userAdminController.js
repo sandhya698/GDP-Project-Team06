@@ -102,7 +102,7 @@ module.exports.getDonationsList = async (req,res) => {
         res.status(200).json({
             message: 'Donations list fetched succesfully',
             success: true,
-            fomattedDonationsList
+            donationsList: fomattedDonationsList
         });
     }
     catch (error) {
@@ -132,7 +132,7 @@ module.exports.getRequestsList = async (req, res) => {
 
         const formattedDonorRequestList = donorRequestList.map((request) => ({
             _id: request._id,
-            donor: request.donor.name,
+            patient: request.donor.name,
             bloodGroup: request.bloodGroup,
             quantity: request.quantity,
             status: request.status,
