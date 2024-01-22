@@ -77,7 +77,7 @@ export const Patient = () => {
   }
 
   useEffect(() => {
-    setColumns([...columns,{
+    setColumns([...donorPatientHeaders,{
       dataField: "Actions",
       isDummyField: true,
       text: "Actions",
