@@ -7,6 +7,7 @@ import { Button, Container } from 'react-bootstrap';
 import ReactTable from '../../components/ReactTable';
 import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
+import { toastOptions } from '../../utils/toasOptions';
 
 export const Patient = () => {
 
@@ -45,14 +46,6 @@ export const Patient = () => {
   useEffect(() => {
     getPatients();
   }, [getPatients, navigate]);
-
-  const toastOptions = {
-		position: "bottom-right",
-		autoClose: 3000,
-		pauseOnHover: true,
-		draggable: true,
-    theme: "light", 
-	};
 
   const updateStatus = async (id,status) => {
     try {

@@ -3,18 +3,11 @@ import axios from 'axios'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { logoutRoute } from '../utils/ApiRoutes';
+import { toastOptions } from '../utils/toasOptions';
 
 export const Logout = ({userId}) => {
 
   const navigate = useNavigate();
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 6000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "light", 
-  };
 
   const handleLogout = () => {
     axios.get(`${logoutRoute}/${userId}`, {

@@ -8,6 +8,7 @@ import ReactTable from '../../components/ReactTable';
 import { Button } from "react-bootstrap";
 import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
+import { toastOptions } from '../../utils/toasOptions';
 
 export const Donor = () => {
 
@@ -47,14 +48,6 @@ export const Donor = () => {
     getDonors();
   }, [getDonors, navigate]);
   
-  const toastOptions = {
-		position: "bottom-right",
-		autoClose: 3000,
-		pauseOnHover: true,
-		draggable: true,
-    theme: "light", 
-	};
-
   const updateStatus = async (id,status) => {
     try {
       let newStatus = status === 'rejected' ? 'verified' : 'rejected';

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 import { authenticate, registerRoute } from '../utils/ApiRoutes';
+import { toastOptions } from '../utils/toasOptions';
 
 export const Register = () => {
 
@@ -13,16 +14,6 @@ export const Register = () => {
   const [userDetails, setUserDetails] = useState({
     name: "", email: "", password: "", cpassword: "", userType: ""
   })
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 6000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "light", 
-    // style: { color: '#141414' },
-    // progressStyle: { background: '#0d6efd' },
-  };
 
   const redirecToHome = useCallback(async () => {
     try {
