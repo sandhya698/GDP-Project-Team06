@@ -19,6 +19,14 @@ export const donationReqHeaders = [
     }
   },
   {
+    dataField: "patient",
+    text: "Patient",
+    sort: true,
+    headerStyle: {
+      backgroundColor: "#DEDADA"
+    }
+  },
+  {
     dataField: "bloodGroup",
     text: "Group",
     headerStyle: {

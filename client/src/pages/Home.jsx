@@ -10,6 +10,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { Donor } from './homePage/Donor';
 import { Patient } from './homePage/Patient';
 import { Donations } from './homePage/Donations';
+import { Requests } from './homePage/Requests';
 
 export const Home = () => {
 
@@ -75,6 +76,11 @@ export const Home = () => {
     else if (currentPage === 'donor'){
       return (
         <Donor />
+      )
+    }
+    else if (currentPage === 'bloodrequest'){
+      return (
+        <Requests />
       )
     }
   }
