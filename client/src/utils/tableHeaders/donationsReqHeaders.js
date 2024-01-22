@@ -11,20 +11,14 @@ export const donationReqHeaders = [
       textOverflow: 'ellipsis'}
   },
   {
-    dataField: "donor",
-    text: "Donor",
+    dataField: "Name",
+    isDummyField: true,
+    text: "Name",
     sort: true,
     headerStyle: {
       backgroundColor: "#DEDADA"
-    }
-  },
-  {
-    dataField: "patient",
-    text: "Patient",
-    sort: true,
-    headerStyle: {
-      backgroundColor: "#DEDADA"
-    }
+    },
+    formatter: (cell, row) => row.donor ? row.donor : row.patient
   },
   {
     dataField: "bloodGroup",
