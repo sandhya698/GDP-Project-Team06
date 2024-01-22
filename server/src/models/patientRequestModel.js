@@ -24,6 +24,7 @@ const patientRequestHistorySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
     },
+    disease: String
 }, { timeStamps: true });
 
 // creating a model and exporting

@@ -21,6 +21,14 @@ export const donationReqHeaders = [
     formatter: (cell, row) => row.donor ? row.donor : row.patient
   },
   {
+    dataField: "disease",
+    text: "Disease",
+    headerStyle: {
+      backgroundColor: "#DEDADA"
+    },
+    formatter: (cell) => cell ? cell : 'N/A'
+  },
+  {
     dataField: "bloodGroup",
     text: "Group",
     headerStyle: {
