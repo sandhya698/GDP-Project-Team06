@@ -9,6 +9,7 @@ import Dashboard from './homePage/Dashboard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Donor } from './homePage/Donor';
 import { Patient } from './homePage/Patient';
+import { Donations } from './homePage/Donations';
 
 export const Home = () => {
 
@@ -68,7 +69,7 @@ export const Home = () => {
     }
     else if (currentPage === 'donations'){
       return (
-        <h1>Donation Page</h1>
+        <Donations />
       )
     }
     else if (currentPage === 'donor'){

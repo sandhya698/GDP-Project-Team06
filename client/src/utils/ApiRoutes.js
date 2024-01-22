@@ -7,3 +7,4 @@ export const miscStatsRoute = 'http://localhost:1432/api/inventory/misc-stats';
 export const donorsListRoute = 'http://localhost:1432/api/admin/donor-list';
 export const patientsListRoute = 'http://localhost:1432/api/admin/patient-list';
 export const userStatusUpdateRoute = 'http://localhost:1432/api/user/admin/status';
+export const donationsListRoute = 'http://localhost:1432/api/admin/donations-list';
