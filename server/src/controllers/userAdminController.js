@@ -85,7 +85,8 @@ module.exports.getDonationsList = async (req,res) => {
                 quantity: 1,
                 status: 1,
                 donor: 1,
-                disease: 1
+                disease: 1,
+                registerDate: 1
             }
         ).populate({
             path: 'donor',
@@ -98,7 +99,8 @@ module.exports.getDonationsList = async (req,res) => {
             bloodGroup: donation.bloodGroup,
             quantity: donation.quantity,
             status: donation.status,
-            disease: donation.disease
+            disease: donation.disease,
+            registerDate: donation.registerDate
         }));
   
         res.status(200).json({
@@ -126,7 +128,8 @@ module.exports.getRequestsList = async (req, res) => {
                 quantity: 1,
                 status: 1,
                 donor: 1,
-                disease: 1
+                disease: 1,
+                registerDate: 1
             }
         ).populate({
             path: 'donor',
@@ -139,7 +142,8 @@ module.exports.getRequestsList = async (req, res) => {
             bloodGroup: request.bloodGroup,
             quantity: request.quantity,
             status: request.status,
-            disease: request.disease
+            disease: request.disease,
+            registerDate: request.registerDate
         }));
 
         let patientRequestList = await PatientRequestHistory.find({},
@@ -149,7 +153,8 @@ module.exports.getRequestsList = async (req, res) => {
                 quantity: 1,
                 status: 1,
                 patient: 1,
-                disease: 1
+                disease: 1,
+                registerDate: 1
             }
         ).populate({
             path: 'patient',
@@ -163,7 +168,8 @@ module.exports.getRequestsList = async (req, res) => {
             bloodGroup: request.bloodGroup,
             quantity: request.quantity,
             status: request.status,
-            disease: request.disease
+            disease: request.disease,
+            registerDate: request.registerDate
         }));
 
         requestsList = [...formattedDonorRequestList, ...formattedPatientRequestList];

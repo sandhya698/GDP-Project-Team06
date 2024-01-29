@@ -31,7 +31,7 @@ export const donorPatientHeaders = [
     headerStyle: {
       backgroundColor: "#DEDADA"
     },
-    formatter: (cell) =>  moment(cell).format('MMMM Do YYYY')
+    formatter: (cell) => cell ? moment(cell).format('MMMM Do YYYY') : 'N/A'
   },
   {
     dataField: "status",
