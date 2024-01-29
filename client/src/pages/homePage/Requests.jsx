@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { donationReqHeaders } from '../../utils/tableHeaders/donationsReqHeaders';
 import axios from 'axios';
 import { requestsListRoute } from '../../utils/ApiRoutes';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ReactTable from '../../components/ReactTable';
 
@@ -12,6 +12,7 @@ export const Requests = () => {
   const navigate = useNavigate();
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [columns, setColumns] = useState(donationReqHeaders);
 
   const api = axios.create({
     withCredentials: true,
@@ -44,6 +45,28 @@ export const Requests = () => {
     getDonations();
   }, [getDonations, navigate]);
 
+  useEffect(() => {
+    setColumns([...donationReqHeaders,{
+      dataField: "Actions",
+      isDummyField: true,
+      text: "Actions",
+      headerStyle: {
+        backgroundColor: "#DEDADA",
+        width: '10%'
+      },
+      formatter: (cell, row) => {
+        return (  <>
+          <Button
+            variant={row.status === 'rejected' ? 'success' : 'danger'}
+            size="sm">
+            {row.status === 'rejected' ? 'Accept' : 'Reject'}
+          </Button>
+        </>
+      )}
+    }])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Container className="h-100">
       {
@@ -54,7 +77,7 @@ export const Requests = () => {
               title={'transfusers waiting for Transfusion'}
               pageSize={8}
               data={requests}
-              columns={donationReqHeaders}
+              columns={columns}
             />
         )
       }
