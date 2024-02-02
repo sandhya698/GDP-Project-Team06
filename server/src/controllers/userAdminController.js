@@ -78,19 +78,9 @@ module.exports.getPatients = async (req,res) => {
 
 module.exports.getDonationsList = async (req,res) => {
     try {
-        const donationsList = await DonorRequestHistory.find({ type: 'donate' },
-            {
-                _id: 1,
-                bloodGroup: 1,
-                quantity: 1,
-                status: 1,
-                donor: 1,
-                disease: 1,
-                registerDate: 1
-            }
-        ).populate({
+        const donationsList = await DonorRequestHistory.find({ type: 'donate' }).populate({
             path: 'donor',
-            select: 'name', 
+            select: 'name',
         });
         
         const fomattedDonationsList = donationsList.map((donation) => ({
@@ -121,17 +111,7 @@ module.exports.getDonationsList = async (req,res) => {
 module.exports.getRequestsList = async (req, res) => {
     let requestsList = [];
     try {
-        let donorRequestList = await DonorRequestHistory.find({ type: 'request' },
-            {
-                _id: 1,
-                bloodGroup: 1,
-                quantity: 1,
-                status: 1,
-                donor: 1,
-                disease: 1,
-                registerDate: 1
-            }
-        ).populate({
+        let donorRequestList = await DonorRequestHistory.find({ type: 'request' }).populate({
             path: 'donor',
             select: 'name userType', 
         });
@@ -147,17 +127,7 @@ module.exports.getRequestsList = async (req, res) => {
             userType: request.donor.userType
         }));
 
-        let patientRequestList = await PatientRequestHistory.find({},
-            {
-                _id: 1,
-                bloodGroup: 1,
-                quantity: 1,
-                status: 1,
-                patient: 1,
-                disease: 1,
-                registerDate: 1
-            }
-        ).populate({
+        let patientRequestList = await PatientRequestHistory.find({}).populate({
             path: 'patient',
             select: 'name userType', 
         });
