@@ -133,7 +133,7 @@ module.exports.getRequestsList = async (req, res) => {
             }
         ).populate({
             path: 'donor',
-            select: 'name', 
+            select: 'name userType', 
         });
 
         const formattedDonorRequestList = donorRequestList.map((request) => ({
@@ -143,7 +143,8 @@ module.exports.getRequestsList = async (req, res) => {
             quantity: request.quantity,
             status: request.status,
             disease: request.disease,
-            registerDate: request.registerDate
+            registerDate: request.registerDate,
+            userType: request.donor.userType
         }));
 
         let patientRequestList = await PatientRequestHistory.find({},
@@ -158,7 +159,7 @@ module.exports.getRequestsList = async (req, res) => {
             }
         ).populate({
             path: 'patient',
-            select: 'name', 
+            select: 'name userType', 
         });
         
         
@@ -169,7 +170,8 @@ module.exports.getRequestsList = async (req, res) => {
             quantity: request.quantity,
             status: request.status,
             disease: request.disease,
-            registerDate: request.registerDate
+            registerDate: request.registerDate,
+            userType: request.patient.userType
         }));
 
         requestsList = [...formattedDonorRequestList, ...formattedPatientRequestList];

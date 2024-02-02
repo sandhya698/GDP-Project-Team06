@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { donationReqHeaders } from '../../utils/tableHeaders/donationsReqHeaders';
 import axios from 'axios';
-import { requestsListRoute } from '../../utils/ApiRoutes';
+import { adminControllerRoute, requestsListRoute } from '../../utils/ApiRoutes';
 import { Button, Container } from 'react-bootstrap';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ReactTable from '../../components/ReactTable';
+import { toast } from 'react-toastify';
+import { toastOptions } from '../../utils/toasOptions';
 
 export const Requests = () => {
 
@@ -45,6 +47,31 @@ export const Requests = () => {
     getDonations();
   }, [getDonations, navigate]);
 
+  const updateStatus = async (row) => {
+    const { _id, bloodGroup, userType, quantity, status } = row;
+    try {
+      let newStatus = status === 'rejected' ? 'accepted' : 'rejected';
+      let route = `${adminControllerRoute}/${userType}/request/${newStatus}`;
+      const res = await api.post(route, {
+        id: _id, quantity, bloodGroup
+      });
+      if (res.data.success === true) {
+        setRequests((prevDonorList) => {
+          return prevDonorList.map((request) => {
+            if (request._id === _id) {
+              return { ...request, status: newStatus };
+            }
+            return request;
+          });
+        });
+      };
+    }
+    catch (error) {
+      // console.log(error.response.data);
+      toast.error(error.response.data.message, toastOptions);
+    }
+  }
+
   useEffect(() => {
     setColumns([...donationReqHeaders,{
       dataField: "Actions",
@@ -57,6 +84,7 @@ export const Requests = () => {
       formatter: (cell, row) => {
         return (  <>
           <Button
+            onClick={() => updateStatus(row)}
             variant={row.status === 'rejected' ? 'success' : 'danger'}
             size="sm">
             {row.status === 'rejected' ? 'Accept' : 'Reject'}
