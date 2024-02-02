@@ -105,12 +105,26 @@ const donorRequest = async (status, req, res) => {
             updatedInventory = await subtractStock(bloodGroup, quantity);
             donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
 
+            if (!donorHistRec) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Donation request record not found'
+                });
+            }
+
             message = 'Donor request accepted';
             body['updatedInventory'] = updatedInventory;
             body['donorHistRec'] = donorHistRec;
         }
         else if (status === 'rejected') {
             donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
+
+            if (!donorHistRec) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Donation request record not found'
+                });
+            }
 
             message = 'Donor request rejected';
             body['donorHistRec'] = donorHistRec;
@@ -147,12 +161,26 @@ const patientRequest = async (status, req, res) => {
             updatedInventory = await subtractStock(bloodGroup, quantity);
             patientHistRec = await PatientRequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
 
+            if (!patientHistRec) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Patient request record not found'
+                });
+            }
+
             message = 'Patient request accepted';
             body['updatedInventory'] = updatedInventory;
             body['patientHistRec'] = patientHistRec;
         }
         else if (status === 'rejected') {
             patientHistRec = await PatientRequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
+
+            if (!donorHistRec) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Patient request record not found'
+                });
+            }
 
             message = 'Patient reject rejected';
             body['patientHistRec'] = patientHistRec;
