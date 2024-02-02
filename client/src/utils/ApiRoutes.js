@@ -9,3 +9,4 @@ export const patientsListRoute = 'http://localhost:1432/api/admin/patient-list';
 export const userStatusUpdateRoute = 'http://localhost:1432/api/user/admin/status';
 export const donationsListRoute = 'http://localhost:1432/api/admin/donations-list';
 export const requestsListRoute = 'http://localhost:1432/api/admin/requests-list';
+export const adminControllerRoute = 'http://localhost:1432/api/admin';

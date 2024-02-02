@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { donationReqHeaders } from '../../utils/tableHeaders/donationsReqHeaders';
 import axios from 'axios';
-import { donationsListRoute } from '../../utils/ApiRoutes';
+import { adminControllerRoute, donationsListRoute } from '../../utils/ApiRoutes';
 import { Button, Container } from 'react-bootstrap';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ReactTable from '../../components/ReactTable';
+import { toastOptions } from '../../utils/toasOptions';
+import { toast } from 'react-toastify';
 
 export const Donations = () => {
 
@@ -45,6 +47,30 @@ export const Donations = () => {
     getDonations();
   }, [getDonations, navigate]);
 
+  const updateStatus = async (id, bloodGroup, quantity, status) => {
+    try {
+      let newStatus = status === 'rejected' ? 'accepted' : 'rejected';
+      let route = `${adminControllerRoute}/donor/donate/${newStatus}`;
+      const res = await api.post(route, {
+        id, quantity, bloodGroup
+      });
+      if (res.data.success === true) {
+        setDonations((prevDonorList) => {
+          return prevDonorList.map((donation) => {
+            if (donation._id === id) {
+              return { ...donation, status: newStatus };
+            }
+            return donation;
+          });
+        });
+      };
+    }
+    catch (error) {
+      // console.log(error.response.data);
+      toast.error(error.response.data.message, toastOptions);
+    }
+  }
+
   useEffect(() => {
     setColumns([...donationReqHeaders,{
       dataField: "Actions",
@@ -57,6 +83,7 @@ export const Donations = () => {
       formatter: (cell, row) => {
         return (  <>
           <Button
+            onClick={() => updateStatus(row._id, row.bloodGroup, row.quantity, row.status)}
             variant={row.status === 'rejected' ? 'success' : 'danger'}
             size="sm">
             {row.status === 'rejected' ? 'Accept' : 'Reject'}
