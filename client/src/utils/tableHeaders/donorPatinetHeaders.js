@@ -47,7 +47,14 @@ export const donorPatientHeaders = [
     },
     formatter: (cell) => (  
       <span>
-        <strong style={ { color: `${cell === 'rejected' ? 'red' : 'green'}`, textTransform: 'capitalize'} }> { cell } </strong>
+        <strong style={{
+          color: cell === 'rejected' ? 'red' :
+            cell === 'verified' ? 'green' :
+              '#FFBF00', 
+            textTransform: 'capitalize' 
+        }}>
+          {cell}
+        </strong>
       </span>
     )
   }
