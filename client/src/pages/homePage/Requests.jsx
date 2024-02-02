@@ -89,6 +89,13 @@ export const Requests = () => {
             size="sm">
             {row.status === 'rejected' ? 'Accept' : 'Reject'}
           </Button>
+          <Button
+            className='ms-3'
+            onClick={() => updateStatus(row._id, row.bloodGroup, row.quantity, row.status)}
+            variant={row.status === 'pending' ? 'success' : null}
+            size="sm">
+            {row.status === 'pending' ? 'Accept' : null}
+          </Button>
         </>
       )}
     }])

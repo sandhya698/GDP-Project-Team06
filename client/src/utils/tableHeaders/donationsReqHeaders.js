@@ -66,7 +66,14 @@ export const donationReqHeaders = [
     },
     formatter: (cell) => (  
       <span>
-        <strong style={ { color: `${cell === 'rejected' ? 'red' : 'green'}`, textTransform: 'capitalize'} }> { cell } </strong>
+        <strong style={{
+          color: cell === 'rejected' ? 'red' :
+            cell === 'accepted' ? 'green' :
+              '#FFBF00', 
+            textTransform: 'capitalize' 
+        }}>
+          {cell}
+        </strong>
       </span>
     )
   }
