@@ -5,7 +5,8 @@ export const donorPatientHeaders = [
     dataField: "_id",
     text: "Id",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '8rem'
     },
     style: {  overflow: 'hidden',
       textOverflow: 'ellipsis'}
@@ -15,21 +16,24 @@ export const donorPatientHeaders = [
     text: "Name",
     sort: true,
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '14rem'
     }
   },
   {
     dataField: "email",
     text: "Email",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '18rem'
     },
   },
   {
     dataField: "registerDate",
     text: "Registerd On",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '10rem'
     },
     formatter: (cell) => cell ? moment(cell).format('MMMM Do YYYY') : 'N/A'
   },
@@ -38,7 +42,8 @@ export const donorPatientHeaders = [
     text: "Status",
     sort: true,
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '6rem'
     },
     formatter: (cell) => (  
       <span>

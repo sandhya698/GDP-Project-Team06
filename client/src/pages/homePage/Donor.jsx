@@ -3,9 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { donorsListRoute, userStatusUpdateRoute } from '../../utils/ApiRoutes';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import ReactTable from '../../components/ReactTable';
-import { Button } from "react-bootstrap";
 import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
 import { toastOptions } from '../../utils/toasOptions';
@@ -77,7 +76,7 @@ export const Donor = () => {
       text: "Actions",
       headerStyle: {
         backgroundColor: "#DEDADA",
-        width: '10%'
+        width: '10rem'
       },
       formatter: (cell, row) => {
         return (  <>
@@ -91,7 +90,7 @@ export const Donor = () => {
       )}
     }])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [donorPatientHeaders]);
  
   return (
     <Container className="h-100">

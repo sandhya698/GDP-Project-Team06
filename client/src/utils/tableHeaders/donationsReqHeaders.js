@@ -5,7 +5,8 @@ export const donationReqHeaders = [
     dataField: "_id",
     text: "Id",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '6rem'
     },
     style: {  overflow: 'hidden',
       textOverflow: 'ellipsis'}
@@ -16,7 +17,8 @@ export const donationReqHeaders = [
     text: "Name",
     sort: true,
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '12rem'
     },
     formatter: (cell, row) => row.donor ? row.donor : row.patient
   },
@@ -24,7 +26,8 @@ export const donationReqHeaders = [
     dataField: "disease",
     text: "Disease",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '12rem'
     },
     formatter: (cell) => cell ? cell : 'N/A'
   },
@@ -32,21 +35,24 @@ export const donationReqHeaders = [
     dataField: "bloodGroup",
     text: "Group",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '4rem'
     },
   },
   {
     dataField: "quantity",
     text: "Units",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '4rem'
     },
   },
   {
     dataField: "registerDate",
     text: "Registerd On",
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '10rem'
     },
     formatter: (cell) => cell ?  moment(cell).format('MMMM Do YYYY') : 'N/A'
   },
@@ -55,7 +61,8 @@ export const donationReqHeaders = [
     text: "Status",
     sort: true,
     headerStyle: {
-      backgroundColor: "#DEDADA"
+      backgroundColor: "#DEDADA",
+      width: '6rem'
     },
     formatter: (cell) => (  
       <span>

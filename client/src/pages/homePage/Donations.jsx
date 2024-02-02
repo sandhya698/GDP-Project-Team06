@@ -78,7 +78,7 @@ export const Donations = () => {
       text: "Actions",
       headerStyle: {
         backgroundColor: "#DEDADA",
-        width: '10%'
+        width: '10rem'
       },
       formatter: (cell, row) => {
         return (  <>
@@ -92,7 +92,7 @@ export const Donations = () => {
       )}
     }])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [donationReqHeaders]);
 
   return (
     <Container className="h-100">
