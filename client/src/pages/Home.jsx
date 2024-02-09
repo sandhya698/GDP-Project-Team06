@@ -11,6 +11,7 @@ import { Donor } from './homePage/Donor';
 import { Patient } from './homePage/Patient';
 import { Donations } from './homePage/Donations';
 import { Requests } from './homePage/Requests';
+import Inventory from './homePage/Inventory';
 
 export const Home = () => {
 
@@ -65,7 +66,7 @@ export const Home = () => {
     }
     else if (currentPage === 'inventory') {
       return (
-        <h1>Inventory Page</h1>
+        <Inventory />
       )
     }
     else if (currentPage === 'donations'){
