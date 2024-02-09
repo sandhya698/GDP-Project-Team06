@@ -35,7 +35,7 @@ export const Register = () => {
 
   useEffect(() => {
     redirecToHome();
-  }, [redirecToHome, navigate]);
+  }, [redirecToHome]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

@@ -45,7 +45,7 @@ export const Donations = () => {
 
   useEffect(() => {
     getDonations();
-  }, [getDonations, navigate]);
+  }, [getDonations]);
 
   const updateStatus = async (id, bloodGroup, quantity, status) => {
     try {

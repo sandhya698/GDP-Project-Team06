@@ -45,7 +45,7 @@ export const Patient = () => {
 
   useEffect(() => {
     getPatients();
-  }, [getPatients, navigate]);
+  }, [getPatients]);
 
   const updateStatus = async (id,status) => {
     try {

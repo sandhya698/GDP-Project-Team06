@@ -45,7 +45,7 @@ export const Requests = () => {
 
   useEffect(() => {
     getDonations();
-  }, [getDonations, navigate]);
+  }, [getDonations]);
 
   const updateStatus = async (row) => {
     const { _id, bloodGroup, userType, quantity, status } = row;

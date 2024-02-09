@@ -47,7 +47,7 @@ export const Home = () => {
 
   useEffect(() => {
     checkUserAuthentication();
-  }, [checkUserAuthentication, navigate]);
+  }, [checkUserAuthentication]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

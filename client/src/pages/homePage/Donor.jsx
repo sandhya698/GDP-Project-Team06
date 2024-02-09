@@ -45,7 +45,7 @@ export const Donor = () => {
 
   useEffect(() => {
     getDonors();
-  }, [getDonors, navigate]);
+  }, [getDonors]);
   
   const updateStatus = async (id,status) => {
     try {

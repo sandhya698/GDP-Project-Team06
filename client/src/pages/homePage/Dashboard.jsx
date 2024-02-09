@@ -46,7 +46,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     getStock();
-  }, [getStock, navigate]);
+  }, [getStock]);
 
 
   return (
