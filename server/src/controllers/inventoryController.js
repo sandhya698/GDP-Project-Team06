@@ -9,9 +9,18 @@ const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
 module.exports.manageStock = async (req, res) => {
     let { bloodGroup, quantity } = req.body;
     const type = req.params.type;
-
-    if (!bloodGroup || !quantity ) {
-        return res.status(422).json({ message: "Every field must be filled" });
+    
+    if (!['in','out'].includes(type)) {
+        return res.status(422).json({
+            message: `Invalid type ${type}`,
+            success: false
+        });
+    }
+    if (!bloodGroup || !quantity) {
+        return res.status(422).json({
+            message: "Every field must be filled",
+            success: false
+        });
     }
     if (!bloodGroups.includes(bloodGroup)) {
         return res.status(422).json({
@@ -141,11 +150,6 @@ module.exports.miscStats = async (req,res) => {
         miscStats.accepted = (donorAccepted[0]?.totalQuantity ?? 0) + (patientAccepted[0]?.totalQuantity ?? 0);
         miscStats.rejected = (donorRejected[0]?.totalQuantity ?? 0) + (patientRejected[0]?.totalQuantity ?? 0);
         miscStats.totalBlood = bloodStock[0]?.totalQuantity ?? 0;
-
-        // miscStats.donorAccepted = donorAccepted[0]?.totalQuantity ?? 0;
-        // miscStats.patientAccepted = patientAccepted[0]?.totalQuantity ?? 0;
-        // miscStats.donorRejected = donorRejected[0]?.totalQuantity ?? 0;
-        // miscStats.patientRejected = patientRejected[0]?.totalQuantity ?? 0;
 
         res.status(200).json({
             success: true,

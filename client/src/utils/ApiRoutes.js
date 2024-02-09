@@ -10,3 +10,4 @@ export const userStatusUpdateRoute = 'http://localhost:1432/api/user/admin/statu
 export const donationsListRoute = 'http://localhost:1432/api/admin/donations-list';
 export const requestsListRoute = 'http://localhost:1432/api/admin/requests-list';
 export const adminControllerRoute = 'http://localhost:1432/api/admin';
+export const manageStockRoute = 'http://localhost:1432/api/inventory/manage-stock';
