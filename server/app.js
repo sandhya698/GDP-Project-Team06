@@ -1,8 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const routes = require('./src/routes/routes');
 const cookieParser = require('cookie-parser');
+const userRouter = require('./src/routes/userRoutes');
+const inventoryRouter = require('./src/routes/inventoryRoutes');
+const historyRouter = require('./src/routes/historyRoutes');
+const adminRouter = require('./src/routes/adminRoutes');
 
 // env and database connection configurations
 dotenv.config({ path: './config.env' });
@@ -32,7 +35,10 @@ app.get('/', (req, res) => {
 });
 
 // congigure routes
-app.use('/api', routes);
+app.use('/api/user', userRouter);
+app.use('/api/inventory', inventoryRouter);
+app.use('/api/history', historyRouter);
+app.use('/api/admin', adminRouter);
 
 // undefined route for get and post
 app.get('*', (req, res) => {
