@@ -17,7 +17,7 @@ module.exports.adminControls = async (req, res) => {
     const bodyValidationError = bodyValidation(req.body);
     if (bodyValidationError){
         return res.status(422).json({
-            status: false,
+            success: false,
             message: bodyValidationError
         });
     }
