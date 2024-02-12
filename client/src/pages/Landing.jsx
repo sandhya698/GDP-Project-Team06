@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NavigationBar from '../components/NavigationBar'
-import { Container, Row, Button, Col, Modal } from 'react-bootstrap';
+import { Container, Row, Form, FloatingLabel, Button, Card, Col, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 
 export default function Landing() {
@@ -15,16 +16,51 @@ export default function Landing() {
       >
         <Modal.Header className='px-4 py-2' closeButton>
           <Modal.Title  id="contained-modal-title-vcenter">
-          Modal Title
+          Login to start Transfusion!
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+        <Row className="d-flex justify-content-center align-items-center">
+            <Col md={11}>
+            <Card className="shadow">
+                <div className="border border-3 border-danger mb-2"></div>
+                 <Card.Body>
+                  <Form className="mb-3" >
+                    <Form.Group className="mb-3">
+                      <FloatingLabel controlId="email" label="Email address"  >
+                        <Form.Control type="email" placeholder="name@example.com" name="email"  required />
+                      </FloatingLabel> 
+                    </Form.Group>
+                      
+                    <Form.Group className="mb-3">
+                      <FloatingLabel controlId="password" label="Password" >
+                        <Form.Control type="password" placeholder="secret" name="password"  required />
+                      </FloatingLabel> 
+                    </Form.Group>
+  
+                    <div className="mb-3">
+                      <p className="small">
+                        <Link className="text-danger" to='#' >Forgot password?</Link>
+                      </p>
+                    </div>
+  
+                    <div className="d-grid">
+                      <Button variant="danger">
+                        Start Transfusion
+                      </Button>
+                    </div>
+                      
+                    <div className="mt-3">  
+                      <p className="mb-0  text-center">
+                        Do you want to become a transfuser?{" "}
+                        <Link className="text-danger fw-bold" to='/register' >Register</Link>
+                      </p>
+                    </div>
+                  </Form>
+                  </Card.Body>
+                </Card>
+          </Col>
+        </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='danger' onClick={props.onHide}>Close</Button>
@@ -52,8 +88,8 @@ export default function Landing() {
             </Col>
             <MyVerticallyCenteredModal
               show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+              onHide={() => setModalShow(false)}
+            />
           </Row>
         </Container>
       </Container>
