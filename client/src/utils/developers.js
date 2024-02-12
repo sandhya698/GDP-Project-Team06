@@ -2,22 +2,22 @@ export const developers = [
     {
         name: "Sandhya Paladugu",
         img: '/img.jpeg',
-        about: "1.6 years of experience as a system administrator at DXC Technology. Expertise in Citrix VDI administration."
+        about: "Expertise in Citrix VDI administration. 1.6 years of experience as a System Admin at DXC."
     },
     {
         name: "Manoj Vamanaguntla",
         img: '/img.jpeg',
-        about: "4 years of experience in Data Anaystat IpowerFour Technologies. Expertise in Database and, Quality testin."
+        about: "Expertise in Database and, Quality testing. 4 years of experience as Data Anayst"
     },
     {
         name: "Aparna Marepally",
         img: '/img.jpeg',
-        about: "Passionate to excel in the field of full stack developer, Startups and entrepreneurship."
+        about: "Passionate to excel in the field of full stack developer, Startups and entrepreneurship"
     },
     {
         name: "Praveen Babu",
         img: '/img.jpeg',
-        about: "Achieved AWS (Amazon Web Services) and Python Certifications."
+        about: "Achieved AWS (Amazon Web Services) and Python Certifications"
     },
     {
         name: "Pooja Sri Ramineni",
@@ -27,6 +27,6 @@ export const developers = [
     {
         name: "Vijaya Gopal Raju",
         img: '/img.jpeg',
-        about: "Good Skills in Salesforce. Good at team participation and time management."
+        about: "Good Skills in Salesforce. Good at team participation and time management"
     },
 ];
