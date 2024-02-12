@@ -25,7 +25,7 @@ export default function NavigationBar({isAuthenticated, userId}) {
   
   return (
     <>
-      <Navbar collapseOnSelect expand="md" bg="primary" data-bs-theme="dark"  sticky="top">
+      <Navbar className='my-navbar' collapseOnSelect expand="md" sticky="top">
       <Container>
         <Navbar.Brand as={NavLink} to='/' className='fw-bold'>Transfuse Now</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

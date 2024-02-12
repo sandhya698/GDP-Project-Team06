@@ -7,6 +7,7 @@ import { Error } from './pages/Error';
 import { ToastContainer } from 'react-toastify';
 import { About } from './pages/About';
 import { Faq } from './pages/Faq';
+import Landing from './pages/Landing';
 
 export default function App() {
 
@@ -19,6 +20,7 @@ export default function App() {
                     <Route path='/login'    element={<Login />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/faq'      element={<Faq />} />
+                    <Route path='/landing'      element={<Landing />} />
                     <Route path='*'         element={<Error />} />
                 </Routes>
             </BrowserRouter>
