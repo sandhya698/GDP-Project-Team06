@@ -9,6 +9,21 @@ body {
   padding: 0;
 }
 
+/* body {
+  scrollbar-width: none;
+} */
+
+body::-webkit-scrollbar {
+  /* width: 0.2rem; */
+  display: none;
+}
+
+/* body::-webkit-scrollbar-thumb {
+  background-color: #58000039;
+  width: 0.1rem;
+  border-radius: 1rem;
+} */
+
 /* Setting up full height for row excluding Navbar */
 .full-height-row {
   min-height: calc(100vh - 56px);
