@@ -89,9 +89,25 @@ body::-webkit-scrollbar {
   font-family: 'Josefin Sans', sans-serif;
 }
 
-.landing-wrapper .landing-slogan{
+.landing-wrapper .landing-slogan::after{
+  content: '';
+  animation: cities  12s infinite linear;
   font-size: 26px;
   text-transform: uppercase;
   font-family: 'Archivo Black', sans-serif;
   color: rgba(255, 0, 0, 0.829);
+}
+
+@keyframes cities {
+  0%{ content: 'Be the difference, donate blood';}
+  10%{ content: 'Be a donor, be a lifeline.';}
+  20%{ content: 'Give the gift of life – donate blood.';}
+  30%{ content: 'Every drop counts: donate blood today.';}
+  40%{ content: 'Be a blood donor, be a blessing.';}
+  50%{ content: 'Share life: donate blood.';}
+  60%{ content: 'Be a part of the cure – donate blood.';}
+  70%{ content: 'Your blood, their hope: donate now.';}
+  80%{ content: 'Be bold, be brave, donate blood.';}
+  90%{ content: 'Be a lifesaver, be a blood donor.';}
+  100%{ content: 'Donate blood, save lives: be a hero.';}
 }
