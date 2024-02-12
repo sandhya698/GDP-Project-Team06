@@ -13,3 +13,24 @@ body {
 .full-height-row {
   min-height: calc(100vh - 56px);
 }
+
+
+.dev-card{
+  width: 250px;
+  height: 350px !important;
+  border-radius: 1rem !important;
+}
+
+.dev-header{
+  background-image: url(https://developer.salesforce.com/resources2/career2017/images/header-bg-2.svg?v=2);
+  background-position: right -1px top -2px;
+  height: 150px;
+  border-radius: 1rem 1rem 0 0 !important;
+}
+
+.dev-header img {
+  height: 150px;
+  width: 150px;
+  position: relative;
+  top: 15px;
+}
