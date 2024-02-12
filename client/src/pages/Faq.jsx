@@ -16,7 +16,7 @@ export const Faq = () => {
         <Row className="full-height-row overflow-x-auto">
           <Col sm={12} md={10} className='mx-auto my-4'>
             <h3 className="text-center fs-1 mb-3 text-capitalize">Frequently Asked Questions</h3>
-            <Accordion flush>
+            <Accordion>
               {
                 faqList.map((data, index) => {
                   return (
