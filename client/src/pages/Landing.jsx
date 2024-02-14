@@ -62,9 +62,6 @@ export default function Landing() {
           </Col>
         </Row>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='danger' onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
       </Modal>
     );
   }
@@ -88,6 +85,8 @@ export default function Landing() {
             </Col>
             <MyVerticallyCenteredModal
               show={modalShow}
+              backdrop="static"
+              keyboard={false}
               onHide={() => setModalShow(false)}
             />
           </Row>
