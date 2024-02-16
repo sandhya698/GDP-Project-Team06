@@ -6,6 +6,7 @@ import { RegLogController } from './modals/RegLogController';
 
 export default function Landing() {
   const [modalShow, setModalShow] = useState(false);
+  
   const MyVerticallyCenteredModal = (props) => {
     return (
       <Modal

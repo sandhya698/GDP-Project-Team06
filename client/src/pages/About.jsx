@@ -13,8 +13,7 @@ export const About = () => {
         isAuthenticated={isAuthenticated}
       />
       <Container fluid >
-        <Row className="full-height-row ">
-          <Col className='mx-2 my-4'>
+          <Col className='d-flex flex-column justify-content-between mx-auto my-4 h-100'>
             <Row className="">
               <h3 className="text-center mb-3 text-capitalize">Developers</h3>
               {
@@ -37,7 +36,6 @@ export const About = () => {
               }
             </Row>
           </Col>
-        </Row>
       </Container>
     </>
   )

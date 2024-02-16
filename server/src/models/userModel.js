@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
     userType: {
         type: String,
         require: true,
-        enum: ['admin', 'donor', 'patinet']
+        enum: ['admin', 'donor', 'patient']
     },
     status: {
         type: String,
