@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, Form, FloatingLabel, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export default function LoginModal() {
+export default function LoginModal({handleUser}) {
   return (
     <>
       <Row className="d-flex justify-content-center align-items-center p-2">
@@ -22,7 +22,7 @@ export default function LoginModal() {
                 </FloatingLabel> 
               </Form.Group>
 
-              <div className="mb-3">
+              <div className="mb-3 ps-1">
                 <p className="small">
                   <Link className="text-danger" to='#' >Forgot password?</Link>
                 </p>
@@ -37,7 +37,7 @@ export default function LoginModal() {
               <div className="mt-3">  
                 <p className="mb-0  text-center">
                   Do you want to become a transfuser?{" "}
-                  <Link className="text-danger fw-bold" to='/register' >Register</Link>
+                  <Link className="text-danger fw-bold" onClick={e => handleUser(false)} >Register</Link>
                 </p>
               </div>
             </Form>

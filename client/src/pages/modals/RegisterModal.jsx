@@ -2,11 +2,11 @@ import React from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export default function RegisterModal() {
+export default function RegisterModal({handleUser}) {
   return (
     <>
       <Row className="d-flex justify-content-center align-items-center">
-        <h2 className="fw-bold mb-2 text-uppercase">BLOOD BANK</h2>
+        <h2 className="fw-bold mb-2 text-uppercase">transfuse now</h2>
         <p className="mb-3">Please enter your details to become a Transfuser!</p>
         <Form className="mb-3" >
             
@@ -57,7 +57,7 @@ export default function RegisterModal() {
           <div className="mt-3">
             <p className="mb-0  text-center">
               Already a Transfuser?{" "}
-              <Link className="text-danger fw-bold" to='/login' >Login</Link>
+              <Link className="text-danger fw-bold" onClick={e => handleUser(true)} >Login</Link>
             </p>
           </div>
         </Form>

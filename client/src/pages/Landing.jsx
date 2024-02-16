@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import NavigationBar from '../components/NavigationBar'
 import { Container, Row, Button, Col, Modal } from 'react-bootstrap';
-import LoginModal from './modals/LoginModal';
-import RegisterModal from './modals/RegisterModal';
+import { RegLogController } from './modals/RegLogController';
 
 
 export default function Landing() {
@@ -17,8 +16,7 @@ export default function Landing() {
       >
         <Modal.Body>
           <Modal.Header className='p-0 m-0 border-0' closeButton> </Modal.Header>
-          {/* <LoginModal /> */}
-          <RegisterModal />
+            <RegLogController />
         </Modal.Body>
       </Modal>
     );
