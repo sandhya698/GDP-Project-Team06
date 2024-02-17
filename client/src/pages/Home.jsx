@@ -50,13 +50,11 @@ export const Home = () => {
           ) :
           (
             <>
-              <Container fluid >
-                <Row className="full-height-row">
-                  <Col sm={2} md={3} lg={2} className='p-0'>
-                    <Sidebar/>
-                  </Col>
-                  <Col sm={10} md={9} lg={10} className='p-0'>
-                    <Dashboard />
+            <Container fluid> 
+                <Row className="h-100"> 
+                  <Sidebar />
+                  <Col className='p-0'>
+                    <Dashboard /> 
                   </Col>
                 </Row>
               </Container>

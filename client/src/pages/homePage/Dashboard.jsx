@@ -58,14 +58,14 @@ export default function Dashboard() {
         ) :
         (
           <>
-            <Container className='h-100 px-5 d-flex flex-column'>
+            <Container className='px-5 d-flex flex-column ' style={{ height: '100vh', overflowY: 'auto' }} >
               <Row className='overview mt-3'>
                   <Row xs={1} md={2} lg={5} className="g-4 mt-0">
                     {
                       Object.keys(miscStats).map((data, index) => ( 
                         <Col key={index} >
                           <Card bg={dashboardList[index].bgColor} style={{height: "120px"}} className='flex-row align-items-center justify-content-around shadow'>
-                            <Col md={8}>
+                            <Col sm={8} md={8}>
                               <Card.Body className='py-2'>
                                 <Card.Title className="text-white fs-5">{dashboardList[index].name}</Card.Title>
                                 <Card.Text>
@@ -84,12 +84,12 @@ export default function Dashboard() {
                   </Row>
               </Row>
               <Row className='blood-groups my-5'>
-                  <Row xs={1} md={2} lg={4} className="g-5 mt-0">
+                  <Row xs={1} md={2} lg={4} className="g-4 mt-0">
                       {
                         stock.map((data, index) => (
                           <Col key={index}>
                             <Card border='primary' className='flex-row align-items-center justify-content-around shadow' style={{ height: "120px"}}>
-                              <Col md={8}>
+                              <Col sm={8} md={8}>
                                 <Card.Body className='py-2'>
                                   <Card.Title className="text-primary fs-1">{data.bloodGroup}</Card.Title>
                                   <Card.Text>
