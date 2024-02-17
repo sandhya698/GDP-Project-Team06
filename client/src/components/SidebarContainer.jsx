@@ -1,13 +1,19 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Sidebar } from './Sidebar'
+import { useLocation } from 'react-router-dom';
+
 
 export default function SidebarContainer({ children }) {
-  console.log(window.location.pathname)
+  const SIDEBAR_ROUTES = ['/home', '/donors', '/patients', '/donations', '/requests', '/inventory', '/donate', '/request'];
+  
+  const location = useLocation();
+  console.log(location.pathname)
+
   return (
     <>
       {
-        window.location.pathname !== '/' ?
+        SIDEBAR_ROUTES.includes(location.pathname)?
         (
           <Container fluid> 
             <Row className="h-100"> 
