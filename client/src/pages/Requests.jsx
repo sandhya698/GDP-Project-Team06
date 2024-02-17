@@ -8,7 +8,6 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ReactTable from '../components/ReactTable';
 import { toast } from 'react-toastify';
 import { toastOptions } from '../utils/toasOptions';
-import SidebarContainer from '../components/SidebarContainer';
 
 export const Requests = () => {
 
@@ -106,7 +105,7 @@ export const Requests = () => {
   }, [donationReqHeaders]);
 
   return (
-    <SidebarContainer>
+    <>
       { loading ? (
         <LoadingSpinner />
       ) : (
@@ -117,6 +116,6 @@ export const Requests = () => {
             columns={columns}
           />
       )}
-    </SidebarContainer>
+    </>
   )
 }

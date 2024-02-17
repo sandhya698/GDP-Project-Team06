@@ -8,7 +8,6 @@ import ReactTable from '../components/ReactTable';
 import { donorPatientHeaders } from '../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
 import { toastOptions } from '../utils/toasOptions';
-import SidebarContainer from '../components/SidebarContainer';
 
 export const Patient = () => {
 
@@ -103,7 +102,7 @@ export const Patient = () => {
   }, [donorPatientHeaders]);
  
   return (
-    <SidebarContainer>
+    <>
       { loading ? (
         <LoadingSpinner />
       ) : (
@@ -114,6 +113,6 @@ export const Patient = () => {
             columns={columns}
           />
       )}
-    </SidebarContainer>
+    </>
   );
 };

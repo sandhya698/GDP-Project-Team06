@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Button, Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import axios from 'axios';
 import { manageStockRoute } from '../utils/ApiRoutes';
-import SidebarContainer from '../components/SidebarContainer';
 
 export default function Inventory() {
 
@@ -40,8 +39,7 @@ export default function Inventory() {
 
 
   return (
-    // <Container>
-      <SidebarContainer>
+    <>
       <Row className="d-flex justify-content-start align-items-center mx-2 my-5 m-md-5">
         <Col md={8} lg={8} xs={12}>
           <div className="border border-3 border-primary"></div>
@@ -101,8 +99,7 @@ export default function Inventory() {
             </Card.Body>
           </Card>
         </Col>
-        </Row>
-        </SidebarContainer>
-    // {/* </Container> */}
+      </Row>
+    </>
   )
 }

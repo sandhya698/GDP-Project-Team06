@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { getStockRoute, miscStatsRoute } from '../utils/ApiRoutes';
 import { dashboardList } from '../utils/dashboardIconList';
 import LoadingSpinner from '../components/LoadingSpinner';
-import SidebarContainer from '../components/SidebarContainer';
 
 export default function Dashboard() {
 
@@ -54,8 +53,7 @@ export default function Dashboard() {
 
   return (
     <>
-      
-          <SidebarContainer>{
+      {
         loading ? (
           <LoadingSpinner />
         ) :
@@ -111,8 +109,6 @@ export default function Dashboard() {
               </Row>
             </Container>  )
       }
-          </SidebarContainer>
-      
     </>
   )
 }

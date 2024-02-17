@@ -15,6 +15,7 @@ import { Donations } from './pages/Donations';
 import { Requests } from './pages/Requests';
 import Inventory from './pages/Inventory';
 import Dashboard from './pages/Dashboard';
+import SidebarContainer from './components/SidebarContainer';
 
 export default function App() {
 
@@ -22,20 +23,22 @@ export default function App() {
         <>
             <GlobalStateProvider>
                 <BrowserRouter>
-                    <Routes>
-                        <Route path='/'          element={<Landing />} />
-                        <Route path='/about'     element={<About />} />
-                        <Route path='/login'     element={<Login />} />
-                        <Route path='/register'  element={<Register />} />
-                        <Route path='/faq'       element={<Faq />} />
-                        <Route path='/home'      element={<Dashboard />} />
-                        <Route path='/donors'    element={<Donor />} />
-                        <Route path='/patients'  element={<Patient />} />
-                        <Route path='/donations' element={<Donations />} />
-                        <Route path='/requests'  element={<Requests />} />
-                        <Route path='/Inventory' element={<Inventory />} />
-                        <Route path='*'          element={<Error />} />
-                    </Routes>
+                    <SidebarContainer>
+                        <Routes>
+                            <Route path='/'          element={<Landing />} />
+                            <Route path='/about'     element={<About />} />
+                            <Route path='/login'     element={<Login />} />
+                            <Route path='/register'  element={<Register />} />
+                            <Route path='/faq'       element={<Faq />} />
+                            <Route path='/home'      element={<Dashboard />} />
+                            <Route path='/donors'    element={<Donor />} />
+                            <Route path='/patients'  element={<Patient />} />
+                            <Route path='/donations' element={<Donations />} />
+                            <Route path='/requests'  element={<Requests />} />
+                            <Route path='/Inventory' element={<Inventory />} />
+                            <Route path='*'          element={<Error />} />
+                        </Routes>
+                    </SidebarContainer>
                 </BrowserRouter>
                 <ToastContainer />
             </GlobalStateProvider>

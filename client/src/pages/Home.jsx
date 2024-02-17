@@ -1,21 +1,28 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
 import { authenticate } from '../utils/ApiRoutes';
-import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Sidebar } from '../components/Sidebar';
-import Dashboard from './Dashboard';
+// import Dashboard from './Dashboard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { useNavigate } from 'react-router';
+// import { Donor } from './Donor';
+// import { Patient } from './Patient';
+// import { Donations } from './Donations';
+// import { Requests } from './Requests'; 
+// import Inventory from './Inventory';
+// import { Error } from './Error';
+// import SidebarContainer from '../components/SidebarContainer';
 
 export const Home = () => {
 
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
   const checkUserAuthentication = useCallback(async () => {
     try {
-      console.log('autnentcaitng')
+      // console.log('autnentcaitng')
       const res = await axios.get(authenticate, {
         withCredentials: true,
         headers: {
@@ -23,7 +30,7 @@ export const Home = () => {
         }
       });
       console.log(res.data);
-      setIsAuthenticated(true);
+      // setIsAuthenticated(true);
     }
     catch (err) {
       console.log(err.response.data);
@@ -56,7 +63,7 @@ export const Home = () => {
                 <Row className="h-100"> 
                   <Sidebar />
                   <Col className='p-0'>
-                    <Dashboard /> 
+                    {/* <Dashboard />  */}
                   </Col>
                 </Row>
               </Container>
