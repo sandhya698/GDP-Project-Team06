@@ -40,6 +40,7 @@ export default function LoginModal({ handleUser }) {
         if (res.data.success) {
           toast.success('Successfully logged In', toastOptions);
           dispatch({ type: 'SET_USER', payload: res.data.loginUser });
+          dispatch({ type: 'SET_TOKEN', payload: res.data.token });
           navigate('/home');
         }
         

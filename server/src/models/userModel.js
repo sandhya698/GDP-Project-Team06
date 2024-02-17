@@ -65,7 +65,7 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.generateJsonWebToken = async function () {
     try {
         // generating a json token
-        const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET_KEY);
+        const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET_KEY, { expiresIn: '8h' });
 
         // concating token with existing tokens
         this.tokens = this.tokens.concat({ token });

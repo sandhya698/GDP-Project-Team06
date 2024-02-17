@@ -90,13 +90,15 @@ module.exports.login = async (req, res) => {
             const expirationDate = new Date(Date.now() + twelveHours);
 
             res.cookie('bloodToken', token, {
-                expires: expirationDate,
+                // expires: expirationDate,
+                maxAge: 3600000,
                 httpOnly: true
             });
 
             res.status(200).json({
                 message: "Login success",
                 loginUser,
+                token,
                 success: true
             });
         }

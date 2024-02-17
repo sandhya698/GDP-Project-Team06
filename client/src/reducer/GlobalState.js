@@ -5,12 +5,15 @@ const GlobalStateContext = createContext();
 const GlobalStateProvider = ({ children }) => {
   const initialState = {
     user: null,
+    token: null
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
       case 'SET_USER':
           return { ...state, user: action.payload };
+      case 'SET_TOKEN':
+        return { ...state, token: action.payload };
       case 'RESTORE_STATE':
         return { ...state, ...action.payload };
       default:
@@ -20,13 +23,28 @@ const GlobalStateProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      return null;
+    }
+  };
+
   useEffect(() => {
     const storedState = JSON.parse(localStorage.getItem('globalState'));
     if (storedState) {
-      dispatch({ type: 'RESTORE_STATE', payload: storedState });
+      const { token } = storedState;
+      const decodedJwt = parseJwt(token);
+  
+      if (decodedJwt && decodedJwt.exp * 1000 > Date.now()) {
+        dispatch({ type: 'RESTORE_STATE', payload: storedState });
+      } else {
+        localStorage.removeItem('globalState');
+      }
     }
   }, []);
-
+  
   useEffect(() => {
     localStorage.setItem('globalState', JSON.stringify(state));
   }, [state]);
