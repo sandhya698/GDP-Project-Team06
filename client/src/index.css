@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +13,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  padding: 0;
 }
 
 /* body {
@@ -110,4 +115,55 @@ body::-webkit-scrollbar {
   80%{ content: 'Be bold, be brave, donate blood.';}
   90%{ content: 'Be a lifesaver, be a blood donor.';}
   100%{ content: 'Donate blood, save lives: be a hero.';}
+}
+
+.sidebar {
+  background: rgb(0, 7, 61);
+  color: white;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 10px;
+}
+
+.logo {
+  font-size: 18px;
+  line-height: 0;
+}
+
+.bars {
+  width: 30px;
+}
+
+.routes {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.link {
+  display: flex;
+  color: white;
+  gap: 10px;
+  padding: 5px 10px;
+  border-right: 4px solid transparent;
+  transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.link:hover {
+  border-right: 4px solid white;
+  background: rgb(45, 51, 89);
+  transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.active {
+  border-right: 4px solid white;
+  background: rgb(45, 51, 89);
+}
+.link_text {
+  white-space: nowrap;
+  font-size: 15px;
 }
