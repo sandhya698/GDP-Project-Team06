@@ -15,20 +15,16 @@ body {
   box-sizing: border-box;
 }
 
-/* body {
-  scrollbar-width: none;
-} */
-
 body::-webkit-scrollbar {
-  /* width: 0.2rem; */
-  display: none;
+  width: 0.2rem;
+  /* display: none; */
 }
 
-/* body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   background-color: #58000039;
   width: 0.1rem;
   border-radius: 1rem;
-} */
+}
 
 .my-navbar{
   height: 60px;
@@ -62,12 +58,8 @@ body::-webkit-scrollbar {
 .landing-page{
   width: 100%;
   height: 100vh;
-    /* background: rgb(38,175,231);
-    background: linear-gradient(90deg, rgba(38,175,231,1) 0%, rgba(12,63,245,1) 100%);
-    clip-path: polygon(0 0, 100% 0, 100% 79%, 0% 100%); */
   background: url('landingPage.png') fixed center;
   background-size: cover;
-  /* background-position: right -20px top -40px; */
 }
 
 /* .my-container{
@@ -117,6 +109,7 @@ body::-webkit-scrollbar {
   100%{ content: 'Donate blood, save lives: be a hero.';}
 }
 
+/* Sidebar */
 .sidebar {
   background: rgb(0, 7, 61);
   color: white;
@@ -126,44 +119,61 @@ body::-webkit-scrollbar {
 
 .top_section {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: baseline;
+  justify-content: space-around;
   padding: 15px 10px;
 }
 
 .logo {
   font-size: 18px;
   line-height: 0;
+  margin-bottom: 0;
+  justify-self: flex-start;
 }
 
 .bars {
-  width: 30px;
+  font-size: 20px;
 }
 
 .routes {
   margin-top: 15px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 12px;
 }
+
 .link {
+  font-size: 20px;
+  text-decoration: none;
   display: flex;
+  align-items: flex-end;
   color: white;
   gap: 10px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-right: 4px solid transparent;
   transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
+
 .link:hover {
   border-right: 4px solid white;
   background: rgb(45, 51, 89);
   transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
-.active {
+
+.routes .active {
   border-right: 4px solid white;
   background: rgb(45, 51, 89);
 }
+
 .link_text {
   white-space: nowrap;
-  font-size: 15px;
+  font-size: 18px;
+}
+
+/* Media query for small screens */
+@media (max-width: 490px) {
+  .sidebar {
+    position: absolute;
+    z-index: 10;
+  }
 }

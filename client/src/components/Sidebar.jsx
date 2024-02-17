@@ -44,7 +44,9 @@ export const Sidebar = () => {
   return (
     <>
        <motion.div
+        initial={{ width: isOpen ? "200px" : "50px" }} 
         animate={animateOptions}
+        transition={{ duration: 1 }}
         className={`sidebar `}
       >
         <div className="top_section">
@@ -67,8 +69,8 @@ export const Sidebar = () => {
           </div>
         </div>
         <section className="routes">
-          {
-            menuList.filter(item => state.user.userType === item.userType || item.userType === "common").map((route, index) => {
+        {
+          menuList.filter(item => state.user.userType === item.userType || item.userType === "common").map((route, index) => {
             return (
               <NavLink
                 to={route.path}
@@ -92,7 +94,8 @@ export const Sidebar = () => {
                 </AnimatePresence>
               </NavLink>
             );
-          })}
+          })
+        }
         </section>
       </motion.div>
     </>
