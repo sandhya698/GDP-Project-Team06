@@ -95,7 +95,9 @@ module.exports.login = async (req, res) => {
             });
 
             res.status(200).json({
-                message: "Login success", success: true
+                message: "Login success",
+                loginUser,
+                success: true
             });
         }
         else {

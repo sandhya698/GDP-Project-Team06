@@ -5,10 +5,12 @@ import { toast } from 'react-toastify';
 import { toastOptions } from '../../utils/toasOptions';
 import axios from 'axios';
 import { loginRoute } from '../../utils/ApiRoutes';
+import { useGlobalState } from '../../reducer/GlobalState';
 
 export default function LoginModal({ handleUser }) {
 
   const navigate = useNavigate();
+  const { dispatch } = useGlobalState();
 
   const [loginDetails, setLoginDetails] = useState({
     email: "", password: ""
@@ -37,6 +39,7 @@ export default function LoginModal({ handleUser }) {
         // console.log(res);
         if (res.data.success) {
           toast.success('Successfully logged In', toastOptions);
+          dispatch({ type: 'SET_USER', payload: res.data.loginUser });
           navigate('/home');
         }
         
