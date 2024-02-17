@@ -1,28 +1,13 @@
 import React, { useState } from 'react'
+import { menuList } from '../utils/menuList';
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from 'react-router-dom';
 import { FaBars } from "react-icons/fa";
+import { useGlobalState } from '../reducer/GlobalState';
 
 export const Sidebar = () => {
 
-  const menuItems = [
-    {
-      name: "Home",
-      path: "home",
-    },
-    {
-      name: "Donors",
-      path: "donor",
-    },
-    {
-      name: "Patients",
-      path: "patient",
-    },
-    {
-      name: "Donations",
-      path: "donations",
-    },
-  ];
+  const { state } = useGlobalState();
 
   const [isOpen, setIsOpen] = useState(false);
   const animateOptions = {
@@ -58,7 +43,7 @@ export const Sidebar = () => {
 
   return (
     <>
-      <motion.div
+       <motion.div
         animate={animateOptions}
         className={`sidebar `}
       >
@@ -83,7 +68,7 @@ export const Sidebar = () => {
         </div>
         <section className="routes">
           {
-            menuItems.map((route, index) => {
+            menuList.filter(item => state.user.userType === item.userType || item.userType === "common").map((route, index) => {
             return (
               <NavLink
                 to={route.path}
@@ -91,6 +76,7 @@ export const Sidebar = () => {
                 className="link"
                 activeClassName="active"
               >
+                <div className="icon">{route.icon}</div>
                 <AnimatePresence>
                   {isOpen && (
                     <motion.div

@@ -1,74 +1,77 @@
+import { FaHome, FaUsers, FaUserInjured, FaWarehouse } from "react-icons/fa";
+import { BiDonateBlood, BiDonateHeart, BiHistory } from "react-icons/bi";
+
 export const menuList = [
     {
         name: "Home",
-        api: "home",
-        icon: "fas fa-home",
+        path: "/home",
+        icon: <FaHome />,
         userType: "common"
     },
     {
         name: "Donors",
-        api: "donor",
-        icon: "fas fa-users",
+        path: "/donors",
+        icon: <FaUsers />,
         userType: "admin"
     },
     {
         name: "Patients",
-        api: "patient",
-        icon: "fas fa-user-injured",
+        path: "/patients",
+        icon: <FaUserInjured />,
         userType: "admin"
     },
     {
         name: "Donations",
-        api: "donations",
-        icon: "fas fa-hand-holding-heart",
+        path: "/donations",
+        icon: <BiDonateHeart />,
         userType: "admin"
     },
     {
         name: "Blood Request",
-        api: "bloodrequest",
-        icon: "fas fa-sync-alt",
+        path: "/requests",
+        icon: <BiDonateBlood />,
         userType: "admin"
     },
     {
         name: "Inventory",
-        api: "inventory",
-        icon: "fas fa-warehouse",
+        path: "/inventory",
+        icon:  <FaWarehouse />,
         userType: "admin"
     },
     {
         name: "Donate Blood",
-        api: "donateblood",
-        icon: "fas fa-hand-holding-heart",
+        path: "/donate",
+        icon: <BiDonateHeart />,
         userType: "donor"
     },
     {
         name: "Donation History",
-        api: "donationhist",
-        icon: "fas fa-history",
+        path: "/donations",
+        icon: <BiHistory />,
         userType: "donor"
     },
     {
         name: "Blood Request",
-        api: "bloodrequest",
-        icon: "fas fa-sync-alt",
+        path: "/request",
+        icon: <BiDonateBlood />,
         userType: "donor"
     },
     {
         name: "Request History",
-        api: "requesthist",
-        icon: "fas fa-history",
+        path: "/requests",
+        icon: <BiHistory />,
         userType: "donor"
     },
     {
-        name: "Make Request",
-        api: "requesthist",
-        icon: "fas fa-hand-holding-heart",
+        name: "Blood Request",
+        path: "/request",
+        icon: <BiDonateBlood />,
         userType: "patient"
     },
     {
         name: "Request History",
-        api: "requesthist",
-        icon: "fas fa-history",
+        path: "/requests",
+        icon: <BiHistory />,
         userType: "patient"
     }
 ];
