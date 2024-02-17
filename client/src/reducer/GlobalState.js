@@ -1,24 +1,23 @@
-import { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
 const GlobalStateContext = createContext();
 
-const initialState = {
-  user: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_USER':
-      return { ...state, user: action.payload };
-    case 'RESTORE_STATE':
-      return { ...state, ...action.payload };
-    default:
-      return state;
-  }
-};
-
 const GlobalStateProvider = ({ children }) => {
-  
+  const initialState = {
+    user: null,
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'SET_USER':
+          return { ...state, user: action.payload };
+      case 'RESTORE_STATE':
+        return { ...state, ...action.payload };
+      default:
+        return state;
+    }
+  };
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {

@@ -12,8 +12,8 @@ export default function NavigationBar({ userId }) {
     if (state.user) {
       return (
         <>
-          <NavLink  className="nav-link d-flex flex-row text-capitalize" disabled><span className="fas fa-user me-2 fs-5"></span> {state.user.userType}</NavLink>
-          <NavLink className="nav-link fw-bold">{state.user.name}</NavLink>
+          <Navbar.Text className="nav-link d-flex flex-row text-capitalize"><span className="fas fa-user me-2 fs-5"></span> {state.user.userType}</Navbar.Text>
+          <Navbar.Text className='fw-bold'>{state.user.name}</Navbar.Text>
           <Logout userId={userId} />
         </>
       )
@@ -31,7 +31,7 @@ export default function NavigationBar({ userId }) {
   return (
     <>
       <Navbar className='my-navbar' collapseOnSelect expand="md" sticky="top">
-      <Container>
+      <Container fluid className='mx-3' >
         <Navbar.Brand as={NavLink} to='/' className='fw-bold'>Transfuse Now</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

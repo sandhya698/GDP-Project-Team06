@@ -30,7 +30,7 @@ export const Logout = ({userId}) => {
 
   return (
     <>
-      <NavLink className="nav-link" onClick={handleLogout}>Logout</NavLink>
+      <NavLink className="nav-link" onClick={handleLogout}><span className="fas fa-sign-out-alt  fs-4"></span></NavLink>
     </>
   )
 }
