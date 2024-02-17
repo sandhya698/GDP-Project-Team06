@@ -95,10 +95,6 @@ export const Home = () => {
           ) :
           (
             <>
-              <NavigationBar
-                isAuthenticated={isAuthenticated}
-                userId = {currentUser._id}
-              />
               <Container fluid >
                 <Row className="full-height-row">
                   <Col sm={2} md={3} lg={2} className='p-0'>

@@ -1,80 +1,114 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { menuList } from '../utils/menuList';
+import { AnimatePresence, motion } from "framer-motion";
+import { NavLink } from 'react-router-dom';
+import { FaBars } from "react-icons/fa";
 
+export const Sidebar = () => {
 
-export const Sidebar = ({ userType, pageChange }) => {
+  const menuItems = [
+    {
+      name: "Home",
+      path: "home",
+    },
+    {
+      name: "Donors",
+      path: "donor",
+    },
+    {
+      name: "Patients",
+      path: "patient",
+    },
+    {
+      name: "Donations",
+      path: "donations",
+    },
+  ];
 
-  const [currentMenu, setCurrentMenu] = useState(0);
-
-  const changeCurrentMenu = (index, page) => {
-    pageChange(page);
-    setCurrentMenu(index);
+  const [isOpen, setIsOpen] = useState(false);
+  const animateOptions = {
+    width: isOpen ? "200px" : "50px",
+    padding: 0,
+    transition: {
+      duration: 0.5,
+      type: "spring",
+      damping: 10,
+    }
   }
-   
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const showAnimation = {
+    hidden: {
+      width: 0,
+      opacity: 0,
+      transition: {
+        duration: 0.1,
+      },
+    },
+    show: {
+      opacity: 1,
+      width: "auto",
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
     <>
-      <Container>
-        <div className="menu">
-          {
-            menuList.filter(item => userType === item.userType || item.userType === "common").map((item, index) => (
-              <Link key={index} className={`menu-item ${item.icon} ${index === currentMenu ? "selected" : ""}`}
-                onClick={() => changeCurrentMenu(index, item.api)} > <p>{item.name}</p> </Link>
-            ))
-          }
-          
+      <motion.div
+        animate={animateOptions}
+        className={`sidebar `}
+      >
+        <div className="top_section">
+          <AnimatePresence>
+            {isOpen && (
+              <motion.h1
+                variants={showAnimation}
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+                className="logo"
+              >
+                TransfuseNow
+              </motion.h1>
+            )}
+          </AnimatePresence>
+
+          <div className="bars">
+            <FaBars onClick={toggle} />
+          </div>
         </div>
-      </Container>
-
+        <section className="routes">
+          {
+            menuItems.map((route, index) => {
+            return (
+              <NavLink
+                to={route.path}
+                key={index}
+                className="link"
+                activeClassName="active"
+              >
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      variants={showAnimation}
+                      initial="hidden"
+                      animate="show"
+                      exit="hidden"
+                      className="link_text"
+                    >
+                      {route.name}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </NavLink>
+            );
+          })}
+        </section>
+      </motion.div>
     </>
-  )
-}
-
-const Container = styled.div`
-  height: 100%;
-  background: #32373c;
-
-  .menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    gap: 0.8rem;
-    padding-top: 0.8rem;
-
-    .menu-item {
-      min-height: 5rem;
-      cursor: pointer;
-      width: 100%;
-      border-radius: 0.2rem;
-      padding: 1.2rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      color: #f2f1ef;
-      text-transform: Capitalize;
-      font-size: 1.2rem;
-      text-decoration: none;
-      p {
-        font-weight: normal;
-        margin:0;
-      }
-      &:hover {
-        background: #222528;
-      }
-      
-    }
-
-    .selected {
-      background: #222528;
-      border-radius: 0rem;
-      p {
-        font-weight: bold;
-      }
-      &:hover {
-        background: #222528;
-      }
-    }
-  }
-`;
+  );
+};
