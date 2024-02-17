@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { donationReqHeaders } from '../../utils/tableHeaders/donationsReqHeaders';
+import { donationReqHeaders } from '../utils/tableHeaders/donationsReqHeaders';
 import axios from 'axios';
-import { adminControllerRoute, requestsListRoute } from '../../utils/ApiRoutes';
+import { adminControllerRoute, requestsListRoute } from '../utils/ApiRoutes';
 import { Button, Container } from 'react-bootstrap';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import ReactTable from '../../components/ReactTable';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ReactTable from '../components/ReactTable';
 import { toast } from 'react-toastify';
-import { toastOptions } from '../../utils/toasOptions';
+import { toastOptions } from '../utils/toasOptions';
 
 export const Requests = () => {
 

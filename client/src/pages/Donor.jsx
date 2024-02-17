@@ -1,20 +1,20 @@
+import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { donationReqHeaders } from '../../utils/tableHeaders/donationsReqHeaders';
-import axios from 'axios';
-import { adminControllerRoute, donationsListRoute } from '../../utils/ApiRoutes';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { donorsListRoute, userStatusUpdateRoute } from '../utils/ApiRoutes';
 import { Button, Container } from 'react-bootstrap';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import ReactTable from '../../components/ReactTable';
-import { toastOptions } from '../../utils/toasOptions';
+import ReactTable from '../components/ReactTable';
+import { donorPatientHeaders } from '../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
+import { toastOptions } from '../utils/toasOptions';
 
-export const Donations = () => {
+export const Donor = () => {
 
   const navigate = useNavigate();
-  const [donations, setDonations] = useState([]);
+  const [donorList, setDonorList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [columns, setColumns] = useState(donationReqHeaders);
+  const [columns, setColumns] = useState(donorPatientHeaders);
 
   const api = axios.create({
     withCredentials: true,
@@ -23,12 +23,12 @@ export const Donations = () => {
     },
   });
 
-  const getDonations = useCallback ( async () => {
+  const getDonors = useCallback ( async () => {
     try {
-      const res = await api.get(donationsListRoute);
+      const res = await api.get(donorsListRoute);
 
       if (res.data.success) {
-        setDonations(res.data.donationsList);
+        setDonorList(res.data.donors);
       }
     }
     catch (err) {
@@ -44,35 +44,33 @@ export const Donations = () => {
   }, [navigate])
 
   useEffect(() => {
-    getDonations();
-  }, [getDonations]);
-
-  const updateStatus = async (id, bloodGroup, quantity, status) => {
+    getDonors();
+  }, [getDonors]);
+  
+  const updateStatus = async (id,status) => {
     try {
-      let newStatus = status === 'rejected' ? 'accepted' : 'rejected';
-      let route = `${adminControllerRoute}/donor/donate/${newStatus}`;
-      const res = await api.post(route, {
-        id, quantity, bloodGroup
-      });
+      let newStatus = status === 'rejected' ? 'verified' : 'rejected';
+      let route = `${userStatusUpdateRoute}/${id}/${newStatus}`;
+      const res = await api.post(route);
       if (res.data.success === true) {
-        setDonations((prevDonorList) => {
-          return prevDonorList.map((donation) => {
-            if (donation._id === id) {
-              return { ...donation, status: newStatus };
+        setDonorList((prevDonorList) => {
+          return prevDonorList.map((donor) => {
+            if (donor._id === id) {
+              return { ...donor, status: newStatus };
             }
-            return donation;
+            return donor;
           });
         });
       };
     }
     catch (error) {
-      // console.log(error.response.data);
-      toast.error(error.response.data.message, toastOptions);
+      console.log(error.response.data);
+      toast.error('Failed to update the status', toastOptions);
     }
   }
 
   useEffect(() => {
-    setColumns([...donationReqHeaders,{
+    setColumns([...donorPatientHeaders,{
       dataField: "Actions",
       isDummyField: true,
       text: "Actions",
@@ -83,7 +81,7 @@ export const Donations = () => {
       formatter: (cell, row) => {
         return (  <>
           <Button
-            onClick={() => updateStatus(row._id, row.bloodGroup, row.quantity, row.status)}
+            onClick={()=>updateStatus(row._id, row.status)}
             variant={row.status === 'rejected' ? 'success' : 'danger'}
             size="sm">
             {row.status === 'rejected' ? 'Accept' : 'Reject'}
@@ -99,22 +97,22 @@ export const Donations = () => {
       )}
     }])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [donationReqHeaders]);
-
+  }, [donorPatientHeaders]);
+ 
   return (
     <Container className="h-100">
       {
         loading ? (
           <LoadingSpinner />
         ) : (
-          <ReactTable
-              title={'Donations made so far...'}
+            <ReactTable
+              title={'Donors ready to Tranfuse'}
               pageSize={8}
-              data={donations}
+              data={donorList}
               columns={columns}
             />
         )
       }
     </Container>
-  )
-}
+  );
+};

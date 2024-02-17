@@ -1,5 +1,5 @@
 import { FaHome, FaUsers, FaUserInjured, FaWarehouse } from "react-icons/fa";
-import { BiDonateBlood, BiDonateHeart, BiHistory } from "react-icons/bi";
+import { BiSolidDonateBlood, BiSolidDonateHeart, BiHistory } from "react-icons/bi";
 
 export const menuList = [
     {
@@ -23,13 +23,13 @@ export const menuList = [
     {
         name: "Donations",
         path: "/donations",
-        icon: <BiDonateHeart />,
+        icon: <BiSolidDonateHeart />,
         userType: "admin"
     },
     {
         name: "Blood Request",
         path: "/requests",
-        icon: <BiDonateBlood />,
+        icon: <BiSolidDonateBlood />,
         userType: "admin"
     },
     {
@@ -41,7 +41,7 @@ export const menuList = [
     {
         name: "Donate Blood",
         path: "/donate",
-        icon: <BiDonateHeart />,
+        icon: <BiSolidDonateHeart />,
         userType: "donor"
     },
     {
@@ -53,7 +53,7 @@ export const menuList = [
     {
         name: "Blood Request",
         path: "/request",
-        icon: <BiDonateBlood />,
+        icon: <BiSolidDonateBlood />,
         userType: "donor"
     },
     {
@@ -65,7 +65,7 @@ export const menuList = [
     {
         name: "Blood Request",
         path: "/request",
-        icon: <BiDonateBlood />,
+        icon: <BiSolidDonateBlood />,
         userType: "patient"
     },
     {

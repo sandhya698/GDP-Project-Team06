@@ -1,18 +1,18 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import { donorsListRoute, userStatusUpdateRoute } from '../../utils/ApiRoutes';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { patientsListRoute, userStatusUpdateRoute } from '../utils/ApiRoutes';
 import { Button, Container } from 'react-bootstrap';
-import ReactTable from '../../components/ReactTable';
-import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
+import ReactTable from '../components/ReactTable';
+import { donorPatientHeaders } from '../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
-import { toastOptions } from '../../utils/toasOptions';
+import { toastOptions } from '../utils/toasOptions';
 
-export const Donor = () => {
+export const Patient = () => {
 
   const navigate = useNavigate();
-  const [donorList, setDonorList] = useState([]);
+  const [patientList, setPatientList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [columns, setColumns] = useState(donorPatientHeaders);
 
@@ -23,12 +23,12 @@ export const Donor = () => {
     },
   });
 
-  const getDonors = useCallback ( async () => {
+  const getPatients = useCallback ( async () => {
     try {
-      const res = await api.get(donorsListRoute);
+      const res = await api.get(patientsListRoute);
 
       if (res.data.success) {
-        setDonorList(res.data.donors);
+        setPatientList(res.data.patients);
       }
     }
     catch (err) {
@@ -44,16 +44,16 @@ export const Donor = () => {
   }, [navigate])
 
   useEffect(() => {
-    getDonors();
-  }, [getDonors]);
-  
+    getPatients();
+  }, [getPatients]);
+
   const updateStatus = async (id,status) => {
     try {
       let newStatus = status === 'rejected' ? 'verified' : 'rejected';
       let route = `${userStatusUpdateRoute}/${id}/${newStatus}`;
       const res = await api.post(route);
       if (res.data.success === true) {
-        setDonorList((prevDonorList) => {
+        setPatientList((prevDonorList) => {
           return prevDonorList.map((donor) => {
             if (donor._id === id) {
               return { ...donor, status: newStatus };
@@ -105,10 +105,10 @@ export const Donor = () => {
         loading ? (
           <LoadingSpinner />
         ) : (
-            <ReactTable
-              title={'Donors ready to Tranfuse'}
+          <ReactTable
+              title={'Patients waiting for Transfusion'}
               pageSize={8}
-              data={donorList}
+              data={patientList}
               columns={columns}
             />
         )

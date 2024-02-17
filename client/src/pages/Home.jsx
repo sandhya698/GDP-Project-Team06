@@ -4,7 +4,7 @@ import { authenticate } from '../utils/ApiRoutes';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Sidebar } from '../components/Sidebar';
-import Dashboard from './homePage/Dashboard';
+import Dashboard from './Dashboard';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 export const Home = () => {

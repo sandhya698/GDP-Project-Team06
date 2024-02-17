@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home } from './pages/Home';
+// import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { Error } from './pages/Error';
@@ -9,11 +9,12 @@ import { About } from './pages/About';
 import { Faq } from './pages/Faq';
 import Landing from './pages/Landing';
 import { GlobalStateProvider } from './reducer/GlobalState';
-import { Donor } from './pages/homePage/Donor';
-import { Patient } from './pages/homePage/Patient';
-import { Donations } from './pages/homePage/Donations';
-import { Requests } from './pages/homePage/Requests';
-import Inventory from './pages/homePage/Inventory';
+import { Donor } from './pages/Donor';
+import { Patient } from './pages/Patient';
+import { Donations } from './pages/Donations';
+import { Requests } from './pages/Requests';
+import Inventory from './pages/Inventory';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
 
@@ -27,7 +28,7 @@ export default function App() {
                         <Route path='/login'     element={<Login />} />
                         <Route path='/register'  element={<Register />} />
                         <Route path='/faq'       element={<Faq />} />
-                        <Route path='/home'      element={<Home />} />
+                        <Route path='/home'      element={<Dashboard />} />
                         <Route path='/donors'    element={<Donor />} />
                         <Route path='/patients'  element={<Patient />} />
                         <Route path='/donations' element={<Donations />} />

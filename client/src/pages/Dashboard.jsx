@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { getStockRoute, miscStatsRoute } from '../../utils/ApiRoutes';
-import { dashboardList } from '../../utils/dashboardIconList';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import { getStockRoute, miscStatsRoute } from '../utils/ApiRoutes';
+import { dashboardList } from '../utils/dashboardIconList';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Dashboard() {
 
