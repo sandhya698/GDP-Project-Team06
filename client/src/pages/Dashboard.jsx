@@ -41,7 +41,9 @@ export default function Dashboard() {
       }
     }
     finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   }, [navigate]);
 

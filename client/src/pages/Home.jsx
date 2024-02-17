@@ -32,7 +32,9 @@ export const Home = () => {
       }
     }
     finally {
+      setTimeout(() => {
         setLoading(false);
+      }, 500);
     }
   }, [navigate]);
 

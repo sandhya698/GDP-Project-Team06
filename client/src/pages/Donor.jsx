@@ -31,6 +31,7 @@ export const Donor = () => {
       if (res.data.success) {
         setDonorList(res.data.donors);
       }
+      
     }
     catch (err) {
       console.log(err.response);
@@ -39,7 +40,9 @@ export const Donor = () => {
       }
     }
     finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
     // eslint-disable-next-line
   }, [navigate])

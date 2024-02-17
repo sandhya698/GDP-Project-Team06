@@ -39,7 +39,9 @@ export const Requests = () => {
       }
     }
     finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
     // eslint-disable-next-line
   }, [navigate])

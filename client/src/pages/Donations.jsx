@@ -39,7 +39,9 @@ export const Donations = () => {
       }
     }
     finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
     // eslint-disable-next-line
   }, [navigate])
