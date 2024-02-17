@@ -3,11 +3,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { patientsListRoute, userStatusUpdateRoute } from '../utils/ApiRoutes';
-import { Button, Container } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import ReactTable from '../components/ReactTable';
 import { donorPatientHeaders } from '../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
 import { toastOptions } from '../utils/toasOptions';
+import SidebarContainer from '../components/SidebarContainer';
 
 export const Patient = () => {
 
@@ -100,19 +101,17 @@ export const Patient = () => {
   }, [donorPatientHeaders]);
  
   return (
-    <Container className="h-100">
-      {
-        loading ? (
-          <LoadingSpinner />
-        ) : (
-          <ReactTable
-              title={'Patients waiting for Transfusion'}
-              pageSize={8}
-              data={patientList}
-              columns={columns}
-            />
-        )
-      }
-    </Container>
+    <SidebarContainer>
+      { loading ? (
+        <LoadingSpinner />
+      ) : (
+        <ReactTable
+            title={'Patients waiting for Transfusion'}
+            pageSize={8}
+            data={patientList}
+            columns={columns}
+          />
+      )}
+    </SidebarContainer>
   );
 };

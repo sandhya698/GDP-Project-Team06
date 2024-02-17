@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { donationReqHeaders } from '../utils/tableHeaders/donationsReqHeaders';
 import axios from 'axios';
 import { adminControllerRoute, requestsListRoute } from '../utils/ApiRoutes';
-import { Button, Container } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ReactTable from '../components/ReactTable';
 import { toast } from 'react-toastify';
 import { toastOptions } from '../utils/toasOptions';
+import SidebarContainer from '../components/SidebarContainer';
 
 export const Requests = () => {
 
@@ -103,19 +104,17 @@ export const Requests = () => {
   }, [donationReqHeaders]);
 
   return (
-    <Container className="h-100">
-      {
-        loading ? (
-          <LoadingSpinner />
-        ) : (
-          <ReactTable
-              title={'transfusers waiting for Transfusion'}
-              pageSize={8}
-              data={requests}
-              columns={columns}
-            />
-        )
-      }
-    </Container>
+    <SidebarContainer>
+      { loading ? (
+        <LoadingSpinner />
+      ) : (
+        <ReactTable
+            title={'transfusers waiting for Transfusion'}
+            pageSize={8}
+            data={requests}
+            columns={columns}
+          />
+      )}
+    </SidebarContainer>
   )
 }

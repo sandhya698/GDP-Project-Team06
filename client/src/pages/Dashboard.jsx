@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getStockRoute, miscStatsRoute } from '../utils/ApiRoutes';
 import { dashboardList } from '../utils/dashboardIconList';
 import LoadingSpinner from '../components/LoadingSpinner';
+import SidebarContainer from '../components/SidebarContainer';
 
 export default function Dashboard() {
 
@@ -51,66 +52,65 @@ export default function Dashboard() {
 
   return (
     <>
-      {
-      loading ?
-        (
+      
+          <SidebarContainer>{
+        loading ? (
           <LoadingSpinner />
         ) :
         (
-          <>
             <Container className='px-5 d-flex flex-column ' style={{ height: '100vh', overflowY: 'auto' }} >
               <Row className='overview mt-3'>
-                  <Row xs={1} md={2} lg={5} className="g-4 mt-0">
+                <Row xs={1} md={2} lg={5} className="g-4 mt-0">
+                  {
+                    Object.keys(miscStats).map((data, index) => ( 
+                      <Col key={index} >
+                        <Card bg={dashboardList[index].bgColor} style={{height: "120px"}} className='flex-row align-items-center justify-content-around shadow'>
+                          <Col sm={8} md={8}>
+                            <Card.Body className='py-2'>
+                              <Card.Title className="text-white fs-5">{dashboardList[index].name}</Card.Title>
+                              <Card.Text>
+                                <span className='fw-boldler fs-3 text-white'>{miscStats[data]}</span>
+                              </Card.Text>
+                            </Card.Body>
+                          </Col>
+                          <Col md={4}>
+                          <i className={`${dashboardList[index].icon} text-white fs-1 }`}></i>
+                          </Col>
+                        </Card>
+                      </Col>
+                      )
+                    )
+                  }
+                </Row>
+              </Row>
+              <Row className='blood-groups my-5'>
+                <Row xs={1} md={2} lg={4} className="g-4 mt-0">
                     {
-                      Object.keys(miscStats).map((data, index) => ( 
-                        <Col key={index} >
-                          <Card bg={dashboardList[index].bgColor} style={{height: "120px"}} className='flex-row align-items-center justify-content-around shadow'>
+                      stock.map((data, index) => (
+                        <Col key={index}>
+                          <Card border='primary' className='flex-row align-items-center justify-content-around shadow' style={{ height: "120px"}}>
                             <Col sm={8} md={8}>
                               <Card.Body className='py-2'>
-                                <Card.Title className="text-white fs-5">{dashboardList[index].name}</Card.Title>
+                                <Card.Title className="text-primary fs-1">{data.bloodGroup}</Card.Title>
                                 <Card.Text>
-                                  <span className='fw-boldler fs-3 text-white'>{miscStats[data]}</span>
+                                  <span className='fw-boldler fs-5'>{data.quantity}ml</span> Available
                                 </Card.Text>
                               </Card.Body>
                             </Col>
                             <Col md={4}>
-                            <i className={`${dashboardList[index].icon} text-white fs-1 }`}></i>
+                              <i className="fas fa-tint" style={{ color: "red", fontSize: "2.8rem"}}></i>
                             </Col>
                           </Card>
                         </Col>
                         )
                       )
                     }
-                  </Row>
+                </Row>
               </Row>
-              <Row className='blood-groups my-5'>
-                  <Row xs={1} md={2} lg={4} className="g-4 mt-0">
-                      {
-                        stock.map((data, index) => (
-                          <Col key={index}>
-                            <Card border='primary' className='flex-row align-items-center justify-content-around shadow' style={{ height: "120px"}}>
-                              <Col sm={8} md={8}>
-                                <Card.Body className='py-2'>
-                                  <Card.Title className="text-primary fs-1">{data.bloodGroup}</Card.Title>
-                                  <Card.Text>
-                                    <span className='fw-boldler fs-5'>{data.quantity}ml</span> Available
-                                  </Card.Text>
-                                </Card.Body>
-                              </Col>
-                              <Col md={4}>
-                                <i className="fas fa-tint" style={{ color: "red", fontSize: "2.8rem"}}></i>
-                              </Col>
-                            </Card>
-                          </Col>
-                          )
-                        )
-                      }
-                  </Row>
-              </Row>
-            </Container>
-          </>
-        )
+            </Container>  )
       }
+          </SidebarContainer>
+      
     </>
   )
 }
