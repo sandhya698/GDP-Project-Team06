@@ -88,10 +88,11 @@ module.exports.login = async (req, res) => {
             
             const twelveHours = 12 * 60 * 60 * 1000; // Convert 12 hours to milliseconds
             const expirationDate = new Date(Date.now() + twelveHours);
-
+            
+            const oneHour = 3 * 60 * 60 * 1000; // Convert 12 hours to milliseconds
             res.cookie('bloodToken', token, {
                 // expires: expirationDate,
-                maxAge: 3600000,
+                maxAge: oneHour,
                 httpOnly: true
             });
 
