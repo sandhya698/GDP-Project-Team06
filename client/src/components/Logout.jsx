@@ -4,10 +4,12 @@ import { useNavigate, NavLink } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { logoutRoute } from '../utils/ApiRoutes';
 import { toastOptions } from '../utils/toasOptions';
+import { useGlobalState } from '../reducer/GlobalState';
 
 export const Logout = ({userId}) => {
 
   const navigate = useNavigate();
+  const { dispatch } = useGlobalState();
 
   const handleLogout = () => {
     axios.get(`${logoutRoute}/${userId}`, {
@@ -17,13 +19,15 @@ export const Logout = ({userId}) => {
     })
       .then((res) => {
         toast.success('Successfully logged out', toastOptions);
-        navigate('/login', { replace: true });
+        dispatch({ type: 'REMOVE_STATE', payload: null });
+        navigate('/', { replace: true });
         if (res.status !== 200) {
           throw new Error(res.error);
         }
       })
       .catch((err) => {
         console.log(err);
+        dispatch({ type: 'REMOVE_STATE' });
         toast.error('Logout Failed!!', toastOptions);
       });
   }

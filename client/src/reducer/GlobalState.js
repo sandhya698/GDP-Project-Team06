@@ -16,6 +16,8 @@ const GlobalStateProvider = ({ children }) => {
         return { ...state, token: action.payload };
       case 'RESTORE_STATE':
         return { ...state, ...action.payload };
+      case 'REMOVE_STATE':
+        return initialState;
       default:
         return state;
     }

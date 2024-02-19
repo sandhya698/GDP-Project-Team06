@@ -177,3 +177,17 @@ body::-webkit-scrollbar-thumb {
     z-index: 10;
   }
 }
+
+.user_section {
+  margin-top: auto;
+  margin-bottom: 100px;
+  font-size: 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  gap: 10px;
+  padding: 6px 12px;
+  border-right: 4px solid transparent;
+  transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
