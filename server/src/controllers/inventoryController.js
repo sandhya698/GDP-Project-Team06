@@ -1,6 +1,5 @@
-const DonorRequestHistory = require("../models/donorRequestModel");
 const Inventory = require("../models/inventoryModel");
-const PatientRequestHistory = require("../models/patientRequestModel");
+const RequestHistory = require("../models/requestHistoryModel");
 const Users = require("../models/userModel");
 const { addStock, subtractStock } = require("../utils/inventoryOperations");
 
@@ -107,36 +106,36 @@ module.exports.miscStats = async (req,res) => {
         
         const donors = await Users.find({ userType: 'donor' }).countDocuments();
         const patients = await Users.find({ userType: 'patient' }).countDocuments();
-        const donorAccepted = await DonorRequestHistory.aggregate([
+        const donorAccepted = await RequestHistory.aggregate([
             {
-                $match: { $and: [{ status: "accepted" }, { type: "request" }] }
+                $match: { $and: [{ status: "accepted" }, { type: "request" }, {userType: 'donor'}] }
             },
             {
                 $group: group
             }
         ]);
 
-        const patientAccepted = await PatientRequestHistory.aggregate([
+        const patientAccepted = await RequestHistory.aggregate([
             {
-              $match: { status: 'accepted' }
+              $match: { $and: [{ status: "accepted" }, { type: "request" }, {userType: 'patient'}] }
             },
             {
               $group: group
             }
         ]);
 
-        const donorRejected = await DonorRequestHistory.aggregate([
+        const donorRejected = await RequestHistory.aggregate([
             {
-                $match: { $and: [{ status: "rejected" }, { type: "request" }] }
+                $match: { $and: [{ status: "rejected" }, { type: "request" }, {userType: 'donor'}] }
             },
             {
                 $group: group
             }
         ]);
 
-        const patientRejected = await PatientRequestHistory.aggregate([
+        const patientRejected = await RequestHistory.aggregate([
             {
-                $match: { status: "rejected" }
+                $match: { $and: [{ status: "rejected" }, { type: "request" }, {userType: 'patient'}] }
             },
             {
                 $group: group

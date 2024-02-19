@@ -30,7 +30,7 @@ export default function App() {
                             <Route path='/login'     element={<Login />} />
                             <Route path='/register'  element={<Register />} />
                             <Route path='/faq'       element={<Faq />} />
-                            <Route path='/home'      element={<Dashboard />} />
+                            <Route path='/dashboard' element={<Dashboard />} />
                             <Route path='/donors'    element={<Donor />} />
                             <Route path='/patients'  element={<Patient />} />
                             <Route path='/donations' element={<Donations />} />

@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 
 export default function SidebarContainer({ children }) {
-  const SIDEBAR_ROUTES = ['/home', '/donors', '/patients', '/donations', '/requests', '/inventory', '/donate', '/request'];
+  const SIDEBAR_ROUTES = ['/dashboard', '/donors', '/patients', '/donations', '/requests', '/inventory', '/donate', '/request'];
   
   const location = useLocation();
   console.log(location.pathname)

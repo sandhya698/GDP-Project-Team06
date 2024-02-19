@@ -35,7 +35,7 @@ export default function Dashboard() {
     }
     catch (err) {
       console.log(err.response.data);
-      if (!err.response.data.status) {
+      if (!err.response.data.success) {
         navigate('/error');
       }
     }

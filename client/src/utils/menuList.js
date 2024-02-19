@@ -4,7 +4,7 @@ import { BiSolidDonateBlood, BiSolidDonateHeart, BiHistory } from "react-icons/b
 export const menuList = [
     {
         name: "Home",
-        path: "/home",
+        path: "/dashboard",
         icon: <FaHome />,
         userType: "common"
     },
