@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
  * to nullify that use pluralize as null */ 
 mongoose.pluralize(null);
 
-// defining schema for storing user collection
-const donorRequestHistorySchema = mongoose.Schema({
+const requestHistorySchema = mongoose.Schema({
     bloodGroup: {
         type: String,
         required: true,
@@ -24,14 +23,18 @@ const donorRequestHistorySchema = mongoose.Schema({
         type: String,
         required: true,
         enum: ['pending', 'accepted', 'rejected']
-    }, 
-    donor: {
+    },
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users'
+    },
+    userType: {
+        type: String,
+        enum: ['admin', 'donor', 'patient'],
+        required: true
     },
     disease: String
 }, { timeStamps: true });
 
-// creating a model and exporting
-const DonorRequestHistory = mongoose.model('DonorRequestHistory', donorRequestHistorySchema);
-module.exports = DonorRequestHistory;
+const RequestHistory = mongoose.model('RequestHistory', requestHistorySchema);
+module.exports = RequestHistory;

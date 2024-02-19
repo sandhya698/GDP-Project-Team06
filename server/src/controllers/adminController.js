@@ -1,5 +1,4 @@
-const DonorRequestHistory = require("../models/donorRequestModel");
-const PatientRequestHistory = require("../models/patientRequestModel");
+const RequestHistory = require("../models/requestHistoryModel");
 const { addStock, subtractStock } = require("../utils/inventoryOperations");
 
 module.exports.adminControls = async (req, res) => {
@@ -60,14 +59,14 @@ const donorDonation = async (status, req, res) => {
 
         if (status === 'accepted') {
             updatedInventory = await addStock(bloodGroup, quantity);
-            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
+            donorHistRec = await RequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
 
             message = 'Donor donation accepted';
             body['updatedInventory'] = updatedInventory;
             body['donorHistRec'] = donorHistRec;
         }
         else if (status === 'rejected') {
-            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
+            donorHistRec = await RequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
 
             message = 'Donor donation rejected';
             body['donorHistRec'] = donorHistRec;
@@ -103,7 +102,7 @@ const donorRequest = async (status, req, res) => {
 
         if (status === 'accepted') {
             updatedInventory = await subtractStock(bloodGroup, quantity);
-            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
+            donorHistRec = await RequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
 
             if (!donorHistRec) {
                 return res.status(400).json({
@@ -117,7 +116,7 @@ const donorRequest = async (status, req, res) => {
             body['donorHistRec'] = donorHistRec;
         }
         else if (status === 'rejected') {
-            donorHistRec = await DonorRequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
+            donorHistRec = await RequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
 
             if (!donorHistRec) {
                 return res.status(400).json({
@@ -159,7 +158,7 @@ const patientRequest = async (status, req, res) => {
 
         if (status === 'accepted') {
             updatedInventory = await subtractStock(bloodGroup, quantity);
-            patientHistRec = await PatientRequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
+            patientHistRec = await RequestHistory.findOneAndUpdate({ _id: id }, { status: 'accepted' }, options);
 
             if (!patientHistRec) {
                 return res.status(400).json({
@@ -173,9 +172,9 @@ const patientRequest = async (status, req, res) => {
             body['patientHistRec'] = patientHistRec;
         }
         else if (status === 'rejected') {
-            patientHistRec = await PatientRequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
+            patientHistRec = await RequestHistory.findOneAndUpdate({ _id: id }, { status: 'rejected' }, options);
 
-            if (!donorHistRec) {
+            if (!patientHistRec) {
                 return res.status(400).json({
                     success: false,
                     message: 'Patient request record not found'
@@ -195,7 +194,7 @@ const patientRequest = async (status, req, res) => {
     catch (error) {
         res.status(422).json({
             success: false,
-            message: 'Failed to accept donor request',
+            message: 'Failed to accept patient request',
             error: error.message
         });
     }

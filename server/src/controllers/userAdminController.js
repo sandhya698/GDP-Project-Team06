@@ -1,5 +1,4 @@
-const DonorRequestHistory = require("../models/donorRequestModel");
-const PatientRequestHistory = require("../models/patientRequestModel");
+const RequestHistory = require("../models/requestHistoryModel");
 const Users = require("../models/userModel");
 
 // user status update route
@@ -78,14 +77,14 @@ module.exports.getPatients = async (req,res) => {
 
 module.exports.getDonationsList = async (req,res) => {
     try {
-        const donationsList = await DonorRequestHistory.find({ type: 'donate' }).populate({
-            path: 'donor',
+        const donationsList = await RequestHistory.find({ type: 'donate', userType: 'donor' }).populate({
+            path: 'user',
             select: 'name',
         });
         
         const fomattedDonationsList = donationsList.map((donation) => ({
             _id: donation._id,
-            donor: donation.donor.name,
+            donor: donation.user.name,
             bloodGroup: donation.bloodGroup,
             quantity: donation.quantity,
             status: donation.status,
@@ -111,40 +110,23 @@ module.exports.getDonationsList = async (req,res) => {
 module.exports.getRequestsList = async (req, res) => {
     let requestsList = [];
     try {
-        let donorRequestList = await DonorRequestHistory.find({ type: 'request' }).populate({
-            path: 'donor',
-            select: 'name userType', 
+        let tempRequestsList = await RequestHistory.find({ type: 'request' }).populate({
+            path: 'user',
+            select: 'name', 
         });
 
-        const formattedDonorRequestList = donorRequestList.map((request) => ({
+        const formattedRequestsList = tempRequestsList.map((request) => ({
             _id: request._id,
-            patient: request.donor.name,
+            patient: request.user.name,
             bloodGroup: request.bloodGroup,
             quantity: request.quantity,
             status: request.status,
             disease: request.disease,
             registerDate: request.registerDate,
-            userType: request.donor.userType
+            userType: request.userType
         }));
 
-        let patientRequestList = await PatientRequestHistory.find({}).populate({
-            path: 'patient',
-            select: 'name userType', 
-        });
-        
-        
-        const formattedPatientRequestList = patientRequestList.map((request) => ({
-            _id: request._id,
-            patient: request.patient.name,
-            bloodGroup: request.bloodGroup,
-            quantity: request.quantity,
-            status: request.status,
-            disease: request.disease,
-            registerDate: request.registerDate,
-            userType: request.patient.userType
-        }));
-
-        requestsList = [...formattedDonorRequestList, ...formattedPatientRequestList];
+        requestsList = [...formattedRequestsList];
   
         res.status(200).json({
             message: 'Requests list fetched succesfully',

@@ -1,10 +1,12 @@
-const DonorRequestHistory = require("../models/donorRequestModel");
+const RequestHistory = require("../models/requestHistoryModel");
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const typeList = ["donate", "request"];
 
 module.exports.donorRequest = async (req, res) => {
     const { bloodGroup, quantity, userId, disease } = req.body;
     const type = req.params.type;
+
+    const userType = 'donor', status = 'pending';
 
     // some validations
     if (!typeList.includes(type)) {
@@ -21,10 +23,11 @@ module.exports.donorRequest = async (req, res) => {
     }
 
     try {
-        const donorHistRec = new DonorRequestHistory({ bloodGroup, quantity, type, disease, status: 'pending', donor: userId });
+
+        const donorHistRec = new RequestHistory({ bloodGroup, quantity, type, disease, status, user: userId, userType });
         const donorRequestHistRec = await donorHistRec.save();
         await donorRequestHistRec.populate({
-            path: 'donor',
+            path: 'user',
             select: 'name', 
         });
         res.status(201).json({
@@ -52,6 +55,8 @@ module.exports.donorRequest = async (req, res) => {
 module.exports.patientRequest = async (req, res) => {
     const { bloodGroup, quantity, userId, disease } = req.body;
 
+    const type = 'request', userType = 'patient', status = 'pending';
+
     // some validations
     if (!bloodGroups.includes(bloodGroup)) {
         return res.status(422).json({
@@ -61,10 +66,11 @@ module.exports.patientRequest = async (req, res) => {
     }
 
     try {
-        const patientHistRec = new PatientRequestHistory({ bloodGroup, quantity, disease, status: 'pending', patient: userId });
+
+        const patientHistRec = new RequestHistory({ bloodGroup, quantity, disease, type, status, user: userId, userType });
         const patientRequestHistRec = await patientHistRec.save();
         await patientRequestHistRec.populate({
-            path: 'patient',
+            path: 'user',
             select: 'name', 
         });
         res.status(201).json({
