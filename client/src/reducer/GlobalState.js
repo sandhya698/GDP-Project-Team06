@@ -11,13 +11,17 @@ const GlobalStateProvider = ({ children }) => {
   const reducer = (state, action) => {
     switch (action.type) {
       case 'SET_USER':
+        localStorage.setItem('globalState', JSON.stringify({ ...state, user: action.payload }));
         return { ...state, user: action.payload };
       case 'SET_TOKEN':
+        localStorage.setItem('globalState', JSON.stringify({ ...state, token: action.payload }));
         return { ...state, token: action.payload };
       case 'RESTORE_STATE':
+        localStorage.setItem('globalState', JSON.stringify({ ...state, ...action.payload }));
         return { ...state, ...action.payload };
       case 'REMOVE_STATE':
-        return initialState;
+        localStorage.setItem('globalState', JSON.stringify({ ...initialState }));
+        return {...initialState};
       default:
         return state;
     }
@@ -36,29 +40,26 @@ const GlobalStateProvider = ({ children }) => {
   const checkTokenValidity = (token) => {
     const decodedJwt = parseJwt(token);
     if (decodedJwt && decodedJwt.exp * 1000 < Date.now()) {
-      // console.log('removing state')
+      // console.log('removing state');
       localStorage.removeItem('globalState');
+      dispatch({ type: 'REMOVE_STATE' }); // Reset state to initial after removing
     }
-  }
+  };
 
   useEffect(() => {
+    // console.log('Checking for stored state...');
     const storedState = JSON.parse(localStorage.getItem('globalState'));
     // console.log(storedState)
-    if (storedState) {
-      // console.log('restoring state')
+    if (storedState && storedState.user && storedState.token) {
+      // console.log('Restoring state:', storedState);
       dispatch({ type: 'RESTORE_STATE', payload: storedState });
-      checkTokenValidity(storedState.token)
+      checkTokenValidity(storedState.token);
+    } else {
+      // console.log('No stored state found.');
     }
     //eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    // console.log('state changed ', state)
-    localStorage.setItem('globalState', JSON.stringify(state));
-    checkTokenValidity(state.token);
-    //eslint-disable-next-line
-  }, [state]);
-
+  
   return (
     <GlobalStateContext.Provider value={{ state, dispatch }}>
       {children}
