@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { donationReqHeaders } from '../utils/tableHeaders/donationsReqHeaders';
 import axios from 'axios';
 import { adminControllerRoute, donationsListRoute } from '../utils/ApiRoutes';
-import { Button } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ReactTable from '../components/ReactTable';
 import { toastOptions } from '../utils/toasOptions';
@@ -108,12 +108,18 @@ export const Donations = () => {
       { loading ? (
         <LoadingSpinner />
       ) : (
-         <ReactTable
-            title={'Donations made so far...'}
-            pageSize={8}
-            data={donations}
-            columns={columns}
-          />
+        <Container className='p-5 d-flex flex-column ' style={{ height: '100vh', overflowY: 'auto' }} >
+          <Row>
+            <h3 className="text-left fs-1 mb-3 text-capitalize">Donations made so far...</h3>
+          </Row>
+          <Row>
+            <ReactTable
+              pageSize={8}
+              data={donations}
+              columns={columns}
+            />
+          </Row>
+        </Container>  
       )}
     </>
   )

@@ -10,7 +10,7 @@ export const Sidebar = () => {
   const userType = state.user?.userType;
   const location = useLocation();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const animateOptions = {
     width: isOpen ? '200px' : '50px',

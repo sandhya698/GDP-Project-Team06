@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { patientsListRoute, userStatusUpdateRoute } from '../utils/ApiRoutes';
-import { Button } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
 import ReactTable from '../components/ReactTable';
 import { donorPatientHeaders } from '../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
@@ -106,12 +106,18 @@ export const Patient = () => {
       { loading ? (
         <LoadingSpinner />
       ) : (
-        <ReactTable
-            title={'Patients waiting for Transfusion'}
-            pageSize={8}
-            data={patientList}
-            columns={columns}
-          />
+        <Container className='p-5 d-flex flex-column ' style={{ height: '100vh', overflowY: 'auto' }} >
+          <Row>
+            <h3 className="text-left fs-1 mb-3 text-capitalize">Patients waiting for Transfusion</h3>
+          </Row>
+          <Row>
+            <ReactTable
+              pageSize={8}
+              data={patientList}
+              columns={columns}
+            />
+          </Row>
+        </Container>  
       )}
     </>
   );
