@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['verfied', 'rejected']
+        enum: ['verfied', 'rejected', 'pending']
     },
     tokens: [{
         token: {

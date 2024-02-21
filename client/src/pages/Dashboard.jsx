@@ -4,12 +4,15 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getStockRoute, miscStatsRoute } from '../utils/ApiRoutes';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { MiscStatsCard } from '../components/dashboard/MiscStatsCard';
-import { BloodCards } from '../components/dashboard/BloodCards';
+import { AdminDashboard } from './dashboardPages/AdminDashboard';
+import { useGlobalState } from '../reducer/GlobalState';
+import { DonorDashboard } from './dashboardPages/DonorDashboard';
+import { PatientDashboard } from './dashboardPages/PatientDashboard';
 
 export default function Dashboard() {
 
   const navigate = useNavigate();
+  const { state } = useGlobalState();
 
   const [loading, setLoading] = useState(true);
   const [stock, setStock] = useState({});
@@ -48,36 +51,39 @@ export default function Dashboard() {
   }, [navigate]);
 
   useEffect(() => {
-    getStock();
+    // console.log(state.user.userType)
+    if (state.user && state.user.userType === 'admin') {
+      getStock();
+    }
+    // eslint-disable-next-line
   }, [getStock]);
 
 
+  const DashboardManager = () => {
+    if(state.user) {
+      switch (state.user.userType){
+        case 'admin':
+          return <>
+              { loading ? <LoadingSpinner /> : <AdminDashboard miscStats={miscStats} stock={stock} /> }
+              </>
+        case 'donor':
+          return <DonorDashboard />
+        case 'patient':
+          return <PatientDashboard />
+        default:
+          return <p>Not logged in</p>
+      }
+    }
+  }
+
   return (
     <>
-      {
-        loading ? (
-          <LoadingSpinner />
-        ) :
-        (
-          <Container className='p-5 d-flex flex-column ' style={{ height: '100vh', overflowY: 'auto' }} >
-            <Row>
-              <h3 className="text-left fs-1 mb-3 text-capitalize">Dashboard</h3>
-            </Row>
-            <Row>
-              <Row className='overview mt-3'>
-                <Row xs={1} md={2} lg={5} className="g-4 mt-0">
-                  <MiscStatsCard miscStats={miscStats} />
-                </Row>
-              </Row>
-              <Row className='blood-groups my-5'>
-                <Row xs={1} md={2} lg={4} className="g-4 mt-0">
-                  <BloodCards stock={stock} />
-                </Row>
-              </Row>
-            </Row>
-          </Container>  
-        )
-      }
-    </>
+      <Container className='p-5 d-flex flex-column ' style={{ height: '100vh', overflowY: 'auto' }} >
+        <Row>
+          <h3 className="text-left fs-1 mb-3 text-capitalize">Dashboard</h3>
+        </Row>
+        <DashboardManager />
+      </Container>  
+    </> 
   )
 }

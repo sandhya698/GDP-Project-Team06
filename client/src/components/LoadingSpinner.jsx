@@ -17,32 +17,35 @@ export default function LoadingSpinner() {
 const Loader = styled.div`
   @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
   .main{
-    height: 100vh;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .load{
-    width: 15rem;
-    height: 15rem;
+    width: 15em;
+    height: 15em;
     position: relative;
     border-radius: 50%;
   }
 
   .circle{
-    width: 15rem;
-    height: 15rem;
+    width: 15em;
+    height: 15em;
     position: absolute;
-    border-right: .5rem solid red;
+    border-right: .5em solid red;
     border-radius: 50%;
     animation: load 1s linear infinite;
   }
 
   h1{
     color: #000;
-    font-size: 2rem;
-    letter-spacing: 0.2rem;
+    font-size: 2em;
+    letter-spacing: 0.2em;
     font-weight: 500;
     position: absolute;
     top: 50%; left: 50%;
@@ -61,18 +64,18 @@ const Loader = styled.div`
 
   @media (max-width: 490px) {
     .load, .circle {
-      width: 12rem;
-      height: 12rem;
+      width: 12em;
+      height: 12em;
     }
 
     .circle {
-      width: 12rem;
-      height: 12rem;
-      border-right: .5rem solid red;
+      width: 12em;
+      height: 12em;
+      border-right: .5em solid red;
     }
 
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.6em;
       font-weight: 600
     }
 
