@@ -33,7 +33,7 @@ module.exports.donorRequest = async (req, res) => {
         res.status(201).json({
             success: true,
             message: 'Requested created successfully',
-            result: donorRequestHistRec 
+            result: donorRequestHistRec._id 
         });
     }
     catch (error) {
@@ -42,7 +42,7 @@ module.exports.donorRequest = async (req, res) => {
             message = 'Failed to make blood donation'
         }
         else if (type === 'request') {
-            message = 'Failed to reqest a blood donor'
+            message = 'Failed to make a blood request'
         }
         res.status(422).json({
             success: false,
@@ -76,13 +76,13 @@ module.exports.patientRequest = async (req, res) => {
         res.status(201).json({
             success: true,
             message: 'Requested created successfully',
-            result: patientRequestHistRec
+            result: patientRequestHistRec._id
         });
     }
     catch (error) {
         res.status(422).json({
             success: false,
-            message: 'Failed to reqest a blood donor',
+            message: 'Failed to make a blood request',
             error: error.message
         });
     }

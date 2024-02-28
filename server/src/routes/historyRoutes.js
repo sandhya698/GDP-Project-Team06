@@ -5,6 +5,6 @@ const { donorRequest, patientRequest } = require('../controllers/historyControll
 
 // history routes
 historyRouter.post('/donor/:type', authenticate, donorRequest);
-historyRouter.post('/patient', authenticate, patientRequest);
+historyRouter.post('/patient/request', authenticate, patientRequest);
 
 module.exports = historyRouter;

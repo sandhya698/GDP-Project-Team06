@@ -11,3 +11,4 @@ export const donationsListRoute = 'http://localhost:1432/api/admin/donations-lis
 export const requestsListRoute = 'http://localhost:1432/api/admin/requests-list';
 export const adminControllerRoute = 'http://localhost:1432/api/admin';
 export const manageStockRoute = 'http://localhost:1432/api/inventory/manage-stock';
+export const bloodRequestRoute = 'http://localhost:1432/api/history';
