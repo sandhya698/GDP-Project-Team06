@@ -40,37 +40,37 @@ export const menuList = [
     },
     {
         name: "Donate Blood",
-        path: "/donate",
+        path: "/blood-donate",
         icon: <BiSolidDonateHeart />,
         userType: "donor"
     },
     {
         name: "Donation History",
-        path: "/donations",
+        path: "/donation-history",
         icon: <BiHistory />,
         userType: "donor"
     },
     {
         name: "Blood Request",
-        path: "/request",
+        path: "/blood-request",
         icon: <BiSolidDonateBlood />,
         userType: "donor"
     },
     {
         name: "Request History",
-        path: "/requests",
+        path: "/request-history",
         icon: <BiHistory />,
         userType: "donor"
     },
     {
         name: "Blood Request",
-        path: "/request",
+        path: "/blood-request",
         icon: <BiSolidDonateBlood />,
         userType: "patient"
     },
     {
         name: "Request History",
-        path: "/requests",
+        path: "/request-history",
         icon: <BiHistory />,
         userType: "patient"
     }

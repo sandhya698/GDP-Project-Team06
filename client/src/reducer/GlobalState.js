@@ -12,15 +12,15 @@ const GlobalStateProvider = ({ children }) => {
     switch (action.type) {
       case 'SET_USER':
         localStorage.setItem('globalState', JSON.stringify({ ...state, user: action.payload }));
+        console.log('setting user' , { ...state, user: action.payload })
         return { ...state, user: action.payload };
       case 'SET_TOKEN':
         localStorage.setItem('globalState', JSON.stringify({ ...state, token: action.payload }));
+        console.log('setting token' , { ...state, token: action.payload })
         return { ...state, token: action.payload };
       case 'RESTORE_STATE':
-        localStorage.setItem('globalState', JSON.stringify({ ...state, ...action.payload }));
         return { ...state, ...action.payload };
       case 'REMOVE_STATE':
-        localStorage.setItem('globalState', JSON.stringify({ ...initialState }));
         return {...initialState};
       default:
         return state;
@@ -55,7 +55,7 @@ const GlobalStateProvider = ({ children }) => {
       dispatch({ type: 'RESTORE_STATE', payload: storedState });
       checkTokenValidity(storedState.token);
     } else {
-      // console.log('No stored state found.');
+      console.log('No stored state found.');
     }
     //eslint-disable-next-line
   }, []);

@@ -9,7 +9,7 @@ export default function NavigationBar({ userId }) {
   const { state } = useGlobalState();
 
   const LoginLogout = () => {
-    if (state && state.user) {
+    if (state.user) {
       return (
         <>
           <Navbar.Text className="nav-link d-flex flex-row text-capitalize"><span className="fas fa-user me-2 fs-5"></span> {state.user.userType}</Navbar.Text>

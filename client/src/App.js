@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { Error } from './pages/Error';
@@ -16,6 +15,10 @@ import { Requests } from './pages/Requests';
 import Inventory from './pages/Inventory';
 import Dashboard from './pages/Dashboard';
 import SidebarContainer from './components/SidebarContainer';
+import { DonateBlood } from './pages/bloodDonations/DonateBlood';
+import { DonationHistory } from './pages/bloodDonations/DonationHistory';
+import { RequestHistory } from './pages/bloodRequests/RequestHistory';
+import { RequestBlood } from './pages/bloodRequests/RequestBlood';
 
 export default function App() {
 
@@ -36,6 +39,10 @@ export default function App() {
                             <Route path='/donations' element={<Donations />} />
                             <Route path='/requests'  element={<Requests />} />
                             <Route path='/Inventory' element={<Inventory />} />
+                            <Route path='/blood-donate'     element={<DonateBlood />} />
+                            <Route path='/donation-history' element={<DonationHistory />} />
+                            <Route path='/blood-request'    element={<RequestBlood />} />
+                            <Route path='/request-history'  element={<RequestHistory />} />
                             <Route path='*'          element={<Error />} />
                         </Routes>
                     </SidebarContainer>
