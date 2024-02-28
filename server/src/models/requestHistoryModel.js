@@ -34,7 +34,7 @@ const requestHistorySchema = mongoose.Schema({
         required: true
     },
     disease: String
-}, { timeStamps: true });
+}, { timestamps: true });
 
 const RequestHistory = mongoose.model('RequestHistory', requestHistorySchema);
 module.exports = RequestHistory;

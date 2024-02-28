@@ -48,8 +48,8 @@ export const donationReqHeaders = [
     },
   },
   {
-    dataField: "registerDate",
-    text: "Registerd On",
+    dataField: "updatedAt",
+    text: "Last updated",
     headerStyle: {
       backgroundColor: "#DEDADA",
       width: '10rem'

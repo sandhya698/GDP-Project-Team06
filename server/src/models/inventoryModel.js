@@ -15,7 +15,7 @@ const inventorySchema = mongoose.Schema({
         type: Number,
         require: true,
     },
-}, { timeStamps: true });
+}, { timestamps: true });
 
 // creating a model and exporting
 const Inventory = mongoose.model('Inventory', inventorySchema);

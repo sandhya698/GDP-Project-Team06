@@ -31,7 +31,7 @@ module.exports.getDonors = async (req,res) => {
                 name: 1,
                 email: 1,
                 status: 1,
-                registerDate: 1
+                updatedAt: 1
             }
         );
         res.status(200).json({
@@ -57,7 +57,7 @@ module.exports.getPatients = async (req,res) => {
                 name: 1,
                 email: 1,
                 status: 1,
-                registerDate: 1
+                updatedAt: 1
             }
         );
         res.status(200).json({
@@ -89,7 +89,7 @@ module.exports.getDonationsList = async (req,res) => {
             quantity: donation.quantity,
             status: donation.status,
             disease: donation.disease,
-            registerDate: donation.registerDate
+            updatedAt: donation.updatedAt
         }));
   
         res.status(200).json({
@@ -122,7 +122,7 @@ module.exports.getRequestsList = async (req, res) => {
             quantity: request.quantity,
             status: request.status,
             disease: request.disease,
-            registerDate: request.registerDate,
+            updatedAt: request.updatedAt,
             userType: request.userType
         }));
 

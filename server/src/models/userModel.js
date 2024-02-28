@@ -42,7 +42,7 @@ const userSchema = mongoose.Schema({
             type: String
         }
     }]
-}, { timeStamps: true });
+}, { timestamps: true });
 
 /* This is a default method 'pre' which runs everytime before saving 
  * into the database. If password is changed hash the password.

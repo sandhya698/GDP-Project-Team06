@@ -87,3 +87,37 @@ module.exports.patientRequest = async (req, res) => {
         });
     }
 }
+
+module.exports.getRequestsHistory = async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        let tempRequestsList = await RequestHistory.find({ type: 'request', user: userId }).populate({
+            path: 'user',
+            select: 'name', 
+        });
+        
+        const requestsList = tempRequestsList.map((request) => ({
+            _id: request._id,
+            name: request.user.name,
+            disease: request.disease,
+            bloodGroup: request.bloodGroup,
+            quantity: request.quantity,
+            updatedAt: request.updatedAt,
+            status: request.status
+        }));
+  
+        res.status(200).json({
+            message: 'Requests list fetched succesfully',
+            success: true,
+            requestsList
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            message: 'Failed to fetch requests list',
+            success: false,
+            error: error.message
+        });
+    }
+}
