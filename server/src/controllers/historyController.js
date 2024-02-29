@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const RequestHistory = require("../models/requestHistoryModel");
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const typeList = ["donate", "request"];
@@ -151,6 +152,93 @@ module.exports.getDonationsHistory = async (req,res) => {
         res.status(422).json({
             message: 'Failed to fetch donations list',
             success: false,
+            error: error.message
+        });
+    }
+}
+
+module.exports.dashboardStats = async (req, res) => {
+    const { userType, user, bloodGroup } = req.query;
+    const userList = ['donor', 'patient'];
+
+    if (!userList.includes(userType)) {
+        return res.status(422).json({
+            success: false,
+            message: `Invalid user ${userType}`
+        });
+    }
+
+    try {
+        if (userType === 'donor') {
+            const donorReqPend = await RequestHistory.find({
+                userType: 'donor', user,
+                type: "donate", status: "pending"
+            }).countDocuments();
+            const donorReqAcc = await RequestHistory.find({
+                userType: 'donor', user,
+                type: "donate", status: "accepted"
+            }).countDocuments();
+            const donorReqRej = await RequestHistory.find({
+                userType: 'donor', user,
+                type: "donate", status: "rejected"
+            }).countDocuments();
+
+            const livesSaved = await RequestHistory.distinct('user', {
+                    type: "request",
+                    status: "accepted",
+                    userType: 'patient',
+                    bloodGroup
+                }
+            );
+
+            return res.status(200).json({
+                success: true,
+                userStats: { donorReqAcc, donorReqPend, donorReqRej, livesSaved: livesSaved.length }
+            });
+
+        }
+        else if (userType === 'patient') {
+            const patientReqAccept = await RequestHistory.aggregate([
+                {
+                    $match: {
+                        type: "request",
+                        status: "accepted",
+                        userType: 'patient',
+                        user: new mongoose.Types.ObjectId(user)
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalQuantity: { $sum: '$quantity' }
+                    }
+                }
+            ]);
+
+            const patientPendingReq = await RequestHistory.find({
+                userType: 'patient', user,
+                type: "request", status: "pending"
+            }).countDocuments();
+
+            const names = await RequestHistory.find({ bloodGroup, status: "accepted", type:"donate" },
+                { sort: { timestamp: -1 }, limit: 5 }).populate({
+                    path: 'user',
+                    select: 'name',
+                });
+            const recentTransfusers = names.map(item => item.user.name);
+
+            return res.status(200).json({
+                success: true,
+                userStats: { accepted: patientReqAccept[0].totalQuantity, pending: patientPendingReq, recentTransfusers }
+            });
+        }
+        
+        
+    } catch (error) {
+        console.log(error)
+        res.status(422).json({
+            success: false,
+            message: 'Failed to get misc stats',
             error: error.message
         });
     }
