@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 const initialState = {
   user: null,
   token: null,
+  isLoading: true
 };
 
 const authReducer = (state, action) => {
@@ -15,10 +16,12 @@ const authReducer = (state, action) => {
           "authState",
           JSON.stringify({ ...state, user, token })
       );
-      return { ...state, user, token };
+      return { ...state, user, token, isLoading:false };
     case "LOGOUT":
       localStorage.removeItem("authState");
-      return initialState;
+      return {...initialState, isLoading: false};
+    case 'SET_LOADING':
+      return { ...state, isLoading: action.payload };
     default:
       return state;
   }
@@ -43,12 +46,15 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    dispatch({ type: 'SET_LOADING', payload: true });
     const authState = JSON.parse(localStorage.getItem("authState"));
 
     if (authState) {
       checkTokenValidity(authState.token);
       dispatch({ type: "LOGIN", payload: { ...authState } });
     }
+
+    dispatch({ type: 'SET_LOADING', payload: false });
     // eslint-disable-next-line
   }, []);
 

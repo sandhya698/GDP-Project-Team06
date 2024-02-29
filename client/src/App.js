@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { Error } from './pages/Error';
@@ -18,34 +18,42 @@ import { DonateBlood } from './pages/bloodDonations/DonateBlood';
 import { DonationHistory } from './pages/bloodDonations/DonationHistory';
 import { RequestHistory } from './pages/bloodRequests/RequestHistory';
 import { RequestBlood } from './pages/bloodRequests/RequestBlood';
+import { useAuthContext } from './hooks/useAuthContext';
+import LoadingSpinner from './components/LoadingSpinner';
 
 export default function App() {
 
-    return (
-        <>
-            <BrowserRouter>
-                <SidebarContainer>
-                    <Routes>
-                        <Route path='/'          element={<Landing />} />
-                        <Route path='/about'     element={<About />} />
-                        <Route path='/login'     element={<Login />} />
-                        <Route path='/register'  element={<Register />} />
-                        <Route path='/faq'       element={<Faq />} />
-                        <Route path='/dashboard' element={<Dashboard />} />
-                        <Route path='/donors'    element={<Donor />} />
-                        <Route path='/patients'  element={<Patient />} />
-                        <Route path='/donations' element={<Donations />} />
-                        <Route path='/requests'  element={<Requests />} />
-                        <Route path='/Inventory' element={<Inventory />} />
-                        <Route path='/blood-donate'     element={<DonateBlood />} />
-                        <Route path='/donation-history' element={<DonationHistory />} />
-                        <Route path='/blood-request'    element={<RequestBlood />} />
-                        <Route path='/request-history'  element={<RequestHistory />} />
-                        <Route path='*'          element={<Error />} />
-                    </Routes>
-                </SidebarContainer>
-            </BrowserRouter>
-            <ToastContainer />
-        </>
-    );
+  const { user, isLoading } = useAuthContext();
+
+  if (isLoading) {
+    return <LoadingSpinner />
+  }
+
+  return (
+    <>
+      <BrowserRouter>
+        <SidebarContainer>
+          <Routes>
+            <Route path='/'          element={<Landing />} />
+            <Route path='/about'     element={<About />} />
+            <Route path='/login'     element={!user ? <Login /> : <Navigate to="/dashboard" />} />
+            <Route path='/register'  element={!user ? <Register /> : <Navigate to="/dashboard" />} />
+            <Route path='/faq'       element={<Faq />} />
+            <Route path='/dashboard' element={user ? <Dashboard /> : <Navigate to="/" />} />
+            <Route path='/donors'    element={user ? <Donor /> : <Navigate to="/" />} />
+            <Route path='/patients'  element={user ? <Patient /> : <Navigate to="/" />} />
+            <Route path='/donations' element={user ? <Donations /> : <Navigate to="/" />} />
+            <Route path='/requests'  element={user ? <Requests /> : <Navigate to="/" />} />
+            <Route path='/Inventory' element={user ? <Inventory /> : <Navigate to="/" />} />
+            <Route path='/blood-donate'     element={user ? <DonateBlood /> : <Navigate to="/" />} />
+            <Route path='/donation-history' element={user ? <DonationHistory /> : <Navigate to="/" />} />
+            <Route path='/blood-request'    element={user ? <RequestBlood /> : <Navigate to="/" />} />
+            <Route path='/request-history'  element={user ? <RequestHistory /> : <Navigate to="/" />} />
+            <Route path='*'          element={<Error />} />
+          </Routes>
+        </SidebarContainer>
+      </BrowserRouter>
+      <ToastContainer />
+    </>
+  );
 };
