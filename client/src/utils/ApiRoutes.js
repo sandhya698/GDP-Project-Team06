@@ -14,3 +14,4 @@ export const manageStockRoute = 'http://localhost:1432/api/inventory/manage-stoc
 export const bloodRequestRoute = 'http://localhost:1432/api/history';
 export const bloodDonationRoute = 'http://localhost:1432/api/history/donor';
 export const bloodRequestHistoryRoute = 'http://localhost:1432/api/history/requests';
+export const bloodDonationsHistoryRoute = 'http://localhost:1432/api/history/donations';
