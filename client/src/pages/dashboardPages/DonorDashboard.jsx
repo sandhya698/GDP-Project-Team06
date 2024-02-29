@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Col, Image, Row } from 'react-bootstrap'
-import bloodImage from '../../assets/oBlood.png'
+import { Col, Row } from 'react-bootstrap'
 import { useAuthContext } from '../../hooks/useAuthContext';
 import axios from 'axios';
 import { userDashboardRoute } from '../../utils/ApiRoutes';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { DonorCarousel } from '../../components/DonorCarousel';
 
 export const DonorDashboard = () => {
 
@@ -72,7 +72,7 @@ export const DonorDashboard = () => {
                 </Row>
               </Col>
               <Col md={6}>
-                <Image src={bloodImage} />
+                <DonorCarousel />
               </Col>
             </Row>
             <Row>
