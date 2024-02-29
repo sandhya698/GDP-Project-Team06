@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Register } from './pages/Register';
-import { Login } from './pages/Login';
 import { Error } from './pages/Error';
 import { ToastContainer } from 'react-toastify';
 import { About } from './pages/About';
@@ -34,10 +32,8 @@ export default function App() {
       <BrowserRouter>
         <SidebarContainer>
           <Routes>
-            <Route path='/'          element={<Landing />} />
+            <Route path='/'          element={!user ? <Landing /> : <Navigate to="/dashboard" />} />
             <Route path='/about'     element={<About />} />
-            <Route path='/login'     element={!user ? <Login /> : <Navigate to="/dashboard" />} />
-            <Route path='/register'  element={!user ? <Register /> : <Navigate to="/dashboard" />} />
             <Route path='/faq'       element={<Faq />} />
             <Route path='/dashboard' element={user ? <Dashboard /> : <Navigate to="/" />} />
             <Route path='/donors'    element={user ? <Donor /> : <Navigate to="/" />} />
