@@ -7,7 +7,6 @@ import { ToastContainer } from 'react-toastify';
 import { About } from './pages/About';
 import { Faq } from './pages/Faq';
 import Landing from './pages/Landing';
-import { GlobalStateProvider } from './reducer/GlobalState';
 import { Donor } from './pages/admin/Donor';
 import { Patient } from './pages/admin/Patient';
 import { Donations } from './pages/admin/Donations';
@@ -24,31 +23,29 @@ export default function App() {
 
     return (
         <>
-            <GlobalStateProvider>
-                <BrowserRouter>
-                    <SidebarContainer>
-                        <Routes>
-                            <Route path='/'          element={<Landing />} />
-                            <Route path='/about'     element={<About />} />
-                            <Route path='/login'     element={<Login />} />
-                            <Route path='/register'  element={<Register />} />
-                            <Route path='/faq'       element={<Faq />} />
-                            <Route path='/dashboard' element={<Dashboard />} />
-                            <Route path='/donors'    element={<Donor />} />
-                            <Route path='/patients'  element={<Patient />} />
-                            <Route path='/donations' element={<Donations />} />
-                            <Route path='/requests'  element={<Requests />} />
-                            <Route path='/Inventory' element={<Inventory />} />
-                            <Route path='/blood-donate'     element={<DonateBlood />} />
-                            <Route path='/donation-history' element={<DonationHistory />} />
-                            <Route path='/blood-request'    element={<RequestBlood />} />
-                            <Route path='/request-history'  element={<RequestHistory />} />
-                            <Route path='*'          element={<Error />} />
-                        </Routes>
-                    </SidebarContainer>
-                </BrowserRouter>
-                <ToastContainer />
-            </GlobalStateProvider>
+            <BrowserRouter>
+                <SidebarContainer>
+                    <Routes>
+                        <Route path='/'          element={<Landing />} />
+                        <Route path='/about'     element={<About />} />
+                        <Route path='/login'     element={<Login />} />
+                        <Route path='/register'  element={<Register />} />
+                        <Route path='/faq'       element={<Faq />} />
+                        <Route path='/dashboard' element={<Dashboard />} />
+                        <Route path='/donors'    element={<Donor />} />
+                        <Route path='/patients'  element={<Patient />} />
+                        <Route path='/donations' element={<Donations />} />
+                        <Route path='/requests'  element={<Requests />} />
+                        <Route path='/Inventory' element={<Inventory />} />
+                        <Route path='/blood-donate'     element={<DonateBlood />} />
+                        <Route path='/donation-history' element={<DonationHistory />} />
+                        <Route path='/blood-request'    element={<RequestBlood />} />
+                        <Route path='/request-history'  element={<RequestHistory />} />
+                        <Route path='*'          element={<Error />} />
+                    </Routes>
+                </SidebarContainer>
+            </BrowserRouter>
+            <ToastContainer />
         </>
     );
 };
