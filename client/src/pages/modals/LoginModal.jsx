@@ -5,12 +5,12 @@ import { toast } from 'react-toastify';
 import { toastOptions } from '../../utils/toasOptions';
 import axios from 'axios';
 import { loginRoute } from '../../utils/ApiRoutes';
-import { useGlobalState } from '../../reducer/GlobalState';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export default function LoginModal({ handleUser }) {
 
   const navigate = useNavigate();
-  const { dispatch } = useGlobalState();
+  const { dispatch } = useAuthContext();
 
   const [loginDetails, setLoginDetails] = useState({
     email: "", password: ""
@@ -31,16 +31,15 @@ export default function LoginModal({ handleUser }) {
     }
     else {
       try {
-        const res = await axios.post(loginRoute,
+        const { data } = await axios.post(loginRoute,
           { email, password },
           { withCredentials: true }
         );
         
         // console.log(res);
-        if (res.data.success) {
+        if (data.success) {
           toast.success('Successfully logged In', toastOptions);
-          dispatch({ type: 'SET_USER', payload: res.data.loginUser });
-          dispatch({ type: 'SET_TOKEN', payload: res.data.token });
+          dispatch({ type: 'LOGIN', payload: { ...data } });
           navigate('/dashboard');
         }
         

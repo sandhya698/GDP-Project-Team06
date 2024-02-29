@@ -3,12 +3,12 @@ import { menuList } from '../../utils/menuList';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NavLink, useLocation } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
-import { useGlobalState } from '../../reducer/GlobalState';
 import { Logout } from '../Logout';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const Sidebar = () => {
-  const { state } = useGlobalState();
-  const userType = state.user?.userType;
+  const { user } = useAuthContext();
+  const userType = user?.userType;
   const location = useLocation();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -46,7 +46,7 @@ export const Sidebar = () => {
 
   return (
     <>
-      {userType && (
+      {user && (
         <motion.div
           initial={animateOptions}
           animate={animateOptions}
@@ -75,7 +75,7 @@ export const Sidebar = () => {
             </div>
             <section className="routes">
             {
-              menuList.filter(item => state.user.userType === item.userType || item.userType === "common").map((route, index) => {
+              menuList.filter(item => userType === item.userType || item.userType === "common").map((route, index) => {
                 return (
                   <NavLink
                     to={route.path}
@@ -105,7 +105,7 @@ export const Sidebar = () => {
             </section>
           </div>
           <div className='user_section'>
-             <Logout userId={state.user._id} />
+             <Logout userId={user._id} />
              <AnimatePresence>
                 {isOpen && (
                   <motion.div
@@ -115,7 +115,7 @@ export const Sidebar = () => {
                     exit="hidden"
                     className="link_text"
                   >
-                      {state.user.name} 
+                      {user.name} 
                   </motion.div>
                 )}
               </AnimatePresence>

@@ -5,13 +5,13 @@ import ReactTable from '../../components/ReactTable';
 import { historyHeaders } from '../../utils/tableHeaders/historyHeaders';
 import axios from 'axios';
 import { bloodRequestHistoryRoute } from '../../utils/ApiRoutes';
-import { useGlobalState } from '../../reducer/GlobalState';
 import { toast } from 'react-toastify';
 import { refreshToastOptions } from '../../utils/toasOptions';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const RequestHistory = () => {
 
-  const { state } = useGlobalState();
+  const { user } = useAuthContext();
 
   const [loading, setLoading] = useState(false);
   const [requests, setRequests] = useState([]);
@@ -25,7 +25,7 @@ export const RequestHistory = () => {
 
   const getRequestsHistory = useCallback( async () => {
     try {
-      let userId = state.user?._id;
+      let userId = user?._id;
       const res = await api.get(`${bloodRequestHistoryRoute}/${userId}`);
 
       if (res.data.success) {

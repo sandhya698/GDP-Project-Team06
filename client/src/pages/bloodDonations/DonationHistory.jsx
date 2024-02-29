@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
-import { useGlobalState } from '../../reducer/GlobalState';
 import { historyHeaders } from '../../utils/tableHeaders/historyHeaders';
 import { bloodDonationsHistoryRoute } from '../../utils/ApiRoutes';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -8,10 +7,11 @@ import { Container, Row } from 'react-bootstrap';
 import ReactTable from '../../components/ReactTable';
 import { toast } from 'react-toastify';
 import { refreshToastOptions } from '../../utils/toasOptions';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const DonationHistory = () => {
 
-  const { state } = useGlobalState();
+  const { user } = useAuthContext();
 
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
@@ -25,7 +25,7 @@ export const DonationHistory = () => {
 
   const getDonationsHistory = useCallback( async () => {
     try {
-      let userId = state.user?._id; 
+      let userId = user?._id; 
       const res = await api.get(`${bloodDonationsHistoryRoute}/${userId}`);
 
       if (res.data.success) {

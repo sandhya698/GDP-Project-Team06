@@ -72,11 +72,11 @@ module.exports.login = async (req, res) => {
     }
 
     try {
-        const loginUser = await Users.findOne({ email });
-        if (loginUser) {
+        const user = await Users.findOne({ email });
+        if (user) {
             // comparing user password with hashed password
             // returns true if both hash values are matched
-            const hashOk = await bcrypt.compare(password, loginUser.password);
+            const hashOk = await bcrypt.compare(password, user.password);
 
             if (!hashOk) {
                 return res.status(401).json({
@@ -84,7 +84,7 @@ module.exports.login = async (req, res) => {
                 });
             }
 
-            const token = await loginUser.generateJsonWebToken();
+            const token = await user.generateJsonWebToken();
             
             const twelveHours = 12 * 60 * 60 * 1000; // Convert 12 hours to milliseconds
             const expirationDate = new Date(Date.now() + twelveHours);
@@ -98,7 +98,7 @@ module.exports.login = async (req, res) => {
 
             res.status(200).json({
                 message: "Login success",
-                loginUser,
+                user,
                 token,
                 success: true
             });

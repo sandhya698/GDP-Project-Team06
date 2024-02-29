@@ -2,18 +2,18 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {Container, Nav, Navbar} from 'react-bootstrap';
 import { Logout } from './Logout';
-import { useGlobalState } from '../reducer/GlobalState';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function NavigationBar({ userId }) {
   
-  const { state } = useGlobalState();
+  const { user } = useAuthContext();
 
   const LoginLogout = () => {
-    if (state.user) {
+    if (user) {
       return (
         <>
-          <Navbar.Text className="nav-link d-flex flex-row text-capitalize"><span className="fas fa-user me-2 fs-5"></span> {state.user.userType}</Navbar.Text>
-          <Navbar.Text className='fw-bold'>{state.user.name}</Navbar.Text>
+          <Navbar.Text className="nav-link d-flex flex-row text-capitalize"><span className="fas fa-user me-2 fs-5"></span> {user.userType}</Navbar.Text>
+          <Navbar.Text className='fw-bold'>{user.name}</Navbar.Text>
           <Logout userId={userId} />
         </>
       )

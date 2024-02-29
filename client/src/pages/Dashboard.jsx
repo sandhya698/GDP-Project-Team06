@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { getStockRoute, miscStatsRoute } from '../utils/ApiRoutes';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { AdminDashboard } from './dashboardPages/AdminDashboard';
-import { useGlobalState } from '../reducer/GlobalState';
 import { DonorDashboard } from './dashboardPages/DonorDashboard';
 import { PatientDashboard } from './dashboardPages/PatientDashboard';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function Dashboard() {
 
   const navigate = useNavigate();
-  const { state } = useGlobalState();
+  const { user } = useAuthContext();
 
   const [loading, setLoading] = useState(true);
   const [stock, setStock] = useState({});
@@ -52,7 +52,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     // console.log(state.user.userType)
-    if (state.user && state.user.userType === 'admin') {
+    if (user && user.userType === 'admin') {
       getStock();
     }
     // eslint-disable-next-line
@@ -60,8 +60,8 @@ export default function Dashboard() {
 
 
   const DashboardManager = () => {
-    if(state.user) {
-      switch (state.user.userType){
+    if(user) {
+      switch (user.userType){
         case 'admin':
           return <>
               { loading ? <LoadingSpinner /> : <AdminDashboard miscStats={miscStats} stock={stock} /> }

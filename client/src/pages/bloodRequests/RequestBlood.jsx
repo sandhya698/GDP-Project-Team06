@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useGlobalState } from '../../reducer/GlobalState'
 import axios from 'axios';
 import { bloodRequestRoute } from '../../utils/ApiRoutes';
 import { NonVerfiedUser } from '../../components/NonVerfiedUser';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const RequestBlood = () => {
 
-  const {state} = useGlobalState();
+  const { user } = useAuthContext();
 
   const [requestMade, setRequestMade] = useState(false);
   const [requestError, setRequestError] = useState(undefined);
@@ -33,8 +33,8 @@ export const RequestBlood = () => {
     event.preventDefault();
     const { bloodGroup, quantity, disease } = requestDetails;
     try {
-      const userType = state.user?.userType;
-      const userId = state.user?._id;
+      const userType = user?.userType;
+      const userId = user?._id;
       const res = await api.post(`${bloodRequestRoute}/${userType}/request`, {
         bloodGroup, quantity, disease, userId
       });
@@ -66,7 +66,7 @@ export const RequestBlood = () => {
           <h3 className="text-left fs-1 mb-3 text-capitalize">Request for blood</h3>
         </Row>
         {
-          state.user && state.user.status === 'verified' ? 
+          user && user.status === 'verified' ? 
           <Row>
           {
             requestMade ?
@@ -97,7 +97,7 @@ export const RequestBlood = () => {
                         Name
                       </Form.Label>
                       <Col sm={9}>
-                        <Form.Control disabled readOnly className='border-2' type="text" placeholder="John" value={state.user?.name} />
+                        <Form.Control disabled readOnly className='border-2' type="text" placeholder="John" value={user.name} />
                       </Col>
                     </Form.Group>
 
@@ -148,7 +148,7 @@ export const RequestBlood = () => {
               </>
           }
         </Row> : 
-        <NonVerfiedUser status={state.user?.status}/>
+        <NonVerfiedUser status={user.status}/>
         }
         
       </Container>  

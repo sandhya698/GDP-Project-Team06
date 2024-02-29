@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useGlobalState } from '../../reducer/GlobalState';
 import { bloodDonationRoute } from '../../utils/ApiRoutes';
 import axios from 'axios';
 import { NonVerfiedUser } from '../../components/NonVerfiedUser';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const DonateBlood = () => {
 
-  const {state} = useGlobalState();
+  const { user } = useAuthContext();
 
   const [requestMade, setRequestMade] = useState(false);
   const [requestError, setRequestError] = useState(undefined);
@@ -33,7 +33,7 @@ export const DonateBlood = () => {
     event.preventDefault();
     const { bloodGroup, quantity, disease } = donationDetails;
     try {
-      const userId = state.user?._id; 
+      const userId = user?._id; 
       const res = await api.post(`${bloodDonationRoute}/donate`, {
         bloodGroup, quantity, disease, userId
       });
@@ -64,7 +64,7 @@ export const DonateBlood = () => {
         <h3 className="text-left fs-1 mb-3 text-capitalize">Donate blood</h3>
       </Row>
       {
-        state.user && state.user.status === 'verified' ?
+        user && user.status === 'verified' ?
         <Row>
         {
           requestMade ?
@@ -95,7 +95,7 @@ export const DonateBlood = () => {
                       Name
                     </Form.Label>
                     <Col sm={9}>
-                      <Form.Control disabled readOnly className='border-2' type="text" placeholder="John" value={state.user?.name} />
+                      <Form.Control disabled readOnly className='border-2' type="text" placeholder="John" value={user.name} />
                     </Col>
                   </Form.Group>
 
@@ -146,7 +146,7 @@ export const DonateBlood = () => {
             </>
         }
       </Row> :
-      <NonVerfiedUser status={state.user?.status}/>
+      <NonVerfiedUser status={user.status}/>
       }
     </Container>
   )
