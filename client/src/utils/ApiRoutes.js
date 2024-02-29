@@ -13,3 +13,4 @@ export const adminControllerRoute = 'http://localhost:1432/api/admin';
 export const manageStockRoute = 'http://localhost:1432/api/inventory/manage-stock';
 export const bloodRequestRoute = 'http://localhost:1432/api/history';
 export const bloodDonationRoute = 'http://localhost:1432/api/history/donor';
+export const bloodRequestHistoryRoute = 'http://localhost:1432/api/history/requests';
