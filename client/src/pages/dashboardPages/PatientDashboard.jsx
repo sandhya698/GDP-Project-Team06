@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Col, Image, Row } from 'react-bootstrap'
-import bloodImage from '../../assets/oBlood.png'
 import axios from 'axios';
 import { userDashboardRoute } from '../../utils/ApiRoutes';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import oBlood from '../../assets/oBlood.png'
+import aBlood from '../../assets/aBlood.png'
+import bBlood from '../../assets/bBlood.png'
+import abBlood from '../../assets/abBlood.png'
 
 export const PatientDashboard = () => {
 
@@ -46,7 +49,12 @@ export const PatientDashboard = () => {
           <Row className='patient-dash h-100' >
             <Col md={8}>
               <div className='h-75 img-container text-center patient-img'>
-                <Image src={bloodImage} />
+                {
+                  user.bloodGroup === 'A+' || user.bloodGroup === 'A-' ? <Image src={aBlood} /> :
+                    user.bloodGroup === 'B+' || user.bloodGroup === 'B-' ? <Image src={bBlood} /> :
+                      user.bloodGroup === 'AB+' || user.bloodGroup === 'AB-' ? <Image src={abBlood} /> :
+                        <Image src={oBlood} />
+                }
                 <div className='text-on-image'>
                   <p className='m-0'><span className='unit-count'>{dashboardData.accepted}</span>Units<br /> Transfused</p>
                 </div>
