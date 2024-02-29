@@ -191,3 +191,22 @@ body::-webkit-scrollbar-thumb {
   border-right: 4px solid transparent;
   transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
+
+
+.patient-dash .img-container {
+  position: relative;
+}
+
+.patient-dash .img-container .text-on-image {
+  position: absolute;
+  left: 65%;
+  bottom: 27%;
+  color: #fff;
+  font-weight: bold;
+  width: 150px;
+}
+
+.patient-dash .img-container .unit-count {
+  font-size: 4rem;
+  color: #000;
+}
