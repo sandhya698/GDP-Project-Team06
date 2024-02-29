@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { menuList } from '../utils/menuList';
+import { menuList } from '../../utils/menuList';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NavLink, useLocation } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
-import { useGlobalState } from '../reducer/GlobalState';
-import { Logout } from './Logout';
+import { useGlobalState } from '../../reducer/GlobalState';
+import { Logout } from '../Logout';
 
 export const Sidebar = () => {
   const { state } = useGlobalState();

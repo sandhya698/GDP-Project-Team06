@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { donationReqHeaders } from '../utils/tableHeaders/donationsReqHeaders';
+import { donationReqHeaders } from '../../utils/tableHeaders/donationsReqHeaders';
 import axios from 'axios';
-import { adminControllerRoute, requestsListRoute } from '../utils/ApiRoutes';
+import { adminControllerRoute, requestsListRoute } from '../../utils/ApiRoutes';
 import { Button, Container, Row } from 'react-bootstrap';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ReactTable from '../components/ReactTable';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import ReactTable from '../../components/ReactTable';
 import { toast } from 'react-toastify';
-import { refreshToastOptions, toastOptions } from '../utils/toasOptions';
+import { refreshToastOptions, toastOptions } from '../../utils/toasOptions';
 
 export const Requests = () => {
 
@@ -93,7 +93,7 @@ export const Requests = () => {
           </Button>
           <Button
             className='ms-3'
-            onClick={() => updateStatus(row._id, row.bloodGroup, row.quantity, row.status)}
+            onClick={() => updateStatus(row)}
             variant={row.status === 'pending' ? 'success' : null}
             size="sm">
             {row.status === 'pending' ? 'Accept' : null}

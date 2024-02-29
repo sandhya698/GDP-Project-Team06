@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { donorsListRoute, userStatusUpdateRoute } from '../utils/ApiRoutes';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import { donorsListRoute, userStatusUpdateRoute } from '../../utils/ApiRoutes';
 import { Button, Container, Row } from 'react-bootstrap';
-import ReactTable from '../components/ReactTable';
-import { donorPatientHeaders } from '../utils/tableHeaders/donorPatinetHeaders';
+import ReactTable from '../../components/ReactTable';
+import { donorPatientHeaders } from '../../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
-import { refreshToastOptions, toastOptions } from '../utils/toasOptions';
+import { refreshToastOptions, toastOptions } from '../../utils/toasOptions';
 
 export const Donor = () => {
 
@@ -21,7 +21,7 @@ export const Donor = () => {
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  }); 
 
   const getDonors = useCallback ( async () => {
     try {
@@ -91,7 +91,7 @@ export const Donor = () => {
           </Button>
           <Button
             className='ms-3'
-            onClick={() => updateStatus(row._id, row.bloodGroup, row.quantity, row.status)}
+            onClick={() => updateStatus(row._id, row.status)}
             variant={row.status === 'pending' ? 'success' : null}
             size="sm">
             {row.status === 'pending' ? 'Accept' : null}
