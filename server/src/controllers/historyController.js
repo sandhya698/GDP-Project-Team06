@@ -121,3 +121,37 @@ module.exports.getRequestsHistory = async (req, res) => {
         });
     }
 }
+
+module.exports.getDonationsHistory = async (req,res) => {
+    const userId = req.params.id;
+    
+    try {
+        const donationsList = await RequestHistory.find({ type: 'donate', user: userId }).populate({
+            path: 'user',
+            select: 'name',
+        });
+        
+        const fomattedDonationsList = donationsList.map((donation) => ({
+            _id: donation._id,
+            name: donation.user.name,
+            bloodGroup: donation.bloodGroup,
+            quantity: donation.quantity,
+            status: donation.status,
+            disease: donation.disease,
+            updatedAt: donation.updatedAt
+        }));
+  
+        res.status(200).json({
+            message: 'Donations list fetched succesfully',
+            success: true,
+            donationsList: fomattedDonationsList
+        });
+    }
+    catch (error) {
+        res.status(422).json({
+            message: 'Failed to fetch donations list',
+            success: false,
+            error: error.message
+        });
+    }
+}
