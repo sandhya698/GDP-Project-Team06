@@ -4,7 +4,7 @@ import {Container, Nav, Navbar} from 'react-bootstrap';
 import { Logout } from './Logout';
 import { useAuthContext } from '../hooks/useAuthContext';
 
-export default function NavigationBar({ userId }) {
+export default function NavigationBar() {
   
   const { user } = useAuthContext();
 
@@ -14,7 +14,7 @@ export default function NavigationBar({ userId }) {
         <>
           <Navbar.Text className="nav-link d-flex flex-row text-capitalize"><span className="fas fa-user me-2 fs-5"></span> {user.userType}</Navbar.Text>
           <Navbar.Text className='fw-bold'>{user.name}</Navbar.Text>
-          <Logout userId={userId} />
+          <Logout />
         </>
       )
     }

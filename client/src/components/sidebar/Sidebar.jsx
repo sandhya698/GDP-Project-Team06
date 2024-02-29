@@ -105,7 +105,7 @@ export const Sidebar = () => {
             </section>
           </div>
           <div className='user_section'>
-             <Logout userId={user._id} />
+             <Logout />
              <AnimatePresence>
                 {isOpen && (
                   <motion.div
