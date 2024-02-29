@@ -29,6 +29,7 @@ export default function ReactTable({refreshTable, pageSize, data, columns}) {
                     columns={columns}
                     {...paginationTableProps}
                     hover
+                    noDataIndication="There is nothing to show here"
                   />
                 </div>
               )

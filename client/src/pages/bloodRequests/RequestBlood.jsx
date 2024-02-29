@@ -3,6 +3,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useGlobalState } from '../../reducer/GlobalState'
 import axios from 'axios';
 import { bloodRequestRoute } from '../../utils/ApiRoutes';
+import { NonVerfiedUser } from '../../components/NonVerfiedUser';
 
 export const RequestBlood = () => {
 
@@ -64,7 +65,9 @@ export const RequestBlood = () => {
         <Row>
           <h3 className="text-left fs-1 mb-3 text-capitalize">Request for blood</h3>
         </Row>
-        <Row>
+        {
+          state.user && state.user.status === 'verified' ? 
+          <Row>
           {
             requestMade ?
               <>
@@ -144,7 +147,10 @@ export const RequestBlood = () => {
                 </Col>
               </>
           }
-        </Row>
+        </Row> : 
+        <NonVerfiedUser status={state.user?.status}/>
+        }
+        
       </Container>  
     </>
   )
