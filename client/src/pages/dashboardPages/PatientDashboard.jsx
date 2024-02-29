@@ -1,32 +1,78 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Col, Image, Row } from 'react-bootstrap'
 import bloodImage from '../../assets/oBlood.png'
+import axios from 'axios';
+import { userDashboardRoute } from '../../utils/ApiRoutes';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export const PatientDashboard = () => {
+
+  const { user } = useAuthContext();
+  const [dashboardData, setDashboardData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getDashboardStats = useCallback(async () => {
+    const { bloodGroup, _id, userType } = user;
+    setIsLoading(true);
+    try {
+      const { data } = await axios.get(userDashboardRoute, { params: { user: _id, bloodGroup, userType } }, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      setDashboardData(data.userStats);
+    }
+    catch (error) {
+        console.log(error.response)
+    }
+    finally {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line
+  }, []);
+  
+  useEffect(() => {
+    getDashboardStats();
+  }, [getDashboardStats])
+  
   return (
     <>
-      <Row className='patient-dash h-100' >
-        <Col md={8}>
-        <div className='h-75 img-container text-center patient-img'>
-          <Image src={bloodImage} />
-          <div class='text-on-image'>
-            <p className='m-0'><span className='unit-count'>06</span>Units<br /> Transfused</p>
-          </div>
-        </div>
-        <div className='h-auto text-center fs-2'><span className='fw-bold text-danger'>6</span> requests are yet to confirm</div>
-        <div className='h-auto text-center text-capitalize fw-bold fs-1 text-danger'>we hope for your safer health</div>
-        </Col>
-        <Col md={4}>
-          <h3>Recently donated persons....</h3>
-          <br />
-          <p className='fs-4'>mark</p>
-          <p className='fs-4'>anthony</p>
-          <p className='fs-4'>jack</p>
-          <p className='fs-4'>Ceaser</p>
-          <p className='fs-4'>Hunter</p>
-        </Col>
-          
-      </Row>
+      {
+        isLoading ? <LoadingSpinner /> :
+      
+          <Row className='patient-dash h-100' >
+            <Col md={8}>
+              <div className='h-75 img-container text-center patient-img'>
+                <Image src={bloodImage} />
+                <div className='text-on-image'>
+                  <p className='m-0'><span className='unit-count'>{dashboardData.accepted}</span>Units<br /> Transfused</p>
+                </div>
+              </div>
+              <div className='h-auto text-center fs-2'><span className='fw-bold text-danger'>{dashboardData.pending}</span> requests are yet to confirm</div>
+              <div className='h-auto text-center text-capitalize fw-bold fs-1 text-danger'>we hope for your safer health</div>
+            </Col>
+            <Col md={4}>
+              {
+                dashboardData.recentTransfusers && dashboardData.recentTransfusers.length > 0 ? (
+                  <>
+                    <h3>Recently donated persons....</h3>
+                    <br />
+                    {
+                      dashboardData.recentTransfusers.map((item, index) => {
+                        return (
+                          <p key={index} className='fs-4'>{item}</p>
+                        )
+                      })
+                    }
+                  </>
+                ) : null
+              }
+            </Col>
+          </Row>
+      }
     </>
   )
 }
