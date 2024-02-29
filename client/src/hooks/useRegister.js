@@ -85,6 +85,8 @@ export const useRegister = () => {
         setIsLoading(false);
       }
       
+    } else {
+      setError(false);
     }
     
   };

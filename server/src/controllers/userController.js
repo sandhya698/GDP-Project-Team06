@@ -4,10 +4,10 @@ const bcrypt = require('bcryptjs');
 // register route
 module.exports.register = async (req, res) => {
     // object destructuring
-    const { name, email, password, cpassword, userType } = req.body;
+    const { name, email, password, cpassword, userType, bloodGroup } = req.body;
 
     // basic validation
-    if (!name || !email || !password || !cpassword || !userType) {
+    if (!name || !email || !password || !cpassword || !userType || !bloodGroup) {
         return res.status(422).json({
             message: "Every field must be filled", success: false
         });
@@ -29,7 +29,7 @@ module.exports.register = async (req, res) => {
             });
         }
 
-        const user = new Users({ name, email, password, cpassword, userType, status: 'pending' });
+        const user = new Users({ name, email, password, cpassword, userType, bloodGroup, status: 'pending' });
         const registerdUser = await user.save();
 
         res.status(201).json({
@@ -86,8 +86,8 @@ module.exports.login = async (req, res) => {
 
             const token = await user.generateJsonWebToken();
             
-            const twelveHours = 12 * 60 * 60 * 1000; // Convert 12 hours to milliseconds
-            const expirationDate = new Date(Date.now() + twelveHours);
+            // const twelveHours = 12 * 60 * 60 * 1000; // Convert 12 hours to milliseconds
+            // const expirationDate = new Date(Date.now() + twelveHours);
             
             const oneHour = 3 * 60 * 60 * 1000; // Convert 12 hours to milliseconds
             res.cookie('bloodToken', token, {

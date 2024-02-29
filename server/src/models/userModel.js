@@ -33,6 +33,11 @@ const userSchema = mongoose.Schema({
         require: true,
         enum: ['admin', 'donor', 'patient']
     },
+    bloodGroup: {
+        type: String,
+        required: true,
+        enum: ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"],
+    },
     status: {
         type: String,
         enum: ['verified', 'rejected', 'pending']
