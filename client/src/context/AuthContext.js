@@ -41,19 +41,24 @@ export const AuthContextProvider = ({ children }) => {
   const checkTokenValidity = (token) => {
     const decodedJwt = parseJwt(token);
     if (decodedJwt && decodedJwt.exp * 1000 < Date.now()) {
-      dispatch({ type: "LOGOUT" });
+      return true;
     }
+    return false;
   };
 
   useEffect(() => {
     dispatch({ type: 'SET_LOADING', payload: true });
     const authState = JSON.parse(localStorage.getItem("authState"));
-
+    let autoLogout = false;
     if (authState) {
-      checkTokenValidity(authState.token);
-      dispatch({ type: "LOGIN", payload: { ...authState } });
+      autoLogout = checkTokenValidity(authState.token);
+      if (autoLogout) {
+        dispatch({ type: "LOGOUT" });
+      } else if (!autoLogout) {
+        dispatch({ type: "LOGIN", payload: { ...authState } });
+      }
     }
-
+     
     dispatch({ type: 'SET_LOADING', payload: false });
     // eslint-disable-next-line
   }, []);
