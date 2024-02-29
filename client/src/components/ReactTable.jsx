@@ -1,8 +1,10 @@
 import React from 'react'
+import { FaSync } from "react-icons/fa";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationListStandalone, PaginationProvider } from "react-bootstrap-table2-paginator";
+import { Button } from 'react-bootstrap';
 
-export default function ReactTable({title, pageSize, data, columns}) {
+export default function ReactTable({refreshTable, pageSize, data, columns}) {
   const paginationOptions = {
     custom: true,
     sizePerPage: pageSize,
@@ -16,7 +18,11 @@ export default function ReactTable({title, pageSize, data, columns}) {
             {
               ({ paginationProps, paginationTableProps }) => (
                 <div>
-                  <PaginationListStandalone {...paginationProps} />
+                  <div className='d-flex justify-content-between align-items-center'>
+                    <Button className='mb-2' variant="outline-primary" title='refresh table' size='sm' onClick={refreshTable} ><FaSync /></Button> 
+                    <PaginationListStandalone {...paginationProps} />
+                  </div>
+                  
                   <BootstrapTable
                     keyField="_id"
                     data={data}

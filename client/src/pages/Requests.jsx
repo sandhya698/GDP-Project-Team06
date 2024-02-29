@@ -7,7 +7,7 @@ import { Button, Container, Row } from 'react-bootstrap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ReactTable from '../components/ReactTable';
 import { toast } from 'react-toastify';
-import { toastOptions } from '../utils/toasOptions';
+import { refreshToastOptions, toastOptions } from '../utils/toasOptions';
 
 export const Requests = () => {
 
@@ -104,6 +104,11 @@ export const Requests = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donationReqHeaders]);
 
+  const refreshTable = () => {
+    getDonations();
+    toast.success('requests history refreshed', refreshToastOptions);
+  }
+
   return (
     <>
       { loading ? (
@@ -118,6 +123,7 @@ export const Requests = () => {
               pageSize={8}
               data={requests}
               columns={columns}
+              refreshTable={refreshTable}
             />
           </Row>
         </Container>  

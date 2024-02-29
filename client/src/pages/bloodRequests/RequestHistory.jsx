@@ -6,6 +6,8 @@ import { historyHeaders } from '../../utils/tableHeaders/historyHeaders';
 import axios from 'axios';
 import { bloodRequestHistoryRoute } from '../../utils/ApiRoutes';
 import { useGlobalState } from '../../reducer/GlobalState';
+import { toast } from 'react-toastify';
+import { refreshToastOptions } from '../../utils/toasOptions';
 
 export const RequestHistory = () => {
 
@@ -13,7 +15,6 @@ export const RequestHistory = () => {
 
   const [loading, setLoading] = useState(false);
   const [requests, setRequests] = useState([]);
-  const [columns, setColumns] = useState(historyHeaders);
 
   const api = axios.create({
     withCredentials: true,
@@ -49,6 +50,11 @@ export const RequestHistory = () => {
   useEffect(() => {
     getRequestsHistory();
   }, [getRequestsHistory]);
+
+  const refreshTable = () => {
+    getRequestsHistory();
+    toast.success('requests history refreshed', refreshToastOptions);
+  }
   
 
   return (
@@ -64,7 +70,8 @@ export const RequestHistory = () => {
             <ReactTable
               pageSize={8}
               data={requests}
-              columns={columns}
+              columns={historyHeaders}
+              refreshTable={refreshTable}
             />
           </Row>
         </Container>  

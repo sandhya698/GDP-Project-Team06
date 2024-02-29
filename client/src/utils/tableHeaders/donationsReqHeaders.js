@@ -12,15 +12,13 @@ export const donationReqHeaders = [
       textOverflow: 'ellipsis'}
   },
   {
-    dataField: "Name",
-    isDummyField: true,
+    dataField: "name",
     text: "Name",
     sort: true,
     headerStyle: {
       backgroundColor: "#DEDADA",
       width: '12rem'
-    },
-    formatter: (cell, row) => row.donor ? row.donor : row.patient
+    }
   },
   {
     dataField: "disease",

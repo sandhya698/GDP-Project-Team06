@@ -70,13 +70,13 @@ export const DonateBlood = () => {
                 {
                   !requestError ?
                     <>
-                      <p className='text-success fw-bold'>Request had made successfully.</p>
-                      <p className='mb-0'>Please go to request history section to view your status.</p>
-                      <p><strong>Your request id:</strong> {requestId}</p>
+                      <p className='text-success fw-bold'>Donation had made successfully.</p>
+                      <p className='mb-0'>Please go to donation history section to view your status.</p>
+                      <p><strong>Your donation id:</strong> {requestId}</p>
                       <Button sm={{ span: 10, offset: 3 }} onClick={handleRequestButton}>Another Donation</Button>
                     </> : 
                     <>
-                      <p> <span className='text-danger fw-bold'>Error: </span></p>
+                      <p> <span className='text-danger fw-bold'>Error in donation: </span></p>
                       <pre id="json">{JSON.stringify(requestError, undefined, 2)}</pre>
                       <Button sm={{ span: 10, offset: 3 }} onClick={handleRequestButton}>Donate Again</Button>
                     </>

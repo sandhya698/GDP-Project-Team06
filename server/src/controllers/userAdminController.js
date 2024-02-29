@@ -84,7 +84,7 @@ module.exports.getDonationsList = async (req,res) => {
         
         const fomattedDonationsList = donationsList.map((donation) => ({
             _id: donation._id,
-            donor: donation.user.name,
+            name: donation.user.name,
             bloodGroup: donation.bloodGroup,
             quantity: donation.quantity,
             status: donation.status,
@@ -117,7 +117,7 @@ module.exports.getRequestsList = async (req, res) => {
 
         const formattedRequestsList = tempRequestsList.map((request) => ({
             _id: request._id,
-            patient: request.user.name,
+            name: request.user.name,
             bloodGroup: request.bloodGroup,
             quantity: request.quantity,
             status: request.status,

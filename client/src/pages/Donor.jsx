@@ -7,7 +7,7 @@ import { Button, Container, Row } from 'react-bootstrap';
 import ReactTable from '../components/ReactTable';
 import { donorPatientHeaders } from '../utils/tableHeaders/donorPatinetHeaders';
 import { toast } from 'react-toastify';
-import { toastOptions } from '../utils/toasOptions';
+import { refreshToastOptions, toastOptions } from '../utils/toasOptions';
 
 export const Donor = () => {
 
@@ -101,6 +101,11 @@ export const Donor = () => {
     }])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donorPatientHeaders]);
+
+  const refreshTable = () => {
+    getDonors();
+    toast.success('donors list updated', refreshToastOptions);
+  }
  
   return (
     <>
@@ -116,6 +121,7 @@ export const Donor = () => {
               pageSize={8}
               data={donorList}
               columns={columns}
+              refreshTable={refreshTable}
             />
           </Row>
         </Container>  

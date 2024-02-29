@@ -6,7 +6,7 @@ import { adminControllerRoute, donationsListRoute } from '../utils/ApiRoutes';
 import { Button, Container, Row } from 'react-bootstrap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ReactTable from '../components/ReactTable';
-import { toastOptions } from '../utils/toasOptions';
+import { refreshToastOptions, toastOptions } from '../utils/toasOptions';
 import { toast } from 'react-toastify';
 
 export const Donations = () => {
@@ -103,6 +103,11 @@ export const Donations = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donationReqHeaders]);
 
+  const refreshTable = () => {
+    getDonations();
+    toast.success('donations history refreshed', refreshToastOptions);
+  }
+
   return (
     <>
       { loading ? (
@@ -117,6 +122,7 @@ export const Donations = () => {
               pageSize={8}
               data={donations}
               columns={columns}
+              refreshTable={refreshTable}
             />
           </Row>
         </Container>  

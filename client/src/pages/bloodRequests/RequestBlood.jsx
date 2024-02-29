@@ -78,7 +78,7 @@ export const RequestBlood = () => {
                         <Button sm={{ span: 10, offset: 3 }} onClick={handleRequestButton}>Another Request</Button>
                       </> : 
                       <>
-                        <p> <span className='text-danger fw-bold'>Error: </span></p>
+                        <p> <span className='text-danger fw-bold'>Error in making a request: </span></p>
                         <pre id="json">{JSON.stringify(requestError, undefined, 2)}</pre>
                         <Button sm={{ span: 10, offset: 3 }} onClick={handleRequestButton}>Request Again</Button>
                       </>

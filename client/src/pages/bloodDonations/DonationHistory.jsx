@@ -6,6 +6,8 @@ import { bloodDonationsHistoryRoute } from '../../utils/ApiRoutes';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { Container, Row } from 'react-bootstrap';
 import ReactTable from '../../components/ReactTable';
+import { toast } from 'react-toastify';
+import { refreshToastOptions } from '../../utils/toasOptions';
 
 export const DonationHistory = () => {
 
@@ -13,7 +15,6 @@ export const DonationHistory = () => {
 
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
-  const [columns, setColumns] = useState(historyHeaders);
 
   const api = axios.create({
     withCredentials: true,
@@ -22,7 +23,7 @@ export const DonationHistory = () => {
     },
   });
 
-  const getRequestsHistory = useCallback( async () => {
+  const getDonationsHistory = useCallback( async () => {
     try {
       let userId = state.user?._id; 
       const res = await api.get(`${bloodDonationsHistoryRoute}/${userId}`);
@@ -47,8 +48,13 @@ export const DonationHistory = () => {
   },[])
 
   useEffect(() => {
-    getRequestsHistory();
-  }, [getRequestsHistory]);
+    getDonationsHistory();
+  }, [getDonationsHistory]);
+
+  const refreshTable = () => {
+    getDonationsHistory();
+    toast.success('donations history refreshed', refreshToastOptions);
+  }
 
   return (
     <>
@@ -63,7 +69,8 @@ export const DonationHistory = () => {
             <ReactTable
               pageSize={8}
               data={donations}
-              columns={columns}
+              columns={historyHeaders}
+              refreshTable={refreshTable}
             />
           </Row>
         </Container>  
