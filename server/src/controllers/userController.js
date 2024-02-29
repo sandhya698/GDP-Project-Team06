@@ -29,7 +29,7 @@ module.exports.register = async (req, res) => {
             });
         }
 
-        const user = new Users({ name, email, password, cpassword, userType });
+        const user = new Users({ name, email, password, cpassword, userType, status: 'pending' });
         const registerdUser = await user.save();
 
         res.status(201).json({

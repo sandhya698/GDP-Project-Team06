@@ -1,20 +1,15 @@
 import React, { useState } from 'react'
 import { Button, Card, Form, FloatingLabel, Row } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify';
-import { toastOptions } from '../../utils/toasOptions';
-import axios from 'axios';
-import { loginRoute } from '../../utils/ApiRoutes';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { Link } from 'react-router-dom'
+import { useLogin } from '../../hooks/useLogin';
 
 export default function LoginModal({ handleUser }) {
-
-  const navigate = useNavigate();
-  const { dispatch } = useAuthContext();
 
   const [loginDetails, setLoginDetails] = useState({
     email: "", password: ""
   });
+
+  const { login, isLoading } = useLogin();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,33 +18,7 @@ export default function LoginModal({ handleUser }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('in handle submit')
-    const { email, password } = loginDetails;
-
-    if (!email || !password) {
-      toast.error("email and password are required", toastOptions);
-    }
-    else {
-      try {
-        const { data } = await axios.post(loginRoute,
-          { email, password },
-          { withCredentials: true }
-        );
-        
-        // console.log(res);
-        if (data.success) {
-          toast.success('Successfully logged In', toastOptions);
-          dispatch({ type: 'LOGIN', payload: { ...data } });
-          navigate('/dashboard');
-        }
-        
-      }
-      catch (err) {
-        console.log(err.response.data);
-        toast.error(err.response.data.message, toastOptions);
-        // window.alert(err.response.data.message);
-      }
-    }
+    await login(loginDetails);
   }
 
   return (
@@ -78,8 +47,8 @@ export default function LoginModal({ handleUser }) {
               </div>
 
               <div className="d-grid">
-                <Button variant="danger" type="submit">
-                  Start Transfusion
+                <Button variant="danger" type="submit" disabled={isLoading} >
+                  {isLoading ? 'Logging In...' : 'Start Transfusion'}
                 </Button>
               </div>
                 

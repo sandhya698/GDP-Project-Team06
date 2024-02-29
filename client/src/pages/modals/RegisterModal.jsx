@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { toastOptions } from '../../utils/toasOptions';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { registerRoute } from '../../utils/ApiRoutes';
+import { useRegister } from '../../hooks/useRegister';
 
 export default function RegisterModal({ handleUser }) {
 
@@ -17,83 +14,16 @@ export default function RegisterModal({ handleUser }) {
     return setUserDetails({ ...userDetails, [name]: value });
   }
 
-  const validateUserDetails = () => {
-    const { name, email, password, cpassword, userType } = userDetails;
-    console.log(userDetails);
-
-    let validated = true;
-
-    const nameRegex = /^[a-zA-z0-9_ ]{3,25}$/;
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.!@#$%^&*-])[a-zA-Z\d.!@#$%^&*-]{8,16}$/;
-
-    toast.dismiss();
-
-    if (!nameRegex.test(name)) {
-      toast.error(
-        "Username should be greater than 3 chars. Special chars allowed space and underscore",
-        toastOptions
-      );
-      validated = false;
-    }
-
-    if (!emailRegex.test(email)) {
-      toast.error(
-        "Invalid email",
-        toastOptions
-      );
-      validated = false;
-    }
-
-    if (!passwordRegex.test(password)) {
-      toast.error(
-        "Password should be min of 8 and max 16. Should follow standard password rules",
-        toastOptions
-      );
-    validated = false;
-    }
-
-    if (!password.match(cpassword)) {
-      toast.error(
-        "Passwords does not match",
-        toastOptions
-      );
-      validated = false;
-    }
-
-    if (userType === '') {
-      toast.error(
-        "Who are you?",
-        toastOptions
-      );
-      validated = false;
-    }
-
-    return validated;
-  }
+  const { register, error, isLoading } = useRegister();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { name, email, password, cpassword, userType } = userDetails;
 
-    if (validateUserDetails()) {
-      try {
-        const res = await axios.post(registerRoute, {
-          name, email, password, cpassword, userType
-        });
-  
-        console.log(res);
-        if(res.data.success) {
-          toast.success('You are now a Transfuser!!', toastOptions);
-          handleUser(true);
-        };
-      }
-      catch (err) {
-        console.log(err.response.data);
-        toast.error(err.response.data.message, toastOptions);
-      }
-      
-		}
+    await register(userDetails);
+    if (!error) {
+      handleUser(true);
+    }
+    
   }
 
   return (
@@ -142,8 +72,8 @@ export default function RegisterModal({ handleUser }) {
           </Row>
 
           <div className="d-grid">
-            <Button variant="danger" type="submit">
-              Become a Transfuser
+            <Button variant="danger" type="submit" disabled={isLoading} >
+              {isLoading ? 'Registering...' : 'Become a Transfuser'}
             </Button>
           </div>
             
