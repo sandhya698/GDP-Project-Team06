@@ -1,19 +1,4 @@
-import React, { useState } from 'react'
-import { useAuthContext } from '../../hooks/useAuthContext';
-
-export const SecurityProfile = ({isEditing}) => {
-
-    const { user } = useAuthContext();
-
-  const [editedUser, setEditedUser] = useState({ ...user });
-
-
-
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    return setEditedUser({ ...editedUser, [name]: value });
-  };
+export const SecurityProfile = ({isEditing, handleChange, securityData}) => {
 
   return (
     <>

@@ -11,7 +11,8 @@ export const Profile = ({ show, setShow }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isUserEditing, setIsUserEditing] = useState(false);
   const [isSecurityEditing, setIsSecurityEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState({ ...user });
+  const [userData, setUserData] = useState({ ...user });
+  const [securityData, setSecurityData] = useState({ ...user });
   const [key, setKey] = useState('user');
 
   const handleEditClick = () => {
@@ -23,36 +24,47 @@ export const Profile = ({ show, setShow }) => {
     }
   };
 
-  const handleCancelClick = () => {
-    setIsEditing(false);
-    setIsUserEditing(false);
-    setIsSecurityEditing(false);
-  };
-
-  const handleSaveClick = () => {
-    // Perform save logic with editedUser data
-    console.log('Saving:', editedUser);
-
-    setIsEditing(false);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    return setEditedUser({ ...editedUser, [name]: value });
-  };
-
-  const handleModalClose = () => {
-    setShow(false);
+  const resetEditingStates = () => {
     setIsEditing(false);
     setIsUserEditing(false);
     setIsSecurityEditing(false);
   }
 
+  const handleCancelClick = () => {
+    setUserData({ ...user });
+    setSecurityData({ ...user });
+    resetEditingStates();
+  };
+
+  const handleSaveClick = () => {
+    // Perform save logic with editedUser data
+    if (key === 'user') {
+      console.log("saving user data: ", userData);
+    } else if (key === 'security') {
+      console.log("saving security data: ", securityData);
+    }
+
+    resetEditingStates();
+  };
+
+  const handleUserChange = (e) => {
+    const { name, value } = e.target;
+    console.log('first')
+    return setUserData({ ...userData, [name]: value });
+  };
+  const handleSecurityChange = (e) => {
+    const { name, value } = e.target;
+    return setSecurityData({ ...securityData, [name]: value });
+  };
+
+  const handleModalClose = () => {
+    setShow(false);
+    resetEditingStates();
+  }
+
   const handleTabChange = (k) => {
     setKey(k);
-    setIsEditing(false);
-    setIsUserEditing(false);
-    setIsSecurityEditing(false);
+    resetEditingStates();
   }
 
   return (
@@ -77,10 +89,16 @@ export const Profile = ({ show, setShow }) => {
             className="mb-3"
           >
             <Tab eventKey="user" title="User">
-              <UserProfile isEditing={isUserEditing} />
+              <UserProfile
+                isEditing={isUserEditing}
+                userData={userData}
+                handleChange={handleUserChange} />
             </Tab>
             <Tab eventKey="security" title="Security">
-              <SecurityProfile isEditing={isSecurityEditing} />
+              <SecurityProfile
+                isEditing={isSecurityEditing}
+                securityData={securityData}
+                handleChange={handleSecurityChange} />
             </Tab>
           </Tabs>
         </Modal.Body>
