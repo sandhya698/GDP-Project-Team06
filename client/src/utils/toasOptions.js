@@ -10,6 +10,16 @@ export const toastOptions = {
     // progressStyle: { background: '#0d6efd' },
 };
 
+export const userToastOptions = {
+    position: "top-center",
+    autoClose: 5000,
+    pauseOnHover: true,
+    closeOnClick: true,
+    pauseOnFocusLoss:false,
+    draggable: true,
+    theme: "light",
+};
+
 export const refreshToastOptions = {
     position:"top-right",
     autoClose:1000,

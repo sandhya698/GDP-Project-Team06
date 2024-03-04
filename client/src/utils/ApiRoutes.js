@@ -16,3 +16,4 @@ export const bloodDonationRoute = '/api/history/donor';
 export const bloodRequestHistoryRoute = '/api/history/requests';
 export const bloodDonationsHistoryRoute = '/api/history/donations';
 export const userDashboardRoute = '/api/history/dashboard-stats';
+export const userUpdateRoute = '/api/user/updateProfile';

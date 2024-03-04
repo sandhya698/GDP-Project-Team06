@@ -9,9 +9,9 @@ const initialState = {
 };
 
 const authReducer = (state, action) => {
+  const { user, token } = action.payload;
   switch (action.type) {
     case "LOGIN":
-      const { user, token } = action.payload;
       localStorage.setItem(
           "authState",
           JSON.stringify({ ...state, user, token, isLoading: false })
@@ -22,6 +22,13 @@ const authReducer = (state, action) => {
       return {...initialState, isLoading: false};
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload };
+    case 'UPDATE_USER':
+      console.log(user);
+      localStorage.setItem(
+          "authState",
+          JSON.stringify({ ...state, user, isLoading: false })
+      );
+      return { ...state, user, isLoading:false };
     default:
       return state;
   }

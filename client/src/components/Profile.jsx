@@ -1,15 +1,26 @@
 import React, { useState } from 'react'
 import { Button, Modal, Tab, Tabs } from 'react-bootstrap';
 import { useAuthContext } from '../hooks/useAuthContext';
+import axios from 'axios';
+import { userUpdateRoute } from '../utils/ApiRoutes';
+import { ToastContainer, toast } from 'react-toastify';
+import { userToastOptions } from '../utils/toasOptions';
 
 export const Profile = ({ show, setShow }) => {
 
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
   
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({ ...user });
   const [securityData, setSecurityData] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
   const [key, setKey] = useState('user');
+
+  const api = axios.create({
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -21,15 +32,33 @@ export const Profile = ({ show, setShow }) => {
     setIsEditing(false);
   };
 
-  const handleSaveClick = () => {
-    // Perform save logic with editedUser data
-    if (key === 'user') {
-      console.log("saving user data: ", userData);
-    } else if (key === 'security') {
-      console.log("saving security data: ", securityData);
-    }
+  const handleSaveClick = async () => {
+    try {
+      if (key === 'user') {
+        const { data } = await api.post(userUpdateRoute, {
+          _id: userData._id,
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+        });
 
-    setIsEditing(false);
+        toast.success(data.message, userToastOptions);
+        setUserData({ ...data.updatedUser });
+        dispatch({ type: 'UPDATE_USER', payload: {user: data.updatedUser} });
+        
+      } else if (key === 'security') {
+        console.log("saving security data: ", securityData);
+      }
+
+    }
+    catch (error) {
+      console.log("error: ", error.response);
+    }
+    finally {
+      setIsEditing(false);
+    }
+   
+
   };
 
   const handleUserChange = (e) => {
@@ -97,7 +126,7 @@ export const Profile = ({ show, setShow }) => {
                 <div className="row mb-3">
                   <label htmlFor="bloodGroup" className="col-sm-2 col-form-label">Blood Group</label>
                   <div className="col-sm-10">
-                    <input disabled readOnl value={userData.bloodGroup} type="text" className="form-control" name="bloodGroup" />
+                    <input disabled readOnly value={userData.bloodGroup} type="text" className="form-control" name="bloodGroup" />
                   </div>
                 </div>  
               </>
@@ -147,6 +176,7 @@ export const Profile = ({ show, setShow }) => {
         }
       </Modal.Footer>
       </Modal>
+      <ToastContainer />
     </>
   );
 }
