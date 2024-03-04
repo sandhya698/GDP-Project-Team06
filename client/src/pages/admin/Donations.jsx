@@ -51,8 +51,8 @@ export const Donations = () => {
 
   const updateStatus = async (id, bloodGroup, quantity, status) => {
     try {
-      let newStatus = status === 'rejected' ? 'accepted' : 'rejected';
-      let route = `${adminControllerRoute}/donor/donate/${newStatus}`;
+      status = status === 'Accept' ? 'accepted' : 'rejected';
+      let route = `${adminControllerRoute}/donor/donate/${status}`;
       const res = await api.post(route, {
         id, quantity, bloodGroup
       });
@@ -60,7 +60,7 @@ export const Donations = () => {
         setDonations((prevDonorList) => {
           return prevDonorList.map((donation) => {
             if (donation._id === id) {
-              return { ...donation, status: newStatus };
+              return { ...donation, status };
             }
             return donation;
           });
@@ -85,14 +85,14 @@ export const Donations = () => {
       formatter: (cell, row) => {
         return (  <>
           <Button
-            onClick={() => updateStatus(row._id, row.bloodGroup, row.quantity, row.status)}
+            onClick={(e) => updateStatus(row._id, row.bloodGroup, row.quantity, e.currentTarget.innerText)}
             variant={row.status === 'rejected' ? 'success' : 'danger'}
             size="sm">
             {row.status === 'rejected' ? 'Accept' : 'Reject'}
           </Button>
           <Button
             className='ms-3'
-            onClick={() => updateStatus(row._id, row.bloodGroup, row.quantity, row.status)}
+            onClick={(e) => updateStatus(row._id, row.bloodGroup, row.quantity, e.currentTarget.innerText)}
             variant={row.status === 'pending' ? 'success' : null}
             size="sm">
             {row.status === 'pending' ? 'Accept' : null}

@@ -49,11 +49,11 @@ export const Requests = () => {
     getDonations();
   }, [getDonations]);
 
-  const updateStatus = async (row) => {
-    const { _id, bloodGroup, userType, quantity, status } = row;
+  const updateStatus = async (row, status) => {
+    const { _id, bloodGroup, userType, quantity } = row;
     try {
-      let newStatus = status === 'rejected' ? 'accepted' : 'rejected';
-      let route = `${adminControllerRoute}/${userType}/request/${newStatus}`;
+      status = status === 'Accept' ? 'accepted' : 'rejected';
+      let route = `${adminControllerRoute}/${userType}/request/${status}`;
       const res = await api.post(route, {
         id: _id, quantity, bloodGroup
       });
@@ -61,7 +61,7 @@ export const Requests = () => {
         setRequests((prevDonorList) => {
           return prevDonorList.map((request) => {
             if (request._id === _id) {
-              return { ...request, status: newStatus };
+              return { ...request, status };
             }
             return request;
           });
@@ -86,14 +86,14 @@ export const Requests = () => {
       formatter: (cell, row) => {
         return (  <>
           <Button
-            onClick={() => updateStatus(row)}
+            onClick={(e) => updateStatus(row, e.currentTarget.innerText)}
             variant={row.status === 'rejected' ? 'success' : 'danger'}
             size="sm">
             {row.status === 'rejected' ? 'Accept' : 'Reject'}
           </Button>
           <Button
             className='ms-3'
-            onClick={() => updateStatus(row)}
+            onClick={(e) => updateStatus(row, e.currentTarget.innerText)}
             variant={row.status === 'pending' ? 'success' : null}
             size="sm">
             {row.status === 'pending' ? 'Accept' : null}

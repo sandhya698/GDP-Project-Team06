@@ -30,7 +30,7 @@ export default function LoginModal({ handleUser }) {
             <Form className="mb-3" onSubmit={handleSubmit} >
               <Form.Group className="mb-3">
                 <FloatingLabel controlId="email" label="Email address"  >
-                  <Form.Control className='border-2' type="email" placeholder="name@example.com" name="email" onChange={handleChange} required />
+                  <Form.Control className='border-2' type="email" placeholder="name@example.com" name="email" onChange={handleChange} autoFocus required />
                 </FloatingLabel> 
               </Form.Group>
                 

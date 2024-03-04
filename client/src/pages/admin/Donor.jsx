@@ -52,14 +52,14 @@ export const Donor = () => {
   
   const updateStatus = async (id,status) => {
     try {
-      let newStatus = status === 'rejected' ? 'verified' : 'rejected';
-      let route = `${userStatusUpdateRoute}/${id}/${newStatus}`;
+      status = status === 'Verify' ? 'verified' : 'rejected';
+      let route = `${userStatusUpdateRoute}/${id}/${status}`;
       const res = await api.post(route);
       if (res.data.success === true) {
         setDonorList((prevDonorList) => {
           return prevDonorList.map((donor) => {
             if (donor._id === id) {
-              return { ...donor, status: newStatus };
+              return { ...donor, status };
             }
             return donor;
           });
@@ -84,17 +84,17 @@ export const Donor = () => {
       formatter: (cell, row) => {
         return (  <>
           <Button
-            onClick={()=>updateStatus(row._id, row.status)}
+            onClick={(e) => updateStatus(row._id, e.currentTarget.innerText)}
             variant={row.status === 'rejected' ? 'success' : 'danger'}
             size="sm">
-            {row.status === 'rejected' ? 'Accept' : 'Reject'}
+            {row.status === 'rejected' ? 'Verify' : 'Reject'}
           </Button>
           <Button
             className='ms-3'
-            onClick={() => updateStatus(row._id, row.status)}
+            onClick={(e) => updateStatus(row._id, e.currentTarget.innerText)}
             variant={row.status === 'pending' ? 'success' : null}
             size="sm">
-            {row.status === 'pending' ? 'Accept' : null}
+            {row.status === 'pending' ? 'Verify' : null}
           </Button>
         </>
       )}

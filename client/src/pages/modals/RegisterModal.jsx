@@ -54,7 +54,7 @@ export default function RegisterModal({ handleUser }) {
             
           <Form.Group className="mb-3">
             <FloatingLabel controlId="name" label="Name" >
-              <Form.Control className='border-2' type="text" placeholder="Dream Fuel" name="name" onChange={handleChange} required />
+              <Form.Control className='border-2' type="text" placeholder="Dream Fuel" name="name" onChange={handleChange} autoFocus required />
             </FloatingLabel> 
           </Form.Group>
 

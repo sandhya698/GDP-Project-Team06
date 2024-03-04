@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Button, Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import axios from 'axios';
 import { manageStockRoute } from '../../utils/ApiRoutes';
+import { toast } from 'react-toastify';
+import { toastOptions } from '../../utils/toasOptions';
 
 export default function Inventory() {
 
@@ -33,7 +35,7 @@ export default function Inventory() {
       setUpdatedInventory(res.data.updatedInventory);
     }
     catch (error) {
-      console.log(error.response.data);
+      toast.error(error.response.data.message, toastOptions);
     }
   }
 
