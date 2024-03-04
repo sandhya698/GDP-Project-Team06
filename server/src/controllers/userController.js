@@ -150,3 +150,23 @@ module.exports.logout = async (req,res) => {
         });
     }
 }
+
+// uuser update route
+module.exports.updateuser = async (req,res) => {
+    const { _id, name, email, phone } = req.body;
+    try {
+        const updatedUser = await Users.findOneAndUpdate({ _id }, { name, email, phone }, {new: true});
+        return res.status(201).json({
+            message: 'profile updated',
+            updatedUser,
+            success: true
+        });
+
+    } catch (error) {
+        return res.status(404).json({
+            message: 'Failed to update',
+            success: false,
+            error: error.message
+        });
+    }
+}

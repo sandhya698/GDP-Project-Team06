@@ -28,6 +28,11 @@ const userSchema = mongoose.Schema({
         require: true,
         unique: true
     },
+    phone: {
+        type: Number,
+        require: false,
+        unique: true
+    },
     userType: {
         type: String,
         require: true,
