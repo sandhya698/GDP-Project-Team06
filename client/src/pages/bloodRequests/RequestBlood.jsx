@@ -14,7 +14,7 @@ export const RequestBlood = () => {
   const [requestId, setRequestId] = useState('');
 
   const [requestDetails, setrRquestDetails] = useState({
-    bloodGroup: '', quantity: 0,disease: ''
+    bloodGroup: user.bloodGroup, quantity: 0,disease: ''
   });
   
   const handleChange = (event) => {
@@ -99,6 +99,15 @@ export const RequestBlood = () => {
                       <Col sm={9}>
                         <Form.Control disabled readOnly className='border-2' type="text" placeholder="John" value={user.name} />
                       </Col>
+                        </Form.Group>
+                        
+                    <Form.Group as={Row} className="mb-3" controlId="bloodGroup">
+                      <Form.Label column sm={3}>
+                        Blood Group
+                      </Form.Label>
+                      <Col sm={9}>
+                        <Form.Control disabled readOnly className='border-2'  name="bloodGroup" type="text" value={user.bloodGroup} />
+                      </Col>
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3" controlId="disease">
@@ -106,35 +115,17 @@ export const RequestBlood = () => {
                         Disease
                       </Form.Label>
                       <Col sm={9}>
-                        <Form.Control className='border-2' name='disease' type="text" placeholder="COVID" onChange={handleChange} required />
+                        <Form.Control className='border-2' name='disease' type="text" placeholder="your disease..." onChange={handleChange} required />
                       </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3" controlId="bloodGroup">
-                      <Form.Label column sm={3}>
-                        Blood Group
-                      </Form.Label>
-                      <Col sm={9}>
-                        <Form.Select className='border-2' name="bloodGroup" value={requestDetails.bloodGroup} onChange={handleChange} required>
-                            <option value="">Choose...</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                          </Form.Select>
-                      </Col>
-                    </Form.Group>
 
                     <Form.Group as={Row} className="mb-3" controlId="quantity">
                       <Form.Label column sm={3}>
                           Quantity
                       </Form.Label>
                       <Col sm={9}>
-                        <Form.Control className='border-2' min={1} type="number" placeholder="0" name="quantity" value={requestDetails.quantity} onChange={handleChange} required />
+                        <Form.Control className='border-2' min={1} max={10} type="number" placeholder="0" name="quantity" value={requestDetails.quantity} onChange={handleChange} required />
                       </Col>
                     </Form.Group>
 
