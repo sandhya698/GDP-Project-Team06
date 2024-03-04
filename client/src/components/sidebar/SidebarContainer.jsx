@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Sidebar } from './Sidebar'
 import { useLocation } from 'react-router-dom';
-import { Profile } from '../profile/Profile';
+import { Profile } from '../Profile';
 
 
 export default function SidebarContainer({ children }) {
