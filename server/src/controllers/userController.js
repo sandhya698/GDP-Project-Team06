@@ -170,3 +170,32 @@ module.exports.updateuser = async (req,res) => {
         });
     }
 }
+
+// change password route
+module.exports.changePassword = async (req,res) => {
+    const { _id, oldPassword, newPassword } = req.body;
+    try {
+
+        const existingUser = await Users.findOne({ _id });
+        const hashOk = await bcrypt.compare(oldPassword, existingUser.password);
+        if (!hashOk) {
+            return res.status(404).json({
+                message: 'Wrong Old Password',
+                success: false,
+            }); 
+        }
+        const password = await bcrypt.hash(newPassword, 12);
+        const updatedUser = await Users.findOneAndUpdate({ _id }, { password, cpassword: password });
+        return res.status(201).json({
+            message: 'password changed successfully',
+            success: true
+        });
+
+    } catch (error) {
+        return res.status(404).json({
+            message: 'password change failed',
+            success: false,
+            error: error.message
+        });
+    }
+}
