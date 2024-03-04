@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Modal, Tab, Tabs } from 'react-bootstrap';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
-import { userUpdateRoute } from '../utils/ApiRoutes';
+import { changePasswordRoute, userUpdateRoute } from '../utils/ApiRoutes';
 import { ToastContainer, toast } from 'react-toastify';
 import { userToastOptions } from '../utils/toasOptions';
 
@@ -46,13 +46,22 @@ export const Profile = ({ show, setShow }) => {
         setUserData({ ...data.updatedUser });
         dispatch({ type: 'UPDATE_USER', payload: {user: data.updatedUser} });
         
-      } else if (key === 'security') {
+      }
+      else if (key === 'security') {
         console.log("saving security data: ", securityData);
+        const { data } = await api.post(changePasswordRoute, {
+          _id: user._id,
+          oldPassword: securityData.oldPassword,
+          newPassword: securityData.newPassword,
+        });
+
+        setSecurityData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+        toast.success(data.message, userToastOptions);
       }
 
     }
     catch (error) {
-      console.log("error: ", error.response);
+      toast.error(error.response.data.message, userToastOptions);
     }
     finally {
       setIsEditing(false);
@@ -136,19 +145,19 @@ export const Profile = ({ show, setShow }) => {
                 <div className="row mb-3">
                   <label htmlFor="oldPassword" className="col-sm-3 col-form-label">Old Password</label>
                   <div className="col-sm-9">
-                    <input type="password" onChange={handleSecurityChange} className="form-control" name="oldPassword" />
+                    <input type="password" onChange={handleSecurityChange} value={securityData.oldPassword} className="form-control" name="oldPassword" />
                   </div>
                 </div>
                 <div className="row mb-3">
                   <label htmlFor="newPassword" className="col-sm-3 col-form-label">New Password</label>
                   <div className="col-sm-9">
-                    <input type="password" onChange={handleSecurityChange} className="form-control" name="newPassword" />
+                    <input type="password" onChange={handleSecurityChange} value={securityData.newPassword} className="form-control" name="newPassword" />
                   </div>
                 </div>
                 <div className="row mb-3">
                   <label htmlFor="confirmPassword" className="col-sm-3 col-form-label">Confirm Password</label>
                   <div className="col-sm-9">
-                    <input type="password" onChange={handleSecurityChange} className="form-control" name="confirmPassword" />
+                    <input type="password" onChange={handleSecurityChange} value={securityData.confirmPassword} className="form-control" name="confirmPassword" />
                   </div>
                 </div>
               </>
@@ -176,7 +185,6 @@ export const Profile = ({ show, setShow }) => {
         }
       </Modal.Footer>
       </Modal>
-      <ToastContainer />
     </>
   );
 }

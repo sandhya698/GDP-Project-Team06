@@ -12,7 +12,7 @@ export const toastOptions = {
 
 export const userToastOptions = {
     position: "top-center",
-    autoClose: 5000,
+    autoClose: 2000,
     pauseOnHover: true,
     closeOnClick: true,
     pauseOnFocusLoss:false,
