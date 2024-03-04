@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Sidebar } from './Sidebar'
 import { useLocation } from 'react-router-dom';
+import { Profile } from '../profile/Profile';
 
 
 export default function SidebarContainer({ children }) {
@@ -10,6 +11,14 @@ export default function SidebarContainer({ children }) {
   const location = useLocation();
   // console.log(location.pathname)
 
+  const [show, setShow] = useState(false);
+
+  const handleUserProfileClick = (event) => {
+    event.preventDefault();
+    console.log('user profile clicked');
+    setShow(true);
+  }
+
   return (
     <>
       {
@@ -17,10 +26,11 @@ export default function SidebarContainer({ children }) {
         (
           <Container fluid> 
             <Row className="h-100"> 
-              <Sidebar />
+              <Sidebar handleUserProfileClick={handleUserProfileClick} />
               <Col className='p-0 ms-5 m-sm-auto'>
                 <Container className='' style={{ height: '100vh', overflowY: 'auto' }} >
-                  {children} 
+                    {children} 
+                    <Profile show={show} setShow={(data) => setShow(data)} />
                 </Container>
               </Col>
             </Row>

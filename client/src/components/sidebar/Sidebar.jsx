@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { menuList } from '../../utils/menuList';
 import { AnimatePresence, motion } from 'framer-motion';
-import { NavLink, useLocation } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { FaBars, FaUser } from 'react-icons/fa';
 import { Logout } from '../Logout';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
-export const Sidebar = () => {
+export const Sidebar = ({handleUserProfileClick}) => {
   const { user } = useAuthContext();
   const userType = user?.userType;
   const location = useLocation();
@@ -104,21 +104,23 @@ export const Sidebar = () => {
             }
             </section>
           </div>
-          <div className='user_section'>
-             <Logout />
-             <AnimatePresence>
-                {isOpen && (
-                  <motion.div
-                    variants={showAnimation}
-                    initial="hidden"
-                    animate="show"
-                    exit="hidden"
-                    className="link_text"
-                  >
-                      {user.name} 
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <div className='user_section'>
+              <Link className="user_section mb-0" onClick={handleUserProfileClick}  >
+                <FaUser />
+                <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        variants={showAnimation}
+                        initial="hidden"
+                        animate="show"
+                        exit="hidden"
+                        className="link_text fs-5"
+                      >
+                        {user.name} 
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+              </Link>
           </div>
         </div>
         </motion.div>
