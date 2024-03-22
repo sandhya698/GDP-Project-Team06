@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { menuList } from '../../utils/menuList';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { FaBars, FaUser } from 'react-icons/fa';
-import { Logout } from '../Logout';
+import { NavLink, useLocation } from 'react-router-dom';
+import { FaBars } from 'react-icons/fa';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import SideBarMenu from './SideBarMenu';
 
 export const Sidebar = ({handleUserProfileClick}) => {
   const { user } = useAuthContext();
@@ -52,8 +52,6 @@ export const Sidebar = ({handleUserProfileClick}) => {
           animate={animateOptions}
           className={`sidebar `}
         >
-        <div className='h-100 d-flex flex-column'>
-          <div>
             <div className="top_section">
               <AnimatePresence>
                 {isOpen && (
@@ -76,13 +74,21 @@ export const Sidebar = ({handleUserProfileClick}) => {
             <section className="routes">
             {
               menuList.filter(item => userType === item.userType || item.userType === "common").map((route, index) => {
+                if (route.subRoutes) {
+                return (
+                  <SideBarMenu
+                    setIsOpen={setIsOpen}
+                    route={route}
+                    showAnimation={showAnimation}
+                    isOpen={isOpen}
+                  />
+                );
+              }
                 return (
                   <NavLink
                     to={route.path}
                     key={index}
                     className={`link ${route.path === location.pathname ? 'active' : ''}`}
-                    // className="link"
-                    // activeClassName="active"
                   >
                     <div className="icon">{route.icon}</div>
                     <AnimatePresence>
@@ -94,7 +100,7 @@ export const Sidebar = ({handleUserProfileClick}) => {
                           exit="hidden"
                           className="link_text"
                         >
-                          {route.name}
+                          {route.name}  
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -102,27 +108,7 @@ export const Sidebar = ({handleUserProfileClick}) => {
                 );
               })
             }
-            </section>
-          </div>
-            <div className='user_section'>
-              <Link className="user_section mb-0" onClick={handleUserProfileClick}  >
-                <FaUser />
-                <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        variants={showAnimation}
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                        className="link_text fs-5"
-                      >
-                        {user.name} 
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-              </Link>
-          </div>
-        </div>
+          </section>
         </motion.div>
       )}
     </>

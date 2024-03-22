@@ -1,5 +1,6 @@
-import { FaHome, FaUsers, FaUserInjured, FaWarehouse } from "react-icons/fa";
+import { FaHome, FaUsers, FaUserInjured, FaWarehouse, FaUser } from "react-icons/fa";
 import { BiSolidDonateBlood, BiSolidDonateHeart, BiHistory } from "react-icons/bi";
+import { FaGear, FaPowerOff } from "react-icons/fa6";
 
 export const menuList = [
     {
@@ -73,5 +74,25 @@ export const menuList = [
         path: "/request-history",
         icon: <BiHistory />,
         userType: "patient"
-    }
+    },
+    {
+        path: "/settings",
+        name: "Settings",
+        icon: <FaGear />,
+        exact: true,
+        userType: "common",
+        subRoutes: [
+          {
+            path: "/settings/profile",
+            name: "Profile ",
+            icon: <FaUser />,
+          },
+          {
+            path: "/settings/logout",
+            name: "Logout",
+            icon: <FaPowerOff />
+            ,
+          },
+        ],
+      },
 ];
