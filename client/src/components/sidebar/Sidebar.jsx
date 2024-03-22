@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { menuList } from '../../utils/menuList';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NavLink, useLocation } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaUserCircle } from 'react-icons/fa';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import SideBarMenu from './SideBarMenu';
+import Badge from 'react-bootstrap/Badge';
 
 export const Sidebar = ({handleUserProfileClick}) => {
   const { user } = useAuthContext();
@@ -108,6 +109,22 @@ export const Sidebar = ({handleUserProfileClick}) => {
                 );
               })
             }
+            <div className='link user-info'>
+              <div className="icon"><FaUserCircle /></div>
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.div
+                    variants={showAnimation}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    className="link_text"
+                  >
+                  {user.name} <Badge pill style={{fontSize: '12px'}} bg="danger" text="white"> {userType} </Badge>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </section>
         </motion.div>
       )}
