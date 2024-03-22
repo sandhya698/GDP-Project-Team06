@@ -18,6 +18,7 @@ import { RequestHistory } from './pages/bloodRequests/RequestHistory';
 import { RequestBlood } from './pages/bloodRequests/RequestBlood';
 import { useAuthContext } from './hooks/useAuthContext';
 import LoadingSpinner from './components/LoadingSpinner';
+import { Profile } from './components/Profile';
 
 export default function App() {
 
@@ -45,6 +46,7 @@ export default function App() {
             <Route path='/donation-history' element={user ? <DonationHistory /> : <Navigate to="/" />} />
             <Route path='/blood-request'    element={user ? <RequestBlood /> : <Navigate to="/" />} />
             <Route path='/request-history'  element={user ? <RequestHistory /> : <Navigate to="/" />} />
+            <Route path='/settings/profile'  element={user ? <Profile /> : <Navigate to="/" />} />
             <Route path='*'          element={<Error />} />
           </Routes>
         </SidebarContainer>

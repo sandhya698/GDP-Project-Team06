@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Button, Modal, Tab, Tabs } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
 import { changePasswordRoute, userUpdateRoute } from '../utils/ApiRoutes';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { userToastOptions } from '../utils/toasOptions';
 
-export const Profile = ({ show, setShow }) => {
+export const Profile = () => {
 
   const { user, dispatch } = useAuthContext();
   
@@ -14,6 +14,8 @@ export const Profile = ({ show, setShow }) => {
   const [userData, setUserData] = useState({ ...user });
   const [securityData, setSecurityData] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
   const [key, setKey] = useState('user');
+
+  const isSecurityEmpty = Object.values(securityData).every(value => value === "");
 
   const api = axios.create({
     withCredentials: true,
@@ -74,16 +76,11 @@ export const Profile = ({ show, setShow }) => {
     const { name, value } = e.target;
     return setUserData({ ...userData, [name]: value });
   };
-
+  
   const handleSecurityChange = (e) => {
     const { name, value } = e.target;
     return setSecurityData({ ...securityData, [name]: value });
   };
-
-  const handleModalClose = () => {
-    setShow(false);
-    setIsEditing(false);
-  }
 
   const handleTabChange = (k) => {
     setKey(k);
@@ -93,19 +90,11 @@ export const Profile = ({ show, setShow }) => {
 
   return (
     <>
-      <Modal
-        show={show}
-        onHide={handleModalClose}
-        backdrop="static"
-        size="lg"
-        aria-labelledby="about-user-profile"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="about-user-profile">
-            My Profile
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Container className='p-5 d-flex flex-column ' style={{ height: '100vh', overflowY: 'auto' }} >
+        <Row>
+          <h3 className="text-left fs-1 mb-3 text-capitalize">My Profile</h3>
+        </Row>
+        <Col sm={6} md={6}>
           <Tabs
             id="profile-tabs"
             activeKey={key}
@@ -113,78 +102,109 @@ export const Profile = ({ show, setShow }) => {
             className="mb-3"
           >
             <Tab eventKey="user" title="User">
-              <>
-                <div className="row mb-3">
-                  <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
-                  <div className="col-sm-10">
-                    <input disabled={!isEditing} readOnly={!isEditing} onChange={handleUserChange} value={userData.name} type="text" className="form-control" name="name" />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
-                  <div className="col-sm-10">
-                    <input disabled={!isEditing} readOnly={!isEditing} onChange={handleUserChange} value={userData.email} type="email" className="form-control" name="email" />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label htmlFor="phone" className="col-sm-2 col-form-label">Phone</label>
-                  <div className="col-sm-10">
-                    <input disabled={!isEditing} readOnly={!isEditing} onChange={handleUserChange} value={userData.phone || ''} type="number" className="form-control" name="phone" />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label htmlFor="bloodGroup" className="col-sm-2 col-form-label">Blood Group</label>
-                  <div className="col-sm-10">
-                    <input disabled readOnly value={userData.bloodGroup} type="text" className="form-control" name="bloodGroup" />
-                  </div>
-                </div>  
-              </>
+              <Form>
+                <Form.Group as={Row} className="mb-3" controlId="name">
+                  <Form.Label column sm={3}>
+                    Name
+                  </Form.Label>
+                  <Col sm={9}>
+                    <Form.Control disabled={!isEditing} readOnly={!isEditing} className='border-2' onChange={handleUserChange} value={userData.name} type="text" />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3" controlId="email">
+                  <Form.Label column sm={3}>
+                    Email
+                  </Form.Label>
+                  <Col sm={9}>
+                    <Form.Control disabled={!isEditing} readOnly={!isEditing} className='border-2' onChange={handleUserChange} value={userData.email} type="email" name="email" />
+                  </Col>
+                </Form.Group>
+                    
+                <Form.Group as={Row} className="mb-3" controlId="phone">
+                  <Form.Label column sm={3}>
+                    Phone
+                  </Form.Label>
+                  <Col sm={9}>
+                    <Form.Control className='border-2' disabled={!isEditing} readOnly={!isEditing} onChange={handleUserChange} value={userData.phone || ''} type="number" name="phone" />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3" controlId="bloodGroup">
+                  <Form.Label column sm={3}>
+                    Blood Group
+                  </Form.Label>
+                  <Col sm={9}>
+                    <Form.Control disabled readOnly className='border-2'  name="bloodGroup" type="text" value={user.bloodGroup} />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3">
+                  <Col className='d-flex flex-row-reverse gap-3' >
+                  { !isEditing ? (
+                      <Button variant="primary" onClick={handleEditClick}>
+                        Edit
+                      </Button>
+                    ) : (
+                      <>
+                        <Button variant="primary" onClick={handleSaveClick}>
+                          Save
+                        </Button>
+                        <Button variant="secondary" onClick={handleCancelClick}>
+                          Cancel
+                        </Button>
+                      </>
+                      )
+                    }
+                  </Col>
+                </Form.Group>
+              </Form>
             </Tab>
             <Tab eventKey="security" title="Security">
-              <>
-                <div className="row mb-3">
-                  <label htmlFor="oldPassword" className="col-sm-3 col-form-label">Old Password</label>
-                  <div className="col-sm-9">
-                    <input type="password" onChange={handleSecurityChange} value={securityData.oldPassword} className="form-control" name="oldPassword" />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label htmlFor="newPassword" className="col-sm-3 col-form-label">New Password</label>
-                  <div className="col-sm-9">
-                    <input type="password" onChange={handleSecurityChange} value={securityData.newPassword} className="form-control" name="newPassword" />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label htmlFor="confirmPassword" className="col-sm-3 col-form-label">Confirm Password</label>
-                  <div className="col-sm-9">
-                    <input type="password" onChange={handleSecurityChange} value={securityData.confirmPassword} className="form-control" name="confirmPassword" />
-                  </div>
-                </div>
-              </>
+            <Form>
+                <Form.Group as={Row} className="mb-3" controlId="oldPassword">
+                  <Form.Label column sm={4}>
+                    Old Password
+                  </Form.Label>
+                  <Col sm={8}>
+                    <Form.Control className='border-2' type="password" onChange={handleSecurityChange} value={securityData.oldPassword} name="oldPassword" />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3" controlId="newPasssword">
+                  <Form.Label column sm={4}>
+                    New Password
+                  </Form.Label>
+                  <Col sm={8}>
+                    <Form.Control className='border-2' type="password" onChange={handleSecurityChange} value={securityData.newPassword} name="newPassword" />
+                  </Col>
+                </Form.Group>
+                    
+                <Form.Group as={Row} className="mb-3" controlId="confirmPassword">
+                  <Form.Label column sm={4}>
+                    Confirm Passsword
+                  </Form.Label>
+                  <Col sm={8}>
+                    <Form.Control className='border-2' type="password" onChange={handleSecurityChange} value={securityData.confirmPassword}  name="confirmPassword" />
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3">
+                  <Col  className='d-flex flex-row-reverse gap-3' >
+                  { !isSecurityEmpty ? 
+                      <>
+                        <Button variant="primary" onClick={handleSaveClick}>
+                          Save
+                        </Button>
+                      </>
+                      : <></>
+                    }
+                  </Col>
+                </Form.Group>
+              </Form>
             </Tab>
           </Tabs>
-        </Modal.Body>
-      <Modal.Footer>
-        { key === 'user' ? !isEditing ? (
-          <Button variant="primary" onClick={handleEditClick}>
-            Edit
-          </Button>
-        ) : (
-          <>
-            <Button variant="secondary" onClick={handleCancelClick}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={handleSaveClick}>
-              Save
-            </Button>
-          </>
-          ) : 
-          <Button variant="primary" onClick={handleSaveClick}>
-              Save
-            </Button>
-        }
-      </Modal.Footer>
-      </Modal>
+          </Col>
+      </Container> 
     </>
   );
 }
