@@ -126,16 +126,19 @@ const SideBarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
           >
             {route.subRoutes.map((subRoute, i) => (
               <motion.div variants={menuItemAnimation} key={i} custom={i}>
-                <NavLink to={subRoute.path} className="link">
-                  <div className="icon">{subRoute.icon}</div>
-                  <motion.div className="link_text">{subRoute.name}</motion.div>
-                </NavLink>
+                {
+                  subRoute.name === "Logout" ?
+                    <Link onClick={handleShow} className="link">
+                      <div className="icon"><FaPowerOff /></div>
+                      <motion.div className="link_text">Logout</motion.div>
+                     </Link> :
+                    <NavLink to={subRoute.path} className="link">
+                      <div className="icon">{subRoute.icon}</div>
+                      <motion.div className="link_text">{subRoute.name}</motion.div>
+                    </NavLink>
+                }
               </motion.div>
             ))}
-            <Link onClick={handleShow} className="link">
-              <div className="icon"><FaPowerOff /></div>
-              <motion.div className="link_text">Logout</motion.div>
-            </Link>
           </motion.div>
         )}{" "}
       </AnimatePresence>

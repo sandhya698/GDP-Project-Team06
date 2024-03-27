@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {Container, Nav, Navbar} from 'react-bootstrap';
-import { Logout } from './Logout';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function NavigationBar() {
@@ -14,7 +13,6 @@ export default function NavigationBar() {
         <>
           <Navbar.Text className="nav-link d-flex flex-row text-capitalize"><span className="fas fa-user me-2 fs-5"></span> {user.userType}</Navbar.Text>
           <Navbar.Text className='fw-bold'>{user.name}</Navbar.Text>
-          <Logout />
         </>
       )
     }
