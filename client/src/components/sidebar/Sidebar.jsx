@@ -7,7 +7,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import SideBarMenu from './SideBarMenu';
 import Badge from 'react-bootstrap/Badge';
 
-export const Sidebar = ({handleUserProfileClick}) => {
+export const Sidebar = () => {
   const { user } = useAuthContext();
   const userType = user?.userType;
   const location = useLocation();
@@ -82,6 +82,7 @@ export const Sidebar = ({handleUserProfileClick}) => {
                     route={route}
                     showAnimation={showAnimation}
                     isOpen={isOpen}
+                    key={index}
                   />
                 );
               }
