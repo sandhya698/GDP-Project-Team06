@@ -1,7 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
-import { FaAngleDown } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaAngleDown, FaPowerOff } from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
+import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { useLogout } from "../../hooks/useLogout";
 
 const menuAnimation = {
   hidden: {
@@ -47,6 +49,39 @@ const SideBarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
       setIsMenuOpen(false);
     }
   }, [isOpen]);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
+  const { logout } = useLogout();
+  const handleLogout = async () => await logout();
+
+  const LogoutModal = () => {
+    return <Modal size="sm" show={show} onHide={handleClose} backdrop="static" >
+      <Modal.Body>
+      <Container>
+          <Row>
+            <Col>
+              Are you sure do you want to logout?
+            </Col>
+          </Row>
+          <Row>
+          <Col className='d-flex flex-row-reverse gap-3' >
+            <Button size='sm' variant="primary" onClick={handleLogout}>
+              Logout
+            </Button>
+            <Button size='sm' variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            </Col>
+          </Row>
+        </Container>
+      </Modal.Body>
+    </Modal>
+  }
+
   return (
     <>
       <div className="menu" onClick={toggleMenu}>
@@ -97,9 +132,14 @@ const SideBarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
                 </NavLink>
               </motion.div>
             ))}
+            <Link onClick={handleShow} className="link">
+              <div className="icon"><FaPowerOff /></div>
+              <motion.div className="link_text">Logout</motion.div>
+            </Link>
           </motion.div>
         )}{" "}
       </AnimatePresence>
+      <LogoutModal />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { FaHome, FaUsers, FaUserInjured, FaWarehouse, FaUser } from "react-icons/fa";
 import { BiSolidDonateBlood, BiSolidDonateHeart, BiHistory } from "react-icons/bi";
-import { FaGear, FaPowerOff } from "react-icons/fa6";
+import { FaGear } from "react-icons/fa6";
 
 export const menuList = [
     {
@@ -87,12 +87,6 @@ export const menuList = [
             name: "Profile ",
             icon: <FaUser />,
           },
-          {
-            path: "/settings/logout",
-            name: "Logout",
-            icon: <FaPowerOff />
-            ,
-          },
         ],
-      },
+    },
 ];
